@@ -1,6 +1,18 @@
-# Nayan Kote's Personal Website
+# nayankote.github.io
 
-This is my personal website and blog built with Jekyll. The site features both long-form blog posts and micro-posts, with a design inspired by modern personal websites.
+Website for Nayan Nandan Kote
+
+## About
+
+Personal blog and micro-blog about technology, projects, and thoughts.
+
+## Resources
+
+- [nayankote.com](https://nayankote.com)
+
+---
+
+© 2025 Nayan Nandan Kote
 
 ## Features
 

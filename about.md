@@ -9,7 +9,7 @@ permalink: /about/
     
     <div class="about-content">
         <p>
-            Hi! I'm Nayan Kote, a software engineer passionate about technology and innovation.
+            Hi! I'm Nayan Nandan Kote, a software engineer passionate about technology and innovation.
         </p>
 
         <h2>Background</h2>
@@ -27,7 +27,7 @@ permalink: /about/
 
         <h2>Contact</h2>
         <p>
-            Feel free to reach out to me at <a href="mailto:nayan.nkote@gmail.com">nayan.nkote@gmail.com</a>
+            <!-- Contact information removed for privacy -->
         </p>
     </div>
 </div> 

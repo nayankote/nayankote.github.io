@@ -1,0 +1,59 @@
+title: Nayan Kote
+description: Personal blog and micro-blog about technology, projects, and thoughts
+baseurl: ""
+url: "https://nayankote.com"
+
+# Build settings
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-archives
+  - jemoji
+
+# Collections
+collections:
+  micro_posts:
+    output: true
+    permalink: /micro/:title/
+
+# Archives
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-category
+    tag: archive-tag
+  permalinks:
+    category: '/category/:name/'
+    tag: '/tag/:name/'
+
+# Pagination
+paginate: 5
+paginate_path: "/page:num/"
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "micro_posts"
+    values:
+      layout: "micro_post"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .gitignore
+  - README.md 

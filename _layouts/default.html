@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    {% feed_meta %}
+    {% seo %}
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <nav class="main-nav">
+                <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+                <div class="nav-links">
+                    <a href="{{ '/blog' | relative_url }}">Blog</a>
+                    <a href="{{ '/about' | relative_url }}">About</a>
+                    <a href="{{ '/projects' | relative_url }}">Projects</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="content">
+            <div class="main-content">
+                {{ content }}
+            </div>
+            <aside class="micro-blog-sidebar">
+                <h3>Micro Updates</h3>
+                <div class="micro-posts">
+                    {% assign current_tags = page.tags | default: "@main" %}
+                    {% assign filtered_micro_posts = site.micro_posts | where_exp: "post", "post.tags contains current_tags" | limit: 5 %}
+                    {% for post in filtered_micro_posts %}
+                        <article class="micro-post">
+                            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
+                            {{ post.content }}
+                        </article>
+                    {% endfor %}
+                </div>
+            </aside>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html> 

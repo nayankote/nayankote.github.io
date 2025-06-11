@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3.2"
-gem "webrick", "~> 1.8"
+gem "github-pages", group: :jekyll_plugins
 gem "jekyll-feed"
 gem "jekyll-seo-tag"
 gem "jekyll-sitemap"
 gem "jekyll-paginate"
 gem "jekyll-archives"
-gem "jemoji" 
+gem "jemoji"
+gem "webrick", "~> 1.8" 

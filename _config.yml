@@ -56,4 +56,5 @@ exclude:
   - node_modules
   - vendor
   - .gitignore
-  - README.md 
+  - README.md
+  - setup_ruby.sh 

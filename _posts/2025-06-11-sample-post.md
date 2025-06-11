@@ -1,9 +1,17 @@
 ---
+layout: post
 title: "Sample Post"
-date: 2024-06-11
+date: 2024-03-20
 categories: [blog]
 ---
 
-This is a sample blog post to show how the tiling and layout work on my website. You can use this as a template for your future posts.
+This is a sample blog post. You can use this as a template for your future posts.
 
-Feel free to customize the content and styling to make your site look cleaner and more like Vimal's website! 
+## Features
+
+- Markdown support
+- Code syntax highlighting
+- Categories and tags
+- Responsive design
+
+Feel free to modify this post to create your own content! 

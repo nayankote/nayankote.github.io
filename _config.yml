@@ -14,12 +14,6 @@ plugins:
   - jekyll-archives
   - jemoji
 
-# Collections
-collections:
-  micro_posts:
-    output: true
-    permalink: /micro/:title/
-
 # Archives
 jekyll-archives:
   enabled:
@@ -43,11 +37,6 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-  - scope:
-      path: ""
-      type: "micro_posts"
-    values:
-      layout: "micro_post"
 
 # Exclude from processing
 exclude:

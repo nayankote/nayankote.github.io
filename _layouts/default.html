@@ -23,22 +23,7 @@
         </header>
 
         <main class="content">
-            <div class="main-content">
-                {{ content }}
-            </div>
-            <aside class="micro-blog-sidebar">
-                <h3>Micro Updates</h3>
-                <div class="micro-posts">
-                    {% assign current_tags = page.tags | default: "@main" %}
-                    {% assign filtered_micro_posts = site.micro_posts | where_exp: "post", "post.tags contains current_tags" | limit: 5 %}
-                    {% for post in filtered_micro_posts %}
-                        <article class="micro-post">
-                            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
-                            {{ post.content }}
-                        </article>
-                    {% endfor %}
-                </div>
-            </aside>
+            {{ content }}
         </main>
 
         <footer class="site-footer">

@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "exported_on": 1750510620960,
+    "version": "5.8.0"
+  },
+  "data": {
+    "posts": [
+      {
+        "title": "\"Welcome to My Blog\"",
+        "slug": "welcome-to-my-blog",
+        "markdown": "# Welcome to My Blog\n\nThis is my first blog post on my new website. I'll be using this space to share my thoughts, projects, and experiences.\n\n## What to Expect\n\n- Technical deep dives\n- Project updates\n- Book reviews\n- Personal reflections\n\n## Micro Updates\n\nYou'll notice a sidebar on the right with micro-updates. These are quick thoughts and progress updates that I'll be posting regularly. They're tagged with categories like `@main` for general updates or specific project tags like `@arduino` for project-specific updates.\n\n## Stay Connected\n\nFeel free to follow along as I share my journey through both long-form blog posts and micro-updates.",
+        "published_at": "2024-03-20T00:00:00.000Z",
+        "status": "published"
+      },
+      {
+        "title": "\"Sample Post\"",
+        "slug": "sample-post",
+        "markdown": "This is a sample blog post. You can use this as a template for your future posts.\n\n## Features\n\n- Markdown support\n- Code syntax highlighting\n- Categories and tags\n- Responsive design\n\nFeel free to modify this post to create your own content!",
+        "published_at": "2025-06-11T00:00:00.000Z",
+        "status": "published"
+      }
+    ]
+  }
+}

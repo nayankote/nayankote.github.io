@@ -71,14 +71,16 @@ generate_site() {
     # Get the absolute path to the site directory
     SITE_ABS_DIR=$(cd "$SITE_DIR" && pwd)
     
+    ORIG_DIR=$(pwd)
     cd "$GHOST_DIR"
     
-    if ! gssg --dest "$SITE_ABS_DIR"; then
+    if ! gssg --domain "http://localhost:2368" --url "$SITE_URL" --dest "$SITE_ABS_DIR"; then
         print_error "Failed to generate static site"
+        cd "$ORIG_DIR"
         exit 1
     fi
     
-    cd "$SITE_DIR"
+    cd "$ORIG_DIR"
     print_success "Static site generated"
 }
 
@@ -177,6 +179,8 @@ cleanup_files() {
 git_operations() {
     print_status "Performing Git operations..."
     
+    cd "$SITE_DIR"
+
     # Check if there are changes to commit
     if git diff-index --quiet HEAD --; then
         print_warning "No changes to commit"

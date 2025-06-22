@@ -5,7 +5,7 @@ from jinja2 import Template
 from datetime import datetime
 
 # Ghost API configuration
-GHOST_URL = "http://localhost:2368"
+GHOST_URL = "https://nayankote.com"
 API_KEY = ""  # You'll need to add your Ghost API key here
 
 def get_posts():

@@ -68,9 +68,12 @@ check_prerequisites() {
 generate_site() {
     print_status "Generating static site from Ghost..."
     
+    # Get the absolute path to the site directory
+    SITE_ABS_DIR=$(cd "$SITE_DIR" && pwd)
+    
     cd "$GHOST_DIR"
     
-    if ! gssg --url "$SITE_URL" --dest "$SITE_DIR"; then
+    if ! gssg --dest "$SITE_ABS_DIR"; then
         print_error "Failed to generate static site"
         exit 1
     fi

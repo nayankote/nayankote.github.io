@@ -165,6 +165,151 @@
     <script defer src="/public/cards.min.js?v=2aae365934"></script>
     <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=2aae365934">
     <script defer src="/public/member-attribution.min.js?v=2aae365934"></script><style>:root {--ghost-accent-color: #FF1A75;}</style>
+    <!-- Modern, unified styles and theme logic from homepage -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Projects</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2aae365934" />
+    <style>
+        :root {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #181818;
+                --color-text: #fff;
+                --color-accent: #a0aec0;
+                --color-nav-bg: #181818;
+                --color-nav-text: #fff;
+            }
+        }
+        html.theme-dark {
+            --color-bg: #181818;
+            --color-text: #fff;
+            --color-accent: #a0aec0;
+            --color-nav-bg: #181818;
+            --color-nav-text: #fff;
+        }
+        html.theme-light {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-size: 1.15em;
+            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        .homepage-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .nav-header {
+            background: var(--color-nav-bg);
+            color: var(--color-nav-text);
+            padding: 0 32px;
+            box-sizing: border-box;
+        }
+        .nav-wrapper ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 32px;
+        }
+        .nav-wrapper ul li {
+            list-style: none;
+        }
+        .nav-wrapper ul li a {
+            color: var(--color-nav-text);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 0.5em 0.2em;
+        }
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .nav-search {
+            color: var(--color-nav-text);
+        }
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 32px 0 32px;
+        }
+        .section-header {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 32px;
+        }
+        .project-list {
+            list-style: none;
+            padding: 0;
+        }
+        .project-item {
+            margin-bottom: 18px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .project-item:last-child {
+            border-bottom: none;
+        }
+        .project-title {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.13em;
+        }
+        .project-title:hover {
+            color: var(--color-accent);
+        }
+        @media (max-width: 900px) {
+            .homepage-container, .nav-header, .nav-wrapper, .content-section {
+                max-width: 100%;
+                padding: 0 12px;
+            }
+        }
+    </style>
+    <script>
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
+        }
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTheme(getPreferredTheme());
+            const themeToggle = document.querySelector('.js-theme');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+                    setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
+                });
+            }
+        });
+    </script>
 </head>
 
 <body class="page-template page-projects">
@@ -173,9 +318,9 @@
 		<div class="nav-header">
 			<nav class="nav-wrapper" aria-label="Main">
 				<ul>
-		<li class="nav-home"><a href="https://nayankote.com/"><span>Home</span></a></li>
-		<li class="nav-blogs"><a href="https://nayankote.com/blogs/"><span>Blogs</span></a></li>
-		<li class="nav-projects active"><a href="https://nayankote.com/projects/"><span>Projects</span></a></li>
+		<li class="nav-home"><a href="/">Home</a></li>
+		<li class="nav-blogs"><a href="/blogs/">Blogs</a></li>
+		<li class="nav-projects active"><a href="/projects/">Projects</a></li>
 </ul>
 
 				<a class="nav-search" title="Search" aria-label="Search" data-ghost-search><i class="icon icon-search" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

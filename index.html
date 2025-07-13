@@ -155,10 +155,80 @@
 
     <!-- Custom styles for the new homepage design -->
     <style>
+        :root {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568; /* neutral blue-gray */
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #181818;
+                --color-text: #fff;
+                --color-accent: #a0aec0;
+                --color-nav-bg: #181818;
+                --color-nav-text: #fff;
+            }
+        }
+        html.theme-dark {
+            --color-bg: #181818;
+            --color-text: #fff;
+            --color-accent: #a0aec0;
+            --color-nav-bg: #181818;
+            --color-nav-text: #fff;
+        }
+        html.theme-light {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-size: 1.15em;
+            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
         .homepage-container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 32px;
+        }
+        .nav-header {
+            background: var(--color-nav-bg);
+            color: var(--color-nav-text);
+            padding: 0 32px;
+            box-sizing: border-box;
+        }
+        .nav-wrapper ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 32px;
+        }
+        .nav-wrapper ul li {
+            list-style: none;
+        }
+        .nav-wrapper ul li a {
+            color: var(--color-nav-text);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 0.5em 0.2em;
+        }
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .nav-search {
+            color: var(--color-nav-text);
         }
         .hero-section {
             display: flex;
@@ -186,12 +256,12 @@
         .about-content h1 {
             font-size: 2.8em;
             margin-bottom: 12px;
-            color: var(--ghost-accent-color, #FF1A75);
+            color: var(--color-accent);
             font-weight: 700;
         }
         .about-content .subtitle {
             font-size: 1.3em;
-            color: #666;
+            color: var(--color-accent);
             margin-bottom: 32px;
             font-weight: 500;
         }
@@ -203,12 +273,12 @@
         .about-paragraphs p {
             font-size: 1.18em;
             line-height: 1.7;
-            color: #222;
+            color: var(--color-text);
             margin: 0;
         }
         .separator {
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--ghost-accent-color, #FF1A75), transparent);
+            background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
             margin: 0 0 60px 0;
         }
         .blogs-section {
@@ -218,7 +288,7 @@
         .blogs-section h2 {
             font-size: 2em;
             margin-bottom: 30px;
-            color: var(--ghost-accent-color, #FF1A75);
+            color: var(--color-accent);
             font-weight: 700;
         }
         .blog-list {
@@ -234,20 +304,24 @@
             border-bottom: none;
         }
         .blog-date {
-            color: #888;
+            color: var(--color-accent);
             font-size: 1em;
             margin-right: 12px;
         }
         .blog-title {
-            color: #222;
+            color: var(--color-text);
             text-decoration: none;
             font-weight: 600;
             font-size: 1.13em;
         }
         .blog-title:hover {
-            color: var(--ghost-accent-color, #FF1A75);
+            color: var(--color-accent);
         }
         @media (max-width: 900px) {
+            .homepage-container, .nav-header, .nav-wrapper {
+                max-width: 100%;
+                padding: 0 12px;
+            }
             .hero-section {
                 flex-direction: column;
                 align-items: center;
@@ -269,6 +343,31 @@
             }
         }
     </style>
+    <script>
+        // Theme toggle logic
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
+        }
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTheme(getPreferredTheme());
+            // Toggle button logic (if you want to add a button for users)
+            const themeToggle = document.querySelector('.js-theme');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+                    setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
+                });
+            }
+        });
+    </script>
 </head>
 
 <body class="home-template">

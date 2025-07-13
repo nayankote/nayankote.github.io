@@ -29,8 +29,6 @@
 			}
 	</script>
 
-
-
 		<script>localStorage.setItem('attila_theme', 'system');</script>
 
 			<style>
@@ -154,6 +152,127 @@
     <script defer src="/public/cards.min.js?v=2aae365934"></script>
     <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=2aae365934">
     <script defer src="/public/member-attribution.min.js?v=2aae365934"></script><style>:root {--ghost-accent-color: #FF1A75;}</style>
+
+    <!-- Custom styles for the new homepage design -->
+    <style>
+        .homepage-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Remove position, top, left */
+            margin-right: 40px;
+        }
+        
+        .about-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .about-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--ghost-accent-color, #FF1A75);
+        }
+        
+        .about-content .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .about-paragraphs {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .about-paragraphs p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+        }
+        
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ghost-accent-color, #FF1A75), transparent);
+            margin: 60px 0;
+        }
+        
+        .blogs-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: var(--ghost-accent-color, #FF1A75);
+        }
+        
+        .blog-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .blog-item {
+            margin-bottom: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .blog-item:last-child {
+            border-bottom: none;
+        }
+        
+        .blog-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        
+        .blog-title {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+        
+        .blog-title:hover {
+            color: var(--ghost-accent-color, #FF1A75);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .profile-photo {
+                margin-right: 0;
+                margin-bottom: 24px;
+            }
+            .about-content {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body class="home-template">
@@ -189,133 +308,66 @@
 		<div class="nav-close" role="button" aria-label="Close"></div>
 
 		<section class="page-wrapper">
+			<div class="homepage-container">
+				<!-- Profile Section with Photo and About -->
+				<div class="profile-section">
+					<div class="profile-photo">
+						NN
+					</div>
+					<div class="about-content">
+						<h1>Nayan Nandan Kote</h1>
+						<div class="subtitle">Software Engineer & Problem Solver</div>
+						<div class="about-paragraphs">
+							<p>Hi, I'm Nayan Nandan Kote. I'm a software engineer passionate about building things that matter and solving complex problems. I believe in writing clean, maintainable code and creating products that people actually want to use.</p>
+							
+							<p>My focus areas include web development, system design, and creating user-friendly applications. I enjoy learning new technologies and sharing what I discover along the way through my blog posts and projects.</p>
+							
+							<p>I'm always interested in connecting with fellow developers and people working on interesting problems. Feel free to reach out if you'd like to collaborate or just chat about technology.</p>
+						</div>
+					</div>
+				</div>
 
-			<header class="blog-header ">
-	<div class="inner">
-		<div class="box blog-box">
-			<h1 class="blog-name">Nayan Nandan Kote</h1>
-			<span class="blog-description">Software Engineer & Problem Solver</span>
-		</div>
-	</div>
-</header>
+				<!-- Separator -->
+				<div class="separator"></div>
 
-<div id="index" class="container">
-
-	<main class="content" role="main">
-
-		<!-- Personal Introduction Section -->
-		<article class="post no-image">
-			<div class="inner">
-				<div class="box post-box">
-					<h2 class="post-title">About Me</h2>
-					<p class="post-excerpt">Hi, I'm <strong>Nayan Nandan Kote</strong>. I'm a software engineer passionate about building things that matter and solving complex problems.</p>
-					
-					<h3 id="what-i-do">What I Do</h3>
-					<p class="post-excerpt">I work on software solutions that make a difference. My focus areas include web development, system design, and creating user-friendly applications. I believe in writing clean, maintainable code and building products that people actually want to use.</p>
-					
-					<h3 id="current-focus">Current Focus</h3>
-					<p class="post-excerpt">I'm currently exploring new technologies and working on projects that challenge me to grow. You can find my latest thoughts and work in the <a href="/blogs/">Blogs</a> section, and ongoing projects in the <a href="/projects/">Projects</a> section.</p>
-					
-					<h3 id="background">Background</h3>
-					<p class="post-excerpt">I have experience in full-stack development, with expertise in modern web technologies. I enjoy learning new things and sharing what I discover along the way.</p>
-					
-					<h3 id="get-in-touch">Get in Touch</h3>
-					<p class="post-excerpt">I'm always interested in connecting with fellow developers and people working on interesting problems. Feel free to reach out if you'd like to collaborate or just chat about technology.</p>
-					
-					<hr>
-					
-					<p class="post-excerpt"><em>This site serves as my digital garden where I share thoughts, document my work, and track ongoing projects. Thanks for stopping by!</em></p>
+				<!-- Blogs Section -->
+				<div class="blogs-section">
+					<h2>Blogs</h2>
+					<ul class="blog-list">
+						<li class="blog-item">
+							<span class="blog-date">May 2, 2025:</span>
+							<a href="/blogs/lossfunk-llm-recommendation-engines.html" class="blog-title">LossFunk → LLMs for recommendation engines</a>
+						</li>
+					</ul>
 				</div>
 			</div>
-		</article>
+		</section>
 
-		<div class="extra-pagination">
-	<nav class="pagination" aria-label="Pagination">
-	<div class="inner">
-		<div class="box pagination-box">
-			<span class="pagination-info">Page 1 of 1</span>
-		</div>
-	</div>
-</nav>
-
-</div>
-
-
-<article class="post no-image">
-	<div class="inner">
-		<div class="box post-box">
-			<h2 class="post-title"><a href="/bloga-blog-test-1/">Blog test - 1</a></h2>
-			<span class="post-meta">
-				By
-				<a href="/author/nayan/">Nayan Nandan</a>
-				
-				on
-				<time datetime="22-06-2025">22 Jun 2025</time>
-			</span>
-			<p class="post-excerpt">Mic check - 1&hellip;</p>
-		</div>
-	</div>
-</article>
-
-
-<article class="post tag-news">
-	<div class="inner">
-		<div class="box post-box">
-			<h2 class="post-title"><a href="/coming-soon/">Coming soon</a></h2>
-			<span class="post-meta">
-				By
-				<a href="/author/nayan/">Nayan Nandan</a>
-				in <a class="post-meta-tag" href="/tag/news/">News</a>
-				on
-				<time datetime="22-06-2025">22 Jun 2025</time>
-			</span>
-			<p class="post-excerpt">This is Nayan Nandan Kote, a brand new site by Nayan Nandan that&#39;s just getting started. Things will be up and running here shortly, but you can subscribe in the meantime if you&#39;d like to stay up to date and receive emails when new content is&hellip;</p>
-		</div>
-	</div>
-</article>
-
-
-<nav class="pagination" aria-label="Pagination">
-	<div class="inner">
-		<div class="box pagination-box">
-			<span class="pagination-info">Page 1 of 1</span>
-		</div>
-	</div>
-</nav>
-
-
-	</main>
-
-</div>
-
-
-			<div class="nav-footer">
-				<nav class="nav-wrapper" aria-label="Footer">
-					<span class="nav-copy">
-						
-						<span class="nav-title">Nayan Nandan Kote &copy; 2025</span>
-						<a aria-label="RSS" href="https://nayankote.com/rss/" title="RSS"><i class="icon icon-rss" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<div class="nav-footer">
+			<nav class="nav-wrapper" aria-label="Footer">
+				<span class="nav-copy">
+					<span class="nav-title">Nayan Nandan Kote &copy; 2025</span>
+					<a aria-label="RSS" href="https://nayankote.com/rss/" title="RSS"><i class="icon icon-rss" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 1V5C10.93 5 19 13.07 19 23H23C23 10.85 13.15 1 1 1ZM1 8V12C7.07 12 12 16.93 12 23H16C16 14.72 9.28 8 1 8ZM4 17C3.20435 17 2.44129 17.3161 1.87868 17.8787C1.31607 18.4413 1 19.2044 1 20C1 20.7956 1.31607 21.5587 1.87868 22.1213C2.44129 22.6839 3.20435 23 4 23C4.79565 23 5.55871 22.6839 6.12132 22.1213C6.68393 21.5587 7 20.7956 7 20C7 19.2044 6.68393 18.4413 6.12132 17.8787C5.55871 17.3161 4.79565 17 4 17Z" fill="currentColor"/>
 </svg>
 </i></a>
-						<a aria-label="Twitter" href="https://x.com/ghost" title="@ghost"><i class="icon icon-twitter" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<a aria-label="Twitter" href="https://x.com/ghost" title="@ghost"><i class="icon icon-twitter" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M14.2856 10.1635L23.2216 0H21.1048L13.3424 8.82302L7.1472 0H0L9.3704 13.3432L0 23.9999H2.1168L10.3088 14.6805L16.8528 23.9999H24M2.8808 1.56189H6.1328L21.1032 22.5148H17.8504" fill="currentColor"/>
 </svg>
 </i></a>
-						<a aria-label="Facebook" href="https://www.facebook.com/ghost" title="ghost"><i class="icon icon-facebook" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<a aria-label="Facebook" href="https://www.facebook.com/ghost" title="ghost"><i class="icon icon-facebook" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 12C0 17.94 4.32 22.86 10.02 23.88L10.0909 23.822C10.0872 23.8214 10.0836 23.8207 10.08 23.8201V15.3601H7.07996V12.0001H10.08V9.36005C10.08 6.36005 12 4.68005 14.76 4.68005C15.6 4.68005 16.56 4.80005 17.4 4.92005V7.98005H15.84C14.4 7.98005 14.04 8.70005 14.04 9.66005V12.0001H17.22L16.68 15.3601H14.04V23.8201C14.0034 23.8267 13.9669 23.8331 13.9304 23.8394L13.98 23.88C19.68 22.86 24 17.94 24 12C24 5.4 18.6 0 12 0C5.4 0 0 5.4 0 12Z" fill="currentColor"/>
 </svg>
 </i></a>
-					</span>
-					<ul>
+				</span>
+				<ul>
 		<li class="nav-sign-up"><a href="#/portal/"><span>Sign up</span></a></li>
 </ul>
 
-					<span class="nav-credits">Published with <a href="https://ghost.org">Ghost</a> &bull; Theme <a href="https://github.com/zutrinken/attila">Attila</a> &bull; <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme"><span class="theme-icon"></span><span class="theme-text">System theme</span> </a> </span>
-				</nav>
-			</div>
+				<span class="nav-credits">Published with <a href="https://ghost.org">Ghost</a> &bull; Theme <a href="https://github.com/zutrinken/attila">Attila</a> &bull; <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme"><span class="theme-icon"></span><span class="theme-text">System theme</span> </a> </span>
+			</nav>
+		</div>
 
-		</section>
 	</div>
 
 	<script type="text/javascript" src="/assets/js/script.js?v=2aae365934"></script>

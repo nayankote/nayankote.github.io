@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Notion to Blog Post Transformer
+Notion to Blog Post Transformer - Improved Version
 Automatically converts Notion HTML exports to properly formatted blog posts
-Updated version with improved content cleaning and consistent styling
+Enhanced with better debugging and more robust content extraction
 """
 
 import re
@@ -13,9 +13,15 @@ from bs4 import BeautifulSoup
 import argparse
 
 class NotionBlogTransformer:
-    def __init__(self, template_path="blogs/blog-post-template.html"):
+    def __init__(self, template_path="blogs/blog-post-template.html", debug=False):
         self.template_path = template_path
+        self.debug = debug
         self.template = self.load_template()
+    
+    def debug_print(self, message):
+        """Print debug messages if debug mode is enabled"""
+        if self.debug:
+            print(f"[DEBUG] {message}")
     
     def load_template(self):
         """Load the blog template"""
@@ -30,16 +36,25 @@ class NotionBlogTransformer:
         """Extract content from Notion HTML export with improved parsing"""
         try:
             with open(notion_html_path, 'r', encoding='utf-8') as f:
-                soup = BeautifulSoup(f.read(), 'html.parser')
+                html_content = f.read()
+                self.debug_print(f"HTML file size: {len(html_content)} characters")
+                soup = BeautifulSoup(html_content, 'html.parser')
+            
+            # Debug: Print structure
+            if self.debug:
+                self.debug_structure(soup)
             
             # Extract title - try multiple methods
             title = self.extract_title(soup)
+            self.debug_print(f"Extracted title: {title}")
             
             # Extract publish date
             publish_date = self.extract_date(soup)
+            self.debug_print(f"Extracted date: {publish_date}")
             
             # Extract main content
             content = self.extract_content(soup)
+            self.debug_print(f"Extracted content length: {len(content)} characters")
             
             return {
                 'title': title,
@@ -51,6 +66,36 @@ class NotionBlogTransformer:
             print(f"Error reading Notion HTML: {e}")
             sys.exit(1)
     
+    def debug_structure(self, soup):
+        """Print HTML structure for debugging"""
+        print("\n[DEBUG] HTML Structure Analysis:")
+        
+        # Check for common containers
+        containers = [
+            'body', 'main', 'article', '.notion-page-content',
+            '.notion-page-content-inner', '.notion-selectable',
+            '.page-body', '[role="main"]'
+        ]
+        
+        for selector in containers:
+            elements = soup.select(selector)
+            if elements:
+                print(f"  Found {len(elements)} element(s) matching '{selector}'")
+                for i, elem in enumerate(elements[:2]):  # Show first 2
+                    text_preview = elem.get_text()[:100].replace('\n', ' ').strip()
+                    print(f"    [{i}] {text_preview}...")
+        
+        # Check all div classes
+        divs_with_classes = soup.find_all('div', class_=True)
+        print(f"\n  Found {len(divs_with_classes)} divs with classes")
+        unique_classes = set()
+        for div in divs_with_classes:
+            unique_classes.update(div.get('class', []))
+        
+        notion_classes = [cls for cls in unique_classes if 'notion' in cls.lower()]
+        if notion_classes:
+            print(f"  Notion-related classes: {sorted(notion_classes)[:10]}...")
+    
     def extract_title(self, soup):
         """Extract title from various possible locations"""
         # Try different selectors for title
@@ -59,16 +104,27 @@ class NotionBlogTransformer:
             'h1.page-title', 
             '.notion-page-title',
             '.notion-header-title',
-            'h1',
-            'title'
+            'title',  # HTML title tag
+            'h1',     # Any h1
+            '[data-block-type="header"]',
+            '.notion-page-icon-cover + *',  # Element after cover
         ]
         
         for selector in title_selectors:
+            self.debug_print(f"Trying title selector: {selector}")
             title_elem = soup.select_one(selector)
             if title_elem:
                 title = title_elem.get_text().strip()
-                if title and title.lower() not in ['untitled', 'notion']:
+                self.debug_print(f"  Found: '{title}'")
+                if title and title.lower() not in ['untitled', 'notion', '']:
                     return title
+        
+        # Fallback: try to find the first meaningful heading
+        for heading in soup.find_all(['h1', 'h2', 'h3']):
+            title = heading.get_text().strip()
+            if len(title) > 5 and title.lower() not in ['untitled', 'notion']:
+                self.debug_print(f"Fallback title found: '{title}'")
+                return title
         
         return "Untitled Blog Post"
     
@@ -80,55 +136,80 @@ class NotionBlogTransformer:
             '.notion-created-time',
             '.notion-last-edited-time',
             'meta[property="article:published_time"]',
-            'meta[name="date"]'
+            'meta[name="date"]',
+            '[data-value*="202"]',  # Look for year patterns
         ]
         
         for selector in date_selectors:
             date_elem = soup.select_one(selector)
             if date_elem:
-                date_val = date_elem.get('datetime') or date_elem.get('content') or date_elem.get_text()
+                date_val = date_elem.get('datetime') or date_elem.get('content') or date_elem.get('data-value') or date_elem.get_text()
                 if date_val:
+                    self.debug_print(f"Found date candidate: {date_val}")
                     try:
                         # Try to parse the date
                         parsed_date = datetime.fromisoformat(date_val.replace('Z', '+00:00'))
                         return parsed_date.isoformat()
                     except:
-                        pass
+                        # Try other date formats
+                        try:
+                            parsed_date = datetime.strptime(date_val, '%Y-%m-%d')
+                            return parsed_date.isoformat()
+                        except:
+                            pass
         
         return datetime.now().isoformat()
     
     def extract_content(self, soup):
-        """Extract and clean main content"""
-        # Try different content selectors
+        """Extract and clean main content with enhanced debugging"""
+        # Try different content selectors in order of specificity
         content_selectors = [
             '.notion-page-content',
             '.notion-page-content-inner',
+            'div[data-block-type]',  # Notion blocks
             '.notion-selectable.notion-page-block',
             'article',
             '.post-content',
             '.page-body',
             'main',
-            'body'
+            '[role="main"]',
+            '.notion-page-content-inner div',
+            'body > div',  # Fallback to body children
         ]
         
         content_elem = None
         for selector in content_selectors:
-            content_elem = soup.select_one(selector)
-            if content_elem:
-                break
+            self.debug_print(f"Trying content selector: {selector}")
+            elements = soup.select(selector)
+            if elements:
+                self.debug_print(f"  Found {len(elements)} elements")
+                # Take the element with most text content
+                best_elem = max(elements, key=lambda x: len(x.get_text()))
+                text_preview = best_elem.get_text()[:100].replace('\n', ' ').strip()
+                self.debug_print(f"  Best element preview: {text_preview}...")
+                
+                if len(best_elem.get_text().strip()) > 50:  # Must have substantial content
+                    content_elem = best_elem
+                    break
         
+        # Ultimate fallback: get all text from body, excluding nav/header/footer
         if not content_elem:
-            # Fallback: get everything in body except nav/header/footer
+            self.debug_print("Using body fallback")
             content_elem = soup.find('body')
             if content_elem:
                 # Remove navigation, header, footer elements
-                for tag in content_elem.find_all(['nav', 'header', 'footer']):
+                for tag in content_elem.find_all(['nav', 'header', 'footer', 'script', 'style']):
                     tag.decompose()
         
         if content_elem:
-            return self.clean_notion_content(content_elem)
+            raw_content = str(content_elem)
+            self.debug_print(f"Raw content length before cleaning: {len(raw_content)}")
+            cleaned_content = self.clean_notion_content(content_elem)
+            self.debug_print(f"Cleaned content length: {len(cleaned_content)}")
+            return cleaned_content
         else:
-            return "<p>Content not found</p>"
+            self.debug_print("No content found!")
+            return "<p>Content not found - check your Notion export</p>"
     
     def clean_notion_content(self, content_elem):
         """Enhanced content cleaning for Notion exports"""
@@ -148,12 +229,18 @@ class NotionBlogTransformer:
             'script',
             'style',
             '.notion-presence',
-            '.notion-overlay-container'
+            '.notion-overlay-container',
+            '.notion-help-button',
+            '.notion-comments-button',
         ]
         
+        removed_count = 0
         for selector in notion_junk_selectors:
             for elem in content.select(selector):
                 elem.decompose()
+                removed_count += 1
+        
+        self.debug_print(f"Removed {removed_count} junk elements")
         
         # Clean up class attributes (remove Notion-specific classes but preserve structure)
         for elem in content.find_all(class_=True):
@@ -173,12 +260,17 @@ class NotionBlogTransformer:
         
         # Clean up other Notion-specific attributes
         notion_attrs = ['data-block-id', 'data-table-id', 'data-collection-id', 
-                       'data-page-links', 'spellcheck', 'placeholder', 'contenteditable']
+                       'data-page-links', 'spellcheck', 'placeholder', 'contenteditable',
+                       'data-block-type', 'data-content-editable-leaf']
         
+        attrs_removed = 0
         for elem in content.find_all():
             for attr in notion_attrs:
                 if attr in elem.attrs:
                     del elem.attrs[attr]
+                    attrs_removed += 1
+        
+        self.debug_print(f"Removed {attrs_removed} notion-specific attributes")
         
         # Process images
         self.process_images(content)
@@ -195,10 +287,17 @@ class NotionBlogTransformer:
         # Wrap images in figure tags for proper styling
         self.wrap_images_in_figures(content)
         
-        return str(content).replace(str(content.find()), '').strip() if content.find() else str(content)
+        # Extract only the inner content, not the wrapper
+        if content.find():
+            # Get the content inside the wrapper element
+            inner_content = ''.join(str(child) for child in content.children)
+            return inner_content
+        else:
+            return str(content)
     
     def process_images(self, content):
         """Process and clean image elements"""
+        images_processed = 0
         for img in content.find_all('img'):
             src = img.get('src', '')
             
@@ -230,9 +329,14 @@ class NotionBlogTransformer:
             for attr in ['style', 'width', 'height']:
                 if attr in img.attrs:
                     del img.attrs[attr]
+            
+            images_processed += 1
+        
+        self.debug_print(f"Processed {images_processed} images")
     
     def process_links(self, content):
         """Process and clean link elements"""
+        links_processed = 0
         for link in content.find_all('a'):
             href = link.get('href', '')
             
@@ -250,28 +354,26 @@ class NotionBlogTransformer:
             for attr in ['style', 'class']:
                 if attr in link.attrs:
                     del link.attrs[attr]
+            
+            links_processed += 1
+        
+        self.debug_print(f"Processed {links_processed} links")
     
     def process_text_formatting(self, content):
         """Process text formatting elements"""
-        # Convert Notion's text formatting to standard HTML
-        notion_formatting_map = {
-            '.notion-text': None,  # Remove wrapper
-            'strong': 'strong',
-            'em': 'em',
-            'u': 'u',
-            'del': 'del',
-            's': 's',
-            'mark': 'mark'
-        }
-        
         # Remove empty formatting tags
+        empty_removed = 0
         for tag_name in ['strong', 'em', 'u', 'del', 's', 'mark']:
             for elem in content.find_all(tag_name):
                 if not elem.get_text().strip():
                     elem.unwrap()
+                    empty_removed += 1
+        
+        self.debug_print(f"Removed {empty_removed} empty formatting tags")
     
     def wrap_images_in_figures(self, content):
         """Wrap standalone images in figure tags for consistent styling"""
+        images_wrapped = 0
         for img in content.find_all('img'):
             parent = img.parent
             
@@ -284,12 +386,16 @@ class NotionBlogTransformer:
                 if not siblings_text:  # Image is standalone
                     figure = content.new_tag('figure', class_='image')
                     img.wrap(figure)
+                    images_wrapped += 1
+        
+        self.debug_print(f"Wrapped {images_wrapped} images in figures")
     
     def remove_empty_elements(self, content):
         """Remove empty elements that don't contribute to content"""
         # Elements that should be removed if empty
         removable_when_empty = ['p', 'div', 'span', 'strong', 'em', 'u']
         
+        total_removed = 0
         changed = True
         while changed:
             changed = False
@@ -298,6 +404,9 @@ class NotionBlogTransformer:
                     if not elem.get_text().strip() and not elem.find_all(['img', 'br', 'hr']):
                         elem.decompose()
                         changed = True
+                        total_removed += 1
+        
+        self.debug_print(f"Removed {total_removed} empty elements")
     
     def generate_blog_post(self, notion_data, output_path=None):
         """Generate the final blog post using the template"""
@@ -359,6 +468,7 @@ def main():
     parser.add_argument('notion_html', help='Path to Notion HTML export file')
     parser.add_argument('-o', '--output', help='Output path for the blog post')
     parser.add_argument('-t', '--template', default='blogs/blog-post-template.html', help='Path to blog template')
+    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug output')
     
     args = parser.parse_args()
     
@@ -368,7 +478,7 @@ def main():
         sys.exit(1)
     
     # Initialize transformer
-    transformer = NotionBlogTransformer(args.template)
+    transformer = NotionBlogTransformer(args.template, debug=args.debug)
     
     # Transform the blog post
     try:
@@ -384,6 +494,9 @@ def main():
         
     except Exception as e:
         print(f"Error during transformation: {e}")
+        import traceback
+        if args.debug:
+            traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":

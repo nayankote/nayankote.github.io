@@ -2,6 +2,7 @@
 """
 Notion to Blog Post Transformer
 Automatically converts Notion HTML exports to properly formatted blog posts
+Updated version with improved content cleaning and consistent styling
 """
 
 import re
@@ -26,54 +27,23 @@ class NotionBlogTransformer:
             sys.exit(1)
     
     def extract_notion_content(self, notion_html_path):
-        """Extract content from Notion HTML export"""
+        """Extract content from Notion HTML export with improved parsing"""
         try:
             with open(notion_html_path, 'r', encoding='utf-8') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
             
-            # Extract title
-            title_elem = soup.find('h1', class_='post-title')
-            if not title_elem:
-                title_elem = soup.find('h1', class_='page-title')
-            if not title_elem:
-                title_elem = soup.find('title')
-            title = title_elem.get_text().strip() if title_elem else "Untitled Blog Post"
+            # Extract title - try multiple methods
+            title = self.extract_title(soup)
             
             # Extract publish date
-            date_elem = soup.find('time')
-            if not date_elem:
-                # Look for meta tag with publish date
-                date_elem = soup.find('meta', property='article:published_time')
-                if date_elem:
-                    publish_date = date_elem.get('content')
-                else:
-                    publish_date = datetime.now().isoformat()
-            else:
-                publish_date = date_elem.get('datetime') if date_elem else datetime.now().isoformat()
-            
-            # Extract tags
-            tag_elem = soup.find('span', class_='selected-value')
-            tag_name = tag_elem.get_text().strip() if tag_elem else None
-            tag_slug = tag_name.lower().replace(' ', '-') if tag_name else None
+            publish_date = self.extract_date(soup)
             
             # Extract main content
-            content_elem = soup.find('section', class_='post-content')
-            if not content_elem:
-                content_elem = soup.find('div', class_='page-body')
-            if not content_elem:
-                content_elem = soup.find('article')
-            
-            if content_elem:
-                # Clean up the content
-                content = self.clean_notion_content(content_elem)
-            else:
-                content = "<p>Content not found</p>"
+            content = self.extract_content(soup)
             
             return {
                 'title': title,
                 'publish_date': publish_date,
-                'tag_name': tag_name,
-                'tag_slug': tag_slug,
                 'content': content
             }
             
@@ -81,101 +51,306 @@ class NotionBlogTransformer:
             print(f"Error reading Notion HTML: {e}")
             sys.exit(1)
     
+    def extract_title(self, soup):
+        """Extract title from various possible locations"""
+        # Try different selectors for title
+        title_selectors = [
+            'h1.post-title',
+            'h1.page-title', 
+            '.notion-page-title',
+            '.notion-header-title',
+            'h1',
+            'title'
+        ]
+        
+        for selector in title_selectors:
+            title_elem = soup.select_one(selector)
+            if title_elem:
+                title = title_elem.get_text().strip()
+                if title and title.lower() not in ['untitled', 'notion']:
+                    return title
+        
+        return "Untitled Blog Post"
+    
+    def extract_date(self, soup):
+        """Extract date from various possible locations"""
+        # Try to find date in various formats
+        date_selectors = [
+            'time[datetime]',
+            '.notion-created-time',
+            '.notion-last-edited-time',
+            'meta[property="article:published_time"]',
+            'meta[name="date"]'
+        ]
+        
+        for selector in date_selectors:
+            date_elem = soup.select_one(selector)
+            if date_elem:
+                date_val = date_elem.get('datetime') or date_elem.get('content') or date_elem.get_text()
+                if date_val:
+                    try:
+                        # Try to parse the date
+                        parsed_date = datetime.fromisoformat(date_val.replace('Z', '+00:00'))
+                        return parsed_date.isoformat()
+                    except:
+                        pass
+        
+        return datetime.now().isoformat()
+    
+    def extract_content(self, soup):
+        """Extract and clean main content"""
+        # Try different content selectors
+        content_selectors = [
+            '.notion-page-content',
+            '.notion-page-content-inner',
+            '.notion-selectable.notion-page-block',
+            'article',
+            '.post-content',
+            '.page-body',
+            'main',
+            'body'
+        ]
+        
+        content_elem = None
+        for selector in content_selectors:
+            content_elem = soup.select_one(selector)
+            if content_elem:
+                break
+        
+        if not content_elem:
+            # Fallback: get everything in body except nav/header/footer
+            content_elem = soup.find('body')
+            if content_elem:
+                # Remove navigation, header, footer elements
+                for tag in content_elem.find_all(['nav', 'header', 'footer']):
+                    tag.decompose()
+        
+        if content_elem:
+            return self.clean_notion_content(content_elem)
+        else:
+            return "<p>Content not found</p>"
+    
     def clean_notion_content(self, content_elem):
-        """Clean and format Notion content"""
-        # Remove Notion-specific classes and styling
-        for elem in content_elem.find_all(class_=True):
-            elem.attrs = {}
+        """Enhanced content cleaning for Notion exports"""
+        # Create a copy to avoid modifying the original
+        content = BeautifulSoup(str(content_elem), 'html.parser')
         
-        # Convert Notion images to proper format
-        for img in content_elem.find_all('img'):
-            src = img.get('src', '')
-            if src.startswith('attachment:'):
-                # Extract filename from attachment
-                filename = src.split(':')[-1]
-                img['src'] = f"/assets/img/{filename}"
-            elif not src.startswith('/'):
-                # If it's a relative path, make it absolute
-                img['src'] = f"/assets/img/{src}"
-            
-            # Add alt text if missing
-            if not img.get('alt'):
-                img['alt'] = "Blog image"
+        # Remove Notion-specific elements that shouldn't be in the blog
+        notion_junk_selectors = [
+            '.notion-topbar',
+            '.notion-sidebar',
+            '.notion-navbar',
+            '.notion-breadcrumb',
+            '.notion-collection-header',
+            '.notion-page-icon',
+            '.notion-page-cover',
+            '.notion-scroller',
+            'script',
+            'style',
+            '.notion-presence',
+            '.notion-overlay-container'
+        ]
         
-        # Convert Notion links to proper format
-        for link in content_elem.find_all('a'):
-            href = link.get('href', '')
-            if href.startswith('attachment:'):
-                # Remove attachment links
-                link.unwrap()
-            elif href.startswith('http'):
-                # External links - add target="_blank"
-                link['target'] = '_blank'
-                link['rel'] = 'noopener'
-        
-        # Clean up empty elements
-        for elem in content_elem.find_all():
-            if elem.get_text().strip() == '' and not elem.find_all():
+        for selector in notion_junk_selectors:
+            for elem in content.select(selector):
                 elem.decompose()
         
-        return str(content_elem)
+        # Clean up class attributes (remove Notion-specific classes but preserve structure)
+        for elem in content.find_all(class_=True):
+            # Keep only semantic/useful classes, remove Notion-specific ones
+            classes = elem.get('class', [])
+            clean_classes = []
+            
+            for class_name in classes:
+                if not any(notion_prefix in class_name for notion_prefix in 
+                          ['notion-', 'notion_', 'semantic-', 'toastify']):
+                    clean_classes.append(class_name)
+            
+            if clean_classes:
+                elem['class'] = clean_classes
+            else:
+                del elem['class']
+        
+        # Clean up other Notion-specific attributes
+        notion_attrs = ['data-block-id', 'data-table-id', 'data-collection-id', 
+                       'data-page-links', 'spellcheck', 'placeholder', 'contenteditable']
+        
+        for elem in content.find_all():
+            for attr in notion_attrs:
+                if attr in elem.attrs:
+                    del elem.attrs[attr]
+        
+        # Process images
+        self.process_images(content)
+        
+        # Process links
+        self.process_links(content)
+        
+        # Process text formatting
+        self.process_text_formatting(content)
+        
+        # Clean up empty elements
+        self.remove_empty_elements(content)
+        
+        # Wrap images in figure tags for proper styling
+        self.wrap_images_in_figures(content)
+        
+        return str(content).replace(str(content.find()), '').strip() if content.find() else str(content)
+    
+    def process_images(self, content):
+        """Process and clean image elements"""
+        for img in content.find_all('img'):
+            src = img.get('src', '')
+            
+            # Handle different image source formats from Notion
+            if src.startswith('attachment:'):
+                filename = src.split(':')[-1]
+                img['src'] = f"/assets/img/{filename}"
+            elif src.startswith('https://www.notion.so/image/'):
+                # Extract image URL from Notion's proxy
+                import urllib.parse
+                parsed_url = urllib.parse.urlparse(src)
+                query_params = urllib.parse.parse_qs(parsed_url.query)
+                if 'url' in query_params:
+                    actual_url = query_params['url'][0]
+                    # If it's a relative path or filename, use local assets
+                    if not actual_url.startswith('http'):
+                        img['src'] = f"/assets/img/{os.path.basename(actual_url)}"
+                    else:
+                        img['src'] = actual_url
+            elif not src.startswith(('http', '/')):
+                # Relative path - assume it's in assets
+                img['src'] = f"/assets/img/{src}"
+            
+            # Ensure alt text exists
+            if not img.get('alt'):
+                img['alt'] = "Blog image"
+            
+            # Remove Notion-specific styling
+            for attr in ['style', 'width', 'height']:
+                if attr in img.attrs:
+                    del img.attrs[attr]
+    
+    def process_links(self, content):
+        """Process and clean link elements"""
+        for link in content.find_all('a'):
+            href = link.get('href', '')
+            
+            # Remove Notion-specific link formats
+            if href.startswith('attachment:') or href.startswith('notion://'):
+                link.unwrap()
+                continue
+            
+            # Add target="_blank" for external links
+            if href.startswith('http') and 'nayankote.com' not in href:
+                link['target'] = '_blank'
+                link['rel'] = 'noopener'
+            
+            # Clean up link attributes
+            for attr in ['style', 'class']:
+                if attr in link.attrs:
+                    del link.attrs[attr]
+    
+    def process_text_formatting(self, content):
+        """Process text formatting elements"""
+        # Convert Notion's text formatting to standard HTML
+        notion_formatting_map = {
+            '.notion-text': None,  # Remove wrapper
+            'strong': 'strong',
+            'em': 'em',
+            'u': 'u',
+            'del': 'del',
+            's': 's',
+            'mark': 'mark'
+        }
+        
+        # Remove empty formatting tags
+        for tag_name in ['strong', 'em', 'u', 'del', 's', 'mark']:
+            for elem in content.find_all(tag_name):
+                if not elem.get_text().strip():
+                    elem.unwrap()
+    
+    def wrap_images_in_figures(self, content):
+        """Wrap standalone images in figure tags for consistent styling"""
+        for img in content.find_all('img'):
+            parent = img.parent
+            
+            # Only wrap if not already in a figure
+            if parent and parent.name != 'figure':
+                # Check if image is standalone (not inline with text)
+                siblings_text = ''.join(sibling.get_text() if hasattr(sibling, 'get_text') else str(sibling) 
+                                      for sibling in parent.children if sibling != img).strip()
+                
+                if not siblings_text:  # Image is standalone
+                    figure = content.new_tag('figure', class_='image')
+                    img.wrap(figure)
+    
+    def remove_empty_elements(self, content):
+        """Remove empty elements that don't contribute to content"""
+        # Elements that should be removed if empty
+        removable_when_empty = ['p', 'div', 'span', 'strong', 'em', 'u']
+        
+        changed = True
+        while changed:
+            changed = False
+            for tag_name in removable_when_empty:
+                for elem in content.find_all(tag_name):
+                    if not elem.get_text().strip() and not elem.find_all(['img', 'br', 'hr']):
+                        elem.decompose()
+                        changed = True
     
     def generate_blog_post(self, notion_data, output_path=None):
         """Generate the final blog post using the template"""
         # Format dates
         try:
             publish_date = datetime.fromisoformat(notion_data['publish_date'].replace('Z', '+00:00'))
-            publish_date_formatted = publish_date.strftime('%d %b %Y')
+            publish_date_formatted = publish_date.strftime('%B %d, %Y')
             publish_date_iso = publish_date.isoformat()
         except:
-            publish_date_formatted = "Today"
-            publish_date_iso = datetime.now().isoformat()
+            publish_date = datetime.now()
+            publish_date_formatted = publish_date.strftime('%B %d, %Y')
+            publish_date_iso = publish_date.isoformat()
         
-        # Generate canonical URL
-        title_slug = re.sub(r'[^a-zA-Z0-9\s-]', '', notion_data['title']).lower().replace(' ', '-')
-        canonical_url = f"https://nayankote.com/blogs/{title_slug}/"
+        # Generate clean title slug for filename
+        title_slug = re.sub(r'[^a-zA-Z0-9\s-]', '', notion_data['title'])
+        title_slug = re.sub(r'\s+', '-', title_slug.strip()).lower()
+        title_slug = re.sub(r'-+', '-', title_slug)  # Remove multiple dashes
         
-        # Generate description (first 160 characters of content)
-        content_text = re.sub(r'<[^>]+>', '', notion_data['content'])
-        description = content_text[:160] + "..." if len(content_text) > 160 else content_text
-        
-        # Replace template variables
+        # Replace template variables with actual content
         blog_post = self.template.replace('Your Blog Title Here', notion_data['title'])
         blog_post = blog_post.replace('Month Day, Year', publish_date_formatted)
         blog_post = blog_post.replace('<!-- Your blog content here -->', notion_data['content'])
         
-        # Tags are not used in this template, so we skip tag handling
+        # Also update the HTML title tag
+        blog_post = re.sub(r'<title>.*?</title>', f'<title>{notion_data["title"]}</title>', blog_post)
         
-        # Generate output filename
+        # Generate output filename if not provided
         if not output_path:
-            safe_title = re.sub(r'[^a-zA-Z0-9\s-]', '', notion_data['title'])
-            output_path = f"blogs/{safe_title}.html"
+            output_path = f"blogs/{title_slug}.html"
         
         return blog_post, output_path
     
     def transform(self, notion_html_path, output_path=None):
         """Main transformation function"""
-        print(f"🔄 Transforming Notion HTML: {notion_html_path}")
+        print(f"Transforming Notion HTML: {notion_html_path}")
         
         # Extract content from Notion HTML
         notion_data = self.extract_notion_content(notion_html_path)
-        print(f"✅ Extracted: {notion_data['title']}")
+        print(f"Extracted: {notion_data['title']}")
         
         # Generate blog post
         blog_post, final_output_path = self.generate_blog_post(notion_data, output_path)
         
         # Create output directory if it doesn't exist
-        os.makedirs(os.path.dirname(final_output_path), exist_ok=True)
+        os.makedirs(os.path.dirname(final_output_path) if os.path.dirname(final_output_path) else '.', exist_ok=True)
         
         # Write the transformed blog post
         with open(final_output_path, 'w', encoding='utf-8') as f:
             f.write(blog_post)
         
-        print(f"✅ Blog post generated: {final_output_path}")
-        print(f"📝 Title: {notion_data['title']}")
-        print(f"📅 Date: {notion_data['publish_date']}")
-        if notion_data['tag_name']:
-            print(f"🏷️  Tag: {notion_data['tag_name']}")
+        print(f"Blog post generated: {final_output_path}")
+        print(f"Title: {notion_data['title']}")
+        print(f"Date: {notion_data['publish_date']}")
         
         return final_output_path
 
@@ -196,15 +371,20 @@ def main():
     transformer = NotionBlogTransformer(args.template)
     
     # Transform the blog post
-    output_path = transformer.transform(args.notion_html, args.output)
-    
-    print(f"\n🎉 Transformation complete!")
-    print(f"📁 Output: {output_path}")
-    print(f"\n📋 Next steps:")
-    print(f"1. Review the generated blog post")
-    print(f"2. Update index.html files to include the new post")
-    print(f"3. Add any images to /assets/img/ folder")
-    print(f"4. Commit and push to git")
+    try:
+        output_path = transformer.transform(args.notion_html, args.output)
+        
+        print(f"\nTransformation complete!")
+        print(f"Output: {output_path}")
+        print(f"\nNext steps:")
+        print(f"1. Review the generated blog post")
+        print(f"2. Update index.html files to include the new post")
+        print(f"3. Add any images to /assets/img/ folder")
+        print(f"4. Commit and push to git")
+        
+    except Exception as e:
+        print(f"Error during transformation: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

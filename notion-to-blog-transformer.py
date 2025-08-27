@@ -242,6 +242,9 @@ class NotionBlogTransformer:
         
         self.debug_print(f"Removed {removed_count} junk elements")
         
+        # Process tables BEFORE cleaning other attributes
+        self.process_tables(content)
+        
         # Clean up class attributes (remove Notion-specific classes but preserve structure)
         for elem in content.find_all(class_=True):
             # Keep only semantic/useful classes, remove Notion-specific ones
@@ -294,6 +297,171 @@ class NotionBlogTransformer:
             return inner_content
         else:
             return str(content)
+    
+    def process_tables(self, content):
+        """Process and convert Notion tables to proper HTML tables"""
+        tables_processed = 0
+        
+        # Method 1: Look for existing table elements
+        for table in content.find_all('table'):
+            self.clean_table_attributes(table)
+            tables_processed += 1
+        
+        # Method 2: Look for Notion-specific table structures
+        notion_table_selectors = [
+            '.notion-table',
+            '.notion-collection-view-table',
+            '[data-block-type="table"]',
+            '.notion-database-view',
+        ]
+        
+        for selector in notion_table_selectors:
+            for table_container in content.select(selector):
+                converted_table = self.convert_notion_table_structure(table_container)
+                if converted_table:
+                    table_container.replace_with(converted_table)
+                    tables_processed += 1
+        
+        # Method 3: Look for text patterns that look like markdown tables
+        self.convert_markdown_tables_to_html(content)
+        
+        self.debug_print(f"Processed {tables_processed} tables")
+    
+    def clean_table_attributes(self, table):
+        """Clean up table attributes and add proper styling classes"""
+        # Remove notion-specific attributes
+        notion_table_attrs = ['data-table-id', 'data-collection-id']
+        for attr in notion_table_attrs:
+            if attr in table.attrs:
+                del table.attrs[attr]
+        
+        # Add proper table classes for styling
+        table['class'] = 'blog-table'
+        
+        # Clean up cell attributes
+        for cell in table.find_all(['td', 'th']):
+            for attr in ['style', 'data-cell-id']:
+                if attr in cell.attrs:
+                    del cell.attrs[attr]
+    
+    def convert_notion_table_structure(self, table_container):
+        """Convert Notion's table structure to standard HTML table"""
+        # This handles cases where Notion exports tables as divs
+        rows = table_container.find_all(attrs={'data-block-type': 'table_row'}) or \
+               table_container.find_all('.notion-table-row')
+        
+        if not rows:
+            return None
+        
+        # Create new table
+        new_table = table_container.new_tag('table', class_='blog-table')
+        tbody = table_container.new_tag('tbody')
+        
+        for i, row in enumerate(rows):
+            tr = table_container.new_tag('tr')
+            
+            # Find cells in this row
+            cells = row.find_all(attrs={'data-block-type': 'table_cell'}) or \
+                   row.find_all('.notion-table-cell') or \
+                   row.find_all('div')  # Fallback
+            
+            for cell in cells:
+                # First row is typically header
+                cell_tag = 'th' if i == 0 else 'td'
+                new_cell = table_container.new_tag(cell_tag)
+                new_cell.string = cell.get_text().strip()
+                tr.append(new_cell)
+            
+            if i == 0:
+                # Create thead for header row
+                thead = table_container.new_tag('thead')
+                thead.append(tr)
+                new_table.append(thead)
+            else:
+                tbody.append(tr)
+        
+        if tbody.find_all('tr'):
+            new_table.append(tbody)
+        
+        return new_table if new_table.find_all(['th', 'td']) else None
+    
+    def convert_markdown_tables_to_html(self, content):
+        """Convert markdown-style tables in text to HTML tables"""
+        # Find paragraphs or divs that contain table-like text
+        for elem in content.find_all(['p', 'div']):
+            elem_text = elem.get_text()
+            if self.is_markdown_table(elem_text):
+                table_html = self.markdown_table_to_html(elem_text)
+                if table_html:
+                    new_table = BeautifulSoup(table_html, 'html.parser')
+                    elem.replace_with(new_table.find('table'))
+    
+    def is_markdown_table(self, text):
+        """Check if text contains a markdown table pattern"""
+        lines = text.strip().split('\n')
+        if len(lines) < 3:
+            return False
+        
+        # Check for header separator line (contains --- and |)
+        for line in lines[1:3]:  # Check second or third line
+            if ('---|' in line or '|---' in line) and line.count('|') >= 2:
+                return True
+        return False
+    
+    def markdown_table_to_html(self, markdown_text):
+        """Convert markdown table text to HTML table"""
+        lines = [line.strip() for line in markdown_text.strip().split('\n') if line.strip()]
+        
+        if len(lines) < 3:
+            return None
+        
+        # Find the separator line
+        separator_idx = None
+        for i, line in enumerate(lines):
+            if ('---|' in line or '|---' in line) and line.count('|') >= 2:
+                separator_idx = i
+                break
+        
+        if separator_idx is None:
+            return None
+        
+        # Extract headers and rows
+        header_line = lines[separator_idx - 1] if separator_idx > 0 else lines[0]
+        data_lines = lines[separator_idx + 1:]
+        
+        # Parse header
+        headers = [cell.strip() for cell in header_line.split('|') if cell.strip()]
+        
+        if not headers:
+            return None
+        
+        # Build HTML table
+        html_parts = ['<table class="blog-table">']
+        
+        # Add header
+        html_parts.append('<thead>')
+        html_parts.append('<tr>')
+        for header in headers:
+            html_parts.append(f'<th>{header}</th>')
+        html_parts.append('</tr>')
+        html_parts.append('</thead>')
+        
+        # Add body
+        html_parts.append('<tbody>')
+        for line in data_lines:
+            if '|' in line:
+                cells = [cell.strip() for cell in line.split('|') if cell.strip()]
+                if len(cells) >= len(headers):  # Ensure we have enough cells
+                    html_parts.append('<tr>')
+                    # Only take as many cells as headers
+                    for i in range(len(headers)):
+                        cell = cells[i] if i < len(cells) else ''
+                        html_parts.append(f'<td>{cell}</td>')
+                    html_parts.append('</tr>')
+        html_parts.append('</tbody>')
+        html_parts.append('</table>')
+        
+        return ''.join(html_parts)
     
     def process_images(self, content):
         """Process and clean image elements"""
@@ -433,11 +601,76 @@ class NotionBlogTransformer:
         # Also update the HTML title tag
         blog_post = re.sub(r'<title>.*?</title>', f'<title>{notion_data["title"]}</title>', blog_post)
         
+        # Add table CSS if tables are present
+        if '<table' in notion_data['content']:
+            blog_post = self.add_table_css(blog_post)
+        
         # Generate output filename if not provided
         if not output_path:
             output_path = f"blogs/{title_slug}.html"
         
         return blog_post, output_path
+    
+    def add_table_css(self, blog_post):
+        """Add CSS styling for tables if not already present"""
+        table_css = """
+        <style>
+        .blog-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .blog-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e0e0e0;
+            color: #333;
+        }
+        
+        .blog-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        
+        .blog-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .blog-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-table {
+                font-size: 12px;
+            }
+            
+            .blog-table th,
+            .blog-table td {
+                padding: 8px 12px;
+            }
+        }
+        </style>
+        """
+        
+        # Insert table CSS before closing head tag
+        if '</head>' in blog_post:
+            blog_post = blog_post.replace('</head>', f'{table_css}</head>')
+        else:
+            # If no head tag, add it after the opening html tag
+            blog_post = blog_post.replace('<html>', f'<html><head>{table_css}</head>')
+        
+        return blog_post
     
     def transform(self, notion_html_path, output_path=None):
         """Main transformation function"""

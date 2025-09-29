@@ -394,6 +394,24 @@
 	<script type="text/javascript" src="/assets/js/script.js?v=2aae365934"></script>
 
 	<script>
+		// Override script.js theme toggle to make our button work
+		document.addEventListener('DOMContentLoaded', function() {
+			const themeToggle = document.getElementById('theme-toggle');
+			if (themeToggle) {
+				themeToggle.addEventListener('click', function(e) {
+					e.preventDefault();
+					const htmlEl = document.documentElement;
+					const current = htmlEl.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+					const newTheme = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
+					htmlEl.classList.remove('theme-dark', 'theme-light');
+					htmlEl.classList.add(newTheme);
+					localStorage.setItem('attila_theme', newTheme);
+				});
+			}
+		});
+	</script>
+
+	<script>
   $(document).ready(function () {
 		var post = $('.post-content');
 		// Responsive videos with fitVids
@@ -424,7 +442,7 @@
 </script>
 
 
-	
+
 
 </body>
 </html>

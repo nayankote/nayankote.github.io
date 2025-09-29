@@ -306,7 +306,7 @@
 			}
 			document.addEventListener('DOMContentLoaded', function() {
 				setTheme(getPreferredTheme());
-				const themeToggle = document.querySelector('.js-theme');
+            const themeToggle = document.getElementById('theme-toggle');
 				if (themeToggle) {
 					themeToggle.addEventListener('click', function(e) {
 						e.preventDefault();
@@ -325,7 +325,7 @@
                 <li class="nav-blogs active"><a href="/blogs/">Blogs</a></li>
                 <li class="nav-projects"><a href="/projects/">Projects</a></li>
             </ul>
-            <a class="js-theme" href="#" aria-label="Toggle theme" style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--color-accent);border-radius:16px;color:var(--color-nav-text);text-decoration:none">Toggle</a>
+            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme" style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--color-accent);border-radius:16px;color:var(--color-nav-text);text-decoration:none">Toggle</a>
         </nav>
     </div>
     <div class="homepage-container">

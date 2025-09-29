@@ -15,21 +15,15 @@
 			var siteUrl = 'https://nayankote.com';
 	</script>
 
-	<script>
-			var localTheme = localStorage.getItem('attila_theme');
-			switch (localTheme) {
-					case 'dark':
-							document.documentElement.classList.add('theme-dark');
-							break;
-					case 'light':
-							document.documentElement.classList.add('theme-light');
-							break;
-					default:
-							break;
-			}
-	</script>
+    <script>
+            var localTheme = localStorage.getItem('attila_theme');
+            var themeClass = 'theme-light';
+            if (localTheme === 'dark' || localTheme === 'theme-dark') themeClass = 'theme-dark';
+            if (localTheme === 'light' || localTheme === 'theme-light') themeClass = 'theme-light';
+            document.documentElement.classList.add(themeClass);
+    </script>
 
-		<script>localStorage.setItem('attila_theme', 'system');</script>
+		<!-- Removed forcing system theme to allow explicit light default -->
 
 			<style>
 				.theme-dark:root {
@@ -350,8 +344,9 @@
         }
         function getPreferredTheme() {
             const stored = localStorage.getItem('attila_theme');
-            if (stored) return stored;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+            if (stored === 'dark' || stored === 'theme-dark') return 'theme-dark';
+            if (stored === 'light' || stored === 'theme-light') return 'theme-light';
+            return 'theme-light';
         }
         document.addEventListener('DOMContentLoaded', function() {
             setTheme(getPreferredTheme());

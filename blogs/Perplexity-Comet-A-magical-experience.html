@@ -165,8 +165,9 @@
         }
         function getPreferredTheme() {
             const stored = localStorage.getItem('attila_theme');
-            if (stored) return stored;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+            if (stored === 'dark' || stored === 'theme-dark') return 'theme-dark';
+            if (stored === 'light' || stored === 'theme-light') return 'theme-light';
+            return 'theme-light';
         }
         document.addEventListener('DOMContentLoaded', function() {
             setTheme(getPreferredTheme());

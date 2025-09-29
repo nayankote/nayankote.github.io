@@ -31,7 +31,7 @@
 
 
 
-		<script>localStorage.setItem('attila_theme', 'system');</script>
+		<!-- Removed forcing system theme to allow explicit light default -->
 
 			<style>
 				.theme-dark:root {
@@ -292,29 +292,30 @@
             }
         }
     </style>
-    <script>
-        function setTheme(theme) {
-            document.documentElement.classList.remove('theme-dark', 'theme-light');
-            document.documentElement.classList.add(theme);
-            localStorage.setItem('attila_theme', theme);
-        }
-        function getPreferredTheme() {
-            const stored = localStorage.getItem('attila_theme');
-            if (stored) return stored;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            setTheme(getPreferredTheme());
-            const themeToggle = document.querySelector('.js-theme');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
-                    setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
-                });
-            }
-        });
-    </script>
+	<script>
+			function setTheme(theme) {
+				document.documentElement.classList.remove('theme-dark', 'theme-light');
+				document.documentElement.classList.add(theme);
+				localStorage.setItem('attila_theme', theme);
+			}
+			function getPreferredTheme() {
+				const stored = localStorage.getItem('attila_theme');
+				if (stored === 'dark' || stored === 'theme-dark') return 'theme-dark';
+				if (stored === 'light' || stored === 'theme-light') return 'theme-light';
+				return 'theme-light';
+			}
+			document.addEventListener('DOMContentLoaded', function() {
+				setTheme(getPreferredTheme());
+				const themeToggle = document.querySelector('.js-theme');
+				if (themeToggle) {
+					themeToggle.addEventListener('click', function(e) {
+						e.preventDefault();
+						const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+						setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
+					});
+				}
+			});
+		</script>
 </head>
 <body>
     <div class="nav-header">

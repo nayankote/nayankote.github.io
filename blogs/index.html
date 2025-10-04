@@ -262,9 +262,13 @@
             padding: 0;
         }
         .blog-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             margin-bottom: 18px;
             padding: 12px 0;
             border-bottom: 1px solid #eee;
+            gap: 20px;
         }
         .blog-item:last-child {
             border-bottom: none;
@@ -272,13 +276,15 @@
         .blog-date {
             color: var(--color-accent);
             font-size: 1em;
-            margin-right: 12px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         .blog-title {
             color: var(--color-text);
             text-decoration: none;
             font-weight: 400;
             font-family: 'Libre Baskerville', serif;
+            flex-grow: 1;
         }
         .blog-title:hover {
             color: var(--color-accent);
@@ -343,16 +349,16 @@
             <h2>Blogs</h2>
             <ul class="blog-list">
                 <li class="blog-item">
-                    <span class="blog-date">August 27, 2025:</span>
                     <a href="/blogs/The-fictitious-world-of-TAM-SAM-SOM.html" class="blog-title">The Fictitions World of TAM, SAM, SOM</a>
+                    <span class="blog-date">Aug 2025</span>
                 </li>
                 <li class="blog-item">
-                    <span class="blog-date">August 16, 2025:</span>
                     <a href="/blogs/Perplexity-Comet-A-magical-experience.html" class="blog-title">Perplexity Comet: A magical experience</a>
+                    <span class="blog-date">Aug 2025</span>
                 </li>
                 <li class="blog-item">
-                    <span class="blog-date">July 20, 2025:</span>
                     <a href="/blogs/why-am-i-starting-a-blog.html" class="blog-title">Why am I starting a blog?</a>
+                    <span class="blog-date">Jul 2025</span>
                 </li>
             </ul>
         </div>

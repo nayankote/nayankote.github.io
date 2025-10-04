@@ -147,21 +147,12 @@
 
     <!-- Custom styles for the new homepage design -->
     <style>
-        :root {
+        html, :root {
             --color-bg: #fff;
             --color-text: #181818;
-            --color-accent: #4a5568; /* neutral blue-gray */
+            --color-accent: #4a5568;
             --color-nav-bg: #fff;
             --color-nav-text: #181818;
-        }
-        @media (prefers-color-scheme: dark) {
-            html.theme-dark {
-                --color-bg: #181818;
-                --color-text: #fff;
-                --color-accent: #a0aec0;
-                --color-nav-bg: #181818;
-                --color-nav-text: #fff;
-            }
         }
         html.theme-dark {
             --color-bg: #181818;
@@ -286,9 +277,13 @@
             padding: 0;
         }
         .blog-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             margin-bottom: 18px;
             padding: 12px 0;
             border-bottom: 1px solid #eee;
+            gap: 20px;
         }
         .blog-item:last-child {
             border-bottom: none;
@@ -296,13 +291,15 @@
         .blog-date {
             color: var(--color-accent);
             font-size: 1em;
-            margin-right: 12px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         .blog-title {
             color: var(--color-text);
             text-decoration: none;
             font-weight: 400;
             font-family: 'Libre Baskerville', serif;
+            flex-grow: 1;
         }
         .blog-title:hover {
             color: var(--color-accent);
@@ -424,16 +421,16 @@
 					<h2>Blogs</h2>
 					<ul class="blog-list">
                         <li class="blog-item">
-                            <span class="blog-date">August 27, 2025:</span>
                             <a href="/blogs/The-fictitious-world-of-TAM-SAM-SOM.html" class="blog-title">The Fictitions World of TAM, SAM, SOM</a>
+                            <span class="blog-date">Aug 2025</span>
                         </li>
 						<li class="blog-item">
-							<span class="blog-date">August 16, 2025:</span>
 							<a href="/blogs/Perplexity-Comet-A-magical-experience.html" class="blog-title">Perplexity Comet: A magical experience</a>
+							<span class="blog-date">Aug 2025</span>
 						</li>
 						<li class="blog-item">
-							<span class="blog-date">July 20, 2025:</span>
 							<a href="/blogs/why-am-i-starting-a-blog.html" class="blog-title">Why am I starting a blog?</a>
+							<span class="blog-date">Jul 2025</span>
 						</li>
 					</ul>
 				</div>
@@ -452,25 +449,6 @@
 
 	</div>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=2aae365934"></script>
-
-	<script>
-		// Override script.js theme toggle to make our button work
-		document.addEventListener('DOMContentLoaded', function() {
-			const themeToggle = document.getElementById('theme-toggle');
-			if (themeToggle) {
-				themeToggle.addEventListener('click', function(e) {
-					e.preventDefault();
-					const htmlEl = document.documentElement;
-					const current = htmlEl.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
-					const newTheme = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
-					htmlEl.classList.remove('theme-dark', 'theme-light');
-					htmlEl.classList.add(newTheme);
-					localStorage.setItem('attila_theme', newTheme);
-				});
-			}
-		});
-	</script>
 
 </body>
 </html>

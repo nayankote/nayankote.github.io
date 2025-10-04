@@ -171,21 +171,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2aae365934" />
     <style>
-        :root {
+        html, :root {
             --color-bg: #fff;
             --color-text: #181818;
             --color-accent: #4a5568;
             --color-nav-bg: #fff;
             --color-nav-text: #181818;
-        }
-        @media (prefers-color-scheme: dark) {
-            html.theme-dark {
-                --color-bg: #181818;
-                --color-text: #fff;
-                --color-accent: #a0aec0;
-                --color-nav-bg: #181818;
-                --color-nav-text: #fff;
-            }
         }
         html.theme-dark {
             --color-bg: #181818;
@@ -389,25 +380,6 @@
 		</section>
 	</div>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=2aae365934"></script>
-
-	<script>
-		// Override script.js theme toggle to make our button work
-		document.addEventListener('DOMContentLoaded', function() {
-			const themeToggle = document.getElementById('theme-toggle');
-			if (themeToggle) {
-				themeToggle.addEventListener('click', function(e) {
-					e.preventDefault();
-					const htmlEl = document.documentElement;
-					const current = htmlEl.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
-					const newTheme = current === 'theme-dark' ? 'theme-light' : 'theme-dark';
-					htmlEl.classList.remove('theme-dark', 'theme-light');
-					htmlEl.classList.add(newTheme);
-					localStorage.setItem('attila_theme', newTheme);
-				});
-			}
-		});
-	</script>
 
 	<script>
   $(document).ready(function () {

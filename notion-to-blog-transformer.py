@@ -258,6 +258,10 @@ class NotionBlogTransformer:
             '.notion-overlay-container',
             '.notion-help-button',
             '.notion-comments-button',
+            'header',  # Contains duplicate title and properties
+            '.page-title', # Duplicate title
+            '.property-row', # Notion properties table rows
+
         ]
         
         removed_count = 0

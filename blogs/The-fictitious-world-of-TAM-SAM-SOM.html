@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -14,6 +15,7 @@
             --color-nav-bg: #fff;
             --color-nav-text: #181818;
         }
+
         @media (prefers-color-scheme: dark) {
             :root {
                 --color-bg: #181818;
@@ -23,6 +25,7 @@
                 --color-nav-text: #fff;
             }
         }
+
         html.theme-dark {
             --color-bg: #181818;
             --color-text: #fff;
@@ -30,6 +33,7 @@
             --color-nav-bg: #181818;
             --color-nav-text: #fff;
         }
+
         html.theme-light {
             --color-bg: #fff;
             --color-text: #181818;
@@ -37,33 +41,41 @@
             --color-nav-bg: #fff;
             --color-nav-text: #181818;
         }
+
         body {
             background: var(--color-bg);
             color: var(--color-text);
-            font-size: 1.35em;
+            font-size: 1.2em;
+            /* Reduced from 1.35em */
             font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
             margin: 0;
         }
+
         .homepage-container {
-            max-width: 900px;
+            max-width: 720px;
+            /* Reduced from 900px */
             margin: 0 auto;
             padding: 80px 32px 0 32px;
         }
+
         .nav-header {
             background: var(--color-nav-bg);
             color: var(--color-nav-text);
             padding: 0 32px;
             box-sizing: border-box;
         }
+
         .nav-wrapper ul {
             margin: 0;
             padding: 0;
             display: flex;
             gap: 32px;
         }
+
         .nav-wrapper ul li {
             list-style: none;
         }
+
         .nav-wrapper ul li a {
             color: var(--color-nav-text);
             font-weight: 600;
@@ -71,6 +83,7 @@
             font-size: 1.1em;
             padding: 0.5em 0.2em;
         }
+
         .nav-wrapper {
             display: flex;
             align-items: center;
@@ -79,26 +92,31 @@
             margin: 0 auto;
             padding: 0;
         }
+
         .nav-search {
             color: var(--color-nav-text);
         }
+
         .blog-content-container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 32px 48px 32px;
         }
+
         .blog-title-main {
             font-size: 2em;
             font-weight: 700;
             color: var(--color-accent);
             margin-bottom: 24px;
         }
+
         .blog-date-main {
             color: var(--color-accent);
             font-size: 1em;
             margin-bottom: 32px;
             display: block;
         }
+
         .back-button {
             display: inline-block;
             margin-bottom: 32px;
@@ -108,24 +126,29 @@
             font-size: 0.9em;
             transition: color 0.2s;
         }
+
         .back-button:hover {
             color: var(--color-accent);
         }
+
         /* CONSISTENT CONTENT STYLING - CRITICAL FOR UNIFORMITY */
         .blog-content-container p {
             margin-bottom: 1.2em;
             line-height: 1.6;
             font-family: 'Libre Baskerville', serif;
         }
+
         .blog-content-container ul,
         .blog-content-container ol {
             margin-left: 1.5em;
             margin-bottom: 1.2em;
             font-family: 'Libre Baskerville', serif;
         }
+
         .blog-content-container li {
             margin-bottom: 0.5em;
         }
+
         .blog-content-container h1,
         .blog-content-container h2,
         .blog-content-container h3,
@@ -136,14 +159,17 @@
             margin-bottom: 1em;
             color: var(--color-text);
         }
+
         .blog-content-container h2 {
             font-size: 1.5em;
             font-weight: 600;
         }
+
         .blog-content-container h3 {
             font-size: 1.3em;
             font-weight: 600;
         }
+
         /* Blockquote styling */
         .blog-content-container blockquote {
             border-left: 4px solid var(--color-accent);
@@ -153,32 +179,38 @@
             background: rgba(74, 85, 104, 0.05);
             font-style: italic;
         }
+
         /* Dark mode blockquote adjustment */
         html.theme-dark .blog-content-container blockquote {
             background: rgba(160, 174, 192, 0.1);
         }
+
         /* Image styling */
         .blog-content-container figure,
         .blog-content-container .image {
             margin: 2em 0;
             text-align: center;
         }
+
         .blog-content-container figure img,
         .blog-content-container .image img,
         .blog-content-container img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         /* Link styling */
         .blog-content-container a {
             color: var(--color-accent);
             text-decoration: underline;
         }
+
         .blog-content-container a:hover {
             text-decoration: none;
         }
+
         /* Code styling */
         .blog-content-container code {
             background: rgba(74, 85, 104, 0.1);
@@ -187,9 +219,11 @@
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             font-size: 0.9em;
         }
+
         html.theme-dark .blog-content-container code {
             background: rgba(160, 174, 192, 0.2);
         }
+
         .blog-content-container pre {
             background: rgba(74, 85, 104, 0.05);
             padding: 1em;
@@ -197,15 +231,22 @@
             overflow-x: auto;
             margin: 1.5em 0;
         }
+
         html.theme-dark .blog-content-container pre {
             background: rgba(160, 174, 192, 0.1);
         }
+
         .blog-content-container pre code {
             background: none;
             padding: 0;
         }
+
         @media (max-width: 900px) {
-            .homepage-container, .nav-header, .nav-wrapper, .blog-content-container {
+
+            .homepage-container,
+            .nav-header,
+            .nav-wrapper,
+            .blog-content-container {
                 max-width: 100%;
                 padding: 0 12px 48px 12px;
             }
@@ -223,11 +264,11 @@
             if (stored === 'light' || stored === 'theme-light') return 'theme-light';
             return 'theme-light';
         }
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             setTheme(getPreferredTheme());
             const themeToggle = document.getElementById('theme-toggle');
             if (themeToggle) {
-                themeToggle.addEventListener('click', function(e) {
+                themeToggle.addEventListener('click', function (e) {
                     e.preventDefault();
                     const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
                     setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
@@ -236,7 +277,7 @@
         });
     </script>
 
-        <style>
+    <style>
         .blog-table {
             width: 100%;
             border-collapse: collapse;
@@ -245,9 +286,9 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .blog-table th {
             background-color: #f8f9fa;
             font-weight: 600;
@@ -256,34 +297,35 @@
             border-bottom: 2px solid #e0e0e0;
             color: #333;
         }
-        
+
         .blog-table td {
             padding: 12px 16px;
             border-bottom: 1px solid #e0e0e0;
             vertical-align: top;
             line-height: 1.5;
         }
-        
+
         .blog-table tr:last-child td {
             border-bottom: none;
         }
-        
+
         .blog-table tr:hover {
             background-color: #f8f9fa;
         }
-        
+
         @media (max-width: 768px) {
             .blog-table {
                 font-size: 12px;
             }
-            
+
             .blog-table th,
             .blog-table td {
                 padding: 8px 12px;
             }
         }
-        </style>
-        </head>
+    </style>
+</head>
+
 <body>
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
@@ -292,8 +334,10 @@
                 <li class="nav-blogs active"><a href="/blogs/">Blogs</a></li>
                 <li class="nav-projects"><a href="/projects/">Projects</a></li>
             </ul>
-            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme" style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--color-accent);border-radius:20px;color:var(--color-nav-text);text-decoration:none;font-size:0.9em;transition:all 0.2s ease">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme"
+                style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--color-accent);border-radius:20px;color:var(--color-nav-text);text-decoration:none;font-size:0.9em;transition:all 0.2s ease">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="5"></circle>
                     <line x1="12" y1="1" x2="12" y2="3"></line>
                     <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -308,8 +352,19 @@
         </nav>
         <div class="nav-wrapper-control">
             <div class="inner">
-                <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 19H22.5V17H1.5V19ZM1.5 13H22.5V11H1.5V13ZM1.5 5V7H22.5V5H1.5Z" fill="currentColor"/></svg></i> Menu</a>
-                <a class="nav-search" title="Search" aria-label="Search" role="button" data-ghost-search><i class="icon icon-search" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.2148 18.3361C14.7436 19.3838 12.9437 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 12.9437 19.3838 14.7436 18.3361 16.2148L23.1213 21L21 23.1213L16.2148 18.3361ZM11 17.25C14.4518 17.25 17.25 14.4518 17.25 11C17.25 7.54822 14.4518 4.75 11 4.75C7.54822 4.75 4.75 7.54822 4.75 11C4.75 14.4518 7.54822 17.25 11 17.25Z" fill="currentColor"/></svg></i></a>
+                <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"><svg width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M1.5 19H22.5V17H1.5V19ZM1.5 13H22.5V11H1.5V13ZM1.5 5V7H22.5V5H1.5Z"
+                                fill="currentColor" />
+                        </svg></i> Menu</a>
+                <a class="nav-search" title="Search" aria-label="Search" role="button" data-ghost-search><i
+                        class="icon icon-search" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M16.2148 18.3361C14.7436 19.3838 12.9437 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 12.9437 19.3838 14.7436 18.3361 16.2148L23.1213 21L21 23.1213L16.2148 18.3361ZM11 17.25C14.4518 17.25 17.25 14.4518 17.25 11C17.25 7.54822 14.4518 4.75 11 4.75C7.54822 4.75 4.75 7.54822 4.75 11C4.75 14.4518 7.54822 17.25 11 17.25Z"
+                                fill="currentColor" />
+                        </svg></i></a>
             </div>
         </div>
     </div>
@@ -318,15 +373,152 @@
             <a href="/blogs/" class="back-button">← Back to Blogs</a>
             <h1 class="blog-title-main">The fictitious world of TAM, SAM, SOM</h1>
             <span class="blog-date-main">August 27, 2025</span>
-            <article class="page sans" id="25a01a3a-1382-809f-8e8a-f90f4ccd092b"><div class="page-body"><p id="25a01a3a-1382-8096-b2d1-cb2d145a991d">Every founder has that one slide that investors typically skim past - the TAM slide. Owing to my job in the early-stage team at Accel, I have the privilege of reading ~10 pitch decks every week from companies building in AI, defense, robotics, manufacturing, etc. One page that every deck has is a market slide with, typically, three concentric circles depicting the TAM (Target Addressable Market), SAM (Serviceable Addressable Market) and SOM (Serviceable Obtainable Market). This slide is an almost instant skip. It tells investors <em>nearly</em> nothing, yet it is one of the most critical slides in a pitch deck. Here are a few examples of TAM slides that leave readers with more questions than before: </p><table class="blog-table" id="25c01a3a-1382-8088-9068-e1a3b4bfe46e"><thead class="simple-table-header"><tr id="25c01a3a-1382-8015-9861-c03ac9f5a5fc"><th class="simple-table-header-color simple-table-header" id="~_~I">Slide</th><th class="simple-table-header-color simple-table-header" id="&lt;^{~">Unanswered questions</th></tr></thead><tbody><tr id="25c01a3a-1382-80ef-ba97-f759fda61fde"><td id="~_~I">We are solving for a $20B component manufacturing TAM, $4B geo defined SAM and $200M SOM achievable over the next 5 years</td><td id="&lt;^{~">- Who are you including in the $20B TAM? Pointing to a market research report that throws out this number is lazy work.<br/>- Why is your solution only applicable to a certain geo? If somebody else with your skillset moved to your location, can they replicate this solution?<br/>- Why have you assumed 5% adoption in 5 years? Why is not 1% or 50%?<br/>- Who are you solving for? Who is your Ideal Customer Profile (ICP)?</td></tr><tr id="25c01a3a-1382-80a4-9f44-c8622bb5492d"><td id="~_~I">Slide: We are operating in $150B autonomy market, in which we are solving for $30B of warehouse autonomy</td><td id="&lt;^{~">- How did you come up with $150B of autonomy spend?<br/>- What does warehouse autonomy mean? Which category within warehouse autonomy are you solving for?</td></tr></tbody></table><p id="25a01a3a-1382-8020-b000-d060d6b012c8">Early stage companies typically operate in one of two markets:</p><ul class="bulleted-list" id="25a01a3a-1382-8006-a2de-c0391ef264d6"><li style="list-style-type:disc">Targeted niche in large, existing markets (e.g., AI co-pilot for SEC reporting)</li></ul><ul class="bulleted-list" id="25a01a3a-1382-800f-a5d1-cdb9926901a9"><li style="list-style-type:disc">Creating a new market (e.g., Creating apps and websites chatting with AI)</li></ul><p id="25a01a3a-1382-8087-8e32-cf1c217fa485">All startups begin with a targeted niche ICP (Ideal Customer Profile), solving a deep pain-point for a select audience. That ICP dictates their market size which is simply:</p><p id="25c01a3a-1382-80f9-b11e-e22ca5045093"><em>Number of units (people, machines, factories) that qualify as ICP x the average ticket price. </em></p><p id="25c01a3a-1382-80fc-b9de-d4027a22cd29">This lends itself naturally to a bottoms-up approach of sizing this market - my submission is that <em>all </em>market sizes should be bottoms-up. </p><p id="25a01a3a-1382-80b9-8490-c6e5977ea92c">A great TAM slide is less about precision and large numbers, and more about clarity of thought and narrative capability. For investors, TAM is a filter, i.e., is this a few $Bs market allowing a company, with reasonable assumptions, to achieve few $100Ms of revenue? Does this product expand the market significantly? If this startup dominates this niche, do geo or category expansion levers exist?</p><p id="25c01a3a-1382-809b-b3ad-e6ec80d0ac9b">Critically, It provides the founder with a chance to showcase their ability to identify a sizable use-case where their team can have an outsized impact. Here's an example of a good TAM slide in bullet points (<em>Note: use-case and numbers are representative</em>):</p><table class="blog-table" id="25b01a3a-1382-8016-a355-cc989fb11968"><thead class="simple-table-header"><tr id="25b01a3a-1382-8086-b21f-c8e82fbd979a"><th class="simple-table-header-color simple-table-header" id="&lt;A}n">Message</th><th class="simple-table-header-color simple-table-header" id="&lt;m&lt;f">Take-away</th></tr></thead><tbody><tr id="25b01a3a-1382-8005-8845-d29ce81feaf3"><td id="&lt;A}n">We are building the autonomy stack for warehouse forklifts for large retailers in North America ($2B)</td><td id="&lt;m&lt;f">Tells the investor that you are targeting a select use-case and that it sizable </td></tr><tr id="25b01a3a-1382-8049-928f-c6a6f2b2eb80"><td id="&lt;A}n">Large retailers in North American own 10K forklifts running 24/7, spending ~$200K a year on machine operators per forklift </td><td id="&lt;m&lt;f">Explains the rationale behind the size of the niche → 10K forklifts x $200K annual operator spend = $2B</td></tr><tr id="25b01a3a-1382-8059-b87d-e7c5715dbe00"><td id="&lt;A}n">Autonomy for warehouse forklifts is a $8B market globally, $4B in North America growing at a 12% CAGR over the next 5 years</td><td id="&lt;m&lt;f">Shows that TAM expansion levers exist (geo expansion)</td></tr><tr id="25b01a3a-1382-808e-8ce1-d6961a7e6c8b"><td id="&lt;A}n">In the long term, we will expand to other warehouse automation categories such as AMRs, palette loaders, etc. expanding our addressable market to $10B</td><td id="&lt;m&lt;f">Shows that TAM expansion levers exist (category expansion)</td></tr></tbody></table><p id="25b01a3a-1382-800d-90a5-d72ffe91f5dc">Category creating companies have it tougher - their ICP doesn't exist yet. A table-top cooking robot does not have an existing user-base, most of their customers will be net-new to the category. In these cases, it rests upon the founder to make rational, bold assumptions on adoption. Defining the ICP as "households with working adults between the ages of 30-45 with HH income &gt;$100K" lacks specificity. A sharper approach might be: </p><p id="25c01a3a-1382-8040-a5d6-ebd01796fd4c"><em>There are 30-40K private chefs in the US catering to the top 1% of households (~1M households with annual income &gt;$630K). We enable the next 7M affluent households ($250K+ annual income with two working individuals) have the private chef experience.TAM in this case would be 7M households X $1K per device = $7B (Note: numbers are placeholders).</em></p><p id="25c01a3a-1382-8074-88dc-cff5bc3c293c">Some category-creating consumer tech companies don't even bother talking about TAM (e.g., see Swiggy's first ever pitch deck <a href="https://www.seedtoscale.com/podcast/inside-swiggys-first-ever-pitch-deck-with-sriharsha-majety" rel="noopener" target="_blank">here</a>). When drastic changes in user behavior are emerging, everything is imaginative. Founders just need investors willing to take the same leaps of faith.</p><p id="25c01a3a-1382-806e-9f3a-d55ee691a8f6">Great TAM slides aren't just about big numbers, they land with clarity of thought and focus. If your TAM slide doesn't circle back to your core ICP, you've lost the room.</p><p style="margin-top: 48px; color: var(--color-accent); font-size: 0.9em;"><strong>Tags:</strong> Investing</p></div></article>
+            <article class="page sans" id="25a01a3a-1382-809f-8e8a-f90f4ccd092b">
+                <div class="page-body">
+                    <p id="25a01a3a-1382-8096-b2d1-cb2d145a991d">Every founder has that one slide that investors
+                        typically skim past - the TAM slide. Owing to my job in the early-stage team at Accel, I have
+                        the privilege of reading ~10 pitch decks every week from companies building in AI, defense,
+                        robotics, manufacturing, etc. One page that every deck has is a market slide with, typically,
+                        three concentric circles depicting the TAM (Target Addressable Market), SAM (Serviceable
+                        Addressable Market) and SOM (Serviceable Obtainable Market). This slide is an almost instant
+                        skip. It tells investors <em>nearly</em> nothing, yet it is one of the most critical slides in a
+                        pitch deck. Here are a few examples of TAM slides that leave readers with more questions than
+                        before: </p>
+                    <table class="blog-table" id="25c01a3a-1382-8088-9068-e1a3b4bfe46e">
+                        <thead class="simple-table-header">
+                            <tr id="25c01a3a-1382-8015-9861-c03ac9f5a5fc">
+                                <th class="simple-table-header-color simple-table-header" id="~_~I">Slide</th>
+                                <th class="simple-table-header-color simple-table-header" id="&lt;^{~">Unanswered
+                                    questions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="25c01a3a-1382-80ef-ba97-f759fda61fde">
+                                <td id="~_~I">We are solving for a $20B component manufacturing TAM, $4B geo defined SAM
+                                    and $200M SOM achievable over the next 5 years</td>
+                                <td id="&lt;^{~">- Who are you including in the $20B TAM? Pointing to a market research
+                                    report that throws out this number is lazy work.<br />- Why is your solution only
+                                    applicable to a certain geo? If somebody else with your skillset moved to your
+                                    location, can they replicate this solution?<br />- Why have you assumed 5% adoption
+                                    in 5 years? Why is not 1% or 50%?<br />- Who are you solving for? Who is your Ideal
+                                    Customer Profile (ICP)?</td>
+                            </tr>
+                            <tr id="25c01a3a-1382-80a4-9f44-c8622bb5492d">
+                                <td id="~_~I">Slide: We are operating in $150B autonomy market, in which we are solving
+                                    for $30B of warehouse autonomy</td>
+                                <td id="&lt;^{~">- How did you come up with $150B of autonomy spend?<br />- What does
+                                    warehouse autonomy mean? Which category within warehouse autonomy are you solving
+                                    for?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p id="25a01a3a-1382-8020-b000-d060d6b012c8">Early stage companies typically operate in one of two
+                        markets:</p>
+                    <ul class="bulleted-list" id="25a01a3a-1382-8006-a2de-c0391ef264d6">
+                        <li style="list-style-type:disc">Targeted niche in large, existing markets (e.g., AI co-pilot
+                            for SEC reporting)</li>
+                    </ul>
+                    <ul class="bulleted-list" id="25a01a3a-1382-800f-a5d1-cdb9926901a9">
+                        <li style="list-style-type:disc">Creating a new market (e.g., Creating apps and websites
+                            chatting with AI)</li>
+                    </ul>
+                    <p id="25a01a3a-1382-8087-8e32-cf1c217fa485">All startups begin with a targeted niche ICP (Ideal
+                        Customer Profile), solving a deep pain-point for a select audience. That ICP dictates their
+                        market size which is simply:</p>
+                    <p id="25c01a3a-1382-80f9-b11e-e22ca5045093"><em>Number of units (people, machines, factories) that
+                            qualify as ICP x the average ticket price. </em></p>
+                    <p id="25c01a3a-1382-80fc-b9de-d4027a22cd29">This lends itself naturally to a bottoms-up approach of
+                        sizing this market - my submission is that <em>all </em>market sizes should be bottoms-up. </p>
+                    <p id="25a01a3a-1382-80b9-8490-c6e5977ea92c">A great TAM slide is less about precision and large
+                        numbers, and more about clarity of thought and narrative capability. For investors, TAM is a
+                        filter, i.e., is this a few $Bs market allowing a company, with reasonable assumptions, to
+                        achieve few $100Ms of revenue? Does this product expand the market significantly? If this
+                        startup dominates this niche, do geo or category expansion levers exist?</p>
+                    <p id="25c01a3a-1382-809b-b3ad-e6ec80d0ac9b">Critically, It provides the founder with a chance to
+                        showcase their ability to identify a sizable use-case where their team can have an outsized
+                        impact. Here's an example of a good TAM slide in bullet points (<em>Note: use-case and numbers
+                            are representative</em>):</p>
+                    <table class="blog-table" id="25b01a3a-1382-8016-a355-cc989fb11968">
+                        <thead class="simple-table-header">
+                            <tr id="25b01a3a-1382-8086-b21f-c8e82fbd979a">
+                                <th class="simple-table-header-color simple-table-header" id="&lt;A}n">Message</th>
+                                <th class="simple-table-header-color simple-table-header" id="&lt;m&lt;f">Take-away</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="25b01a3a-1382-8005-8845-d29ce81feaf3">
+                                <td id="&lt;A}n">We are building the autonomy stack for warehouse forklifts for large
+                                    retailers in North America ($2B)</td>
+                                <td id="&lt;m&lt;f">Tells the investor that you are targeting a select use-case and that
+                                    it sizable </td>
+                            </tr>
+                            <tr id="25b01a3a-1382-8049-928f-c6a6f2b2eb80">
+                                <td id="&lt;A}n">Large retailers in North American own 10K forklifts running 24/7,
+                                    spending ~$200K a year on machine operators per forklift </td>
+                                <td id="&lt;m&lt;f">Explains the rationale behind the size of the niche → 10K forklifts
+                                    x $200K annual operator spend = $2B</td>
+                            </tr>
+                            <tr id="25b01a3a-1382-8059-b87d-e7c5715dbe00">
+                                <td id="&lt;A}n">Autonomy for warehouse forklifts is a $8B market globally, $4B in North
+                                    America growing at a 12% CAGR over the next 5 years</td>
+                                <td id="&lt;m&lt;f">Shows that TAM expansion levers exist (geo expansion)</td>
+                            </tr>
+                            <tr id="25b01a3a-1382-808e-8ce1-d6961a7e6c8b">
+                                <td id="&lt;A}n">In the long term, we will expand to other warehouse automation
+                                    categories such as AMRs, palette loaders, etc. expanding our addressable market to
+                                    $10B</td>
+                                <td id="&lt;m&lt;f">Shows that TAM expansion levers exist (category expansion)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p id="25b01a3a-1382-800d-90a5-d72ffe91f5dc">Category creating companies have it tougher - their ICP
+                        doesn't exist yet. A table-top cooking robot does not have an existing user-base, most of their
+                        customers will be net-new to the category. In these cases, it rests upon the founder to make
+                        rational, bold assumptions on adoption. Defining the ICP as "households with working adults
+                        between the ages of 30-45 with HH income &gt;$100K" lacks specificity. A sharper approach might
+                        be: </p>
+                    <p id="25c01a3a-1382-8040-a5d6-ebd01796fd4c"><em>There are 30-40K private chefs in the US catering
+                            to the top 1% of households (~1M households with annual income &gt;$630K). We enable the
+                            next 7M affluent households ($250K+ annual income with two working individuals) have the
+                            private chef experience.TAM in this case would be 7M households X $1K per device = $7B
+                            (Note: numbers are placeholders).</em></p>
+                    <p id="25c01a3a-1382-8074-88dc-cff5bc3c293c">Some category-creating consumer tech companies don't
+                        even bother talking about TAM (e.g., see Swiggy's first ever pitch deck <a
+                            href="https://www.seedtoscale.com/podcast/inside-swiggys-first-ever-pitch-deck-with-sriharsha-majety"
+                            rel="noopener" target="_blank">here</a>). When drastic changes in user behavior are
+                        emerging, everything is imaginative. Founders just need investors willing to take the same leaps
+                        of faith.</p>
+                    <p id="25c01a3a-1382-806e-9f3a-d55ee691a8f6">Great TAM slides aren't just about big numbers, they
+                        land with clarity of thought and focus. If your TAM slide doesn't circle back to your core ICP,
+                        you've lost the room.</p>
+                    <p style="margin-top: 48px; color: var(--color-accent); font-size: 0.9em;"><strong>Tags:</strong>
+                        Investing</p>
+                </div>
+            </article>
         </div>
     </div>
     <nav class="nav-wrapper" aria-label="Footer" style="justify-content: center;">
         <div style="display: flex; gap: 32px; justify-content: center; align-items: center; padding: 32px 0;">
-            <a href="https://github.com/nayankote" target="_blank" rel="noopener" aria-label="GitHub" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.987 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.593 1.028 2.686 0 3.847-2.337 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg></a>
-            <a href="https://www.linkedin.com/in/nayankote/" target="_blank" rel="noopener" aria-label="LinkedIn" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.601v5.595z"/></svg></a>
-            <a href="https://twitter.com/nayankote" target="_blank" rel="noopener" aria-label="Twitter" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 0 0-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.058 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636A10.012 10.012 0 0 0 24 4.557z"/></svg></a>
+            <a href="https://github.com/nayankote" target="_blank" rel="noopener" aria-label="GitHub"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.987 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.593 1.028 2.686 0 3.847-2.337 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
+                </svg></a>
+            <a href="https://www.linkedin.com/in/nayankote/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.601v5.595z" />
+                </svg></a>
+            <a href="https://twitter.com/nayankote" target="_blank" rel="noopener" aria-label="Twitter"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 0 0-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.058 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636A10.012 10.012 0 0 0 24 4.557z" />
+                </svg></a>
         </div>
     </nav>
 </body>
+
 </html>

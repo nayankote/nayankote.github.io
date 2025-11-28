@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>No brownie points</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2aae365934" />
+    <style>
+        :root {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #181818;
+                --color-text: #fff;
+                --color-accent: #a0aec0;
+                --color-nav-bg: #181818;
+                --color-nav-text: #fff;
+            }
+        }
+        html.theme-dark {
+            --color-bg: #181818;
+            --color-text: #fff;
+            --color-accent: #a0aec0;
+            --color-nav-bg: #181818;
+            --color-nav-text: #fff;
+        }
+        html.theme-light {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-size: 1.35em;
+            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        .homepage-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 32px 0 32px;
+        }
+        .nav-header {
+            background: var(--color-nav-bg);
+            color: var(--color-nav-text);
+            padding: 0 32px;
+            box-sizing: border-box;
+        }
+        .nav-wrapper ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 32px;
+        }
+        .nav-wrapper ul li {
+            list-style: none;
+        }
+        .nav-wrapper ul li a {
+            color: var(--color-nav-text);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 0.5em 0.2em;
+        }
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .nav-search {
+            color: var(--color-nav-text);
+        }
+        .blog-content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 32px 48px 32px;
+        }
+        .blog-title-main {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 24px;
+        }
+        .blog-date-main {
+            color: var(--color-accent);
+            font-size: 1em;
+            margin-bottom: 32px;
+            display: block;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 32px;
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9em;
+            transition: color 0.2s;
+        }
+        .back-button:hover {
+            color: var(--color-accent);
+        }
+        /* CONSISTENT CONTENT STYLING - CRITICAL FOR UNIFORMITY */
+        .blog-content-container p {
+            margin-bottom: 1.2em;
+            line-height: 1.6;
+            font-family: 'Libre Baskerville', serif;
+        }
+        .blog-content-container ul,
+        .blog-content-container ol {
+            margin-left: 1.5em;
+            margin-bottom: 1.2em;
+            font-family: 'Libre Baskerville', serif;
+        }
+        .blog-content-container li {
+            margin-bottom: 0.5em;
+        }
+        .blog-content-container h1,
+        .blog-content-container h2,
+        .blog-content-container h3,
+        .blog-content-container h4,
+        .blog-content-container h5,
+        .blog-content-container h6 {
+            margin-top: 2em;
+            margin-bottom: 1em;
+            color: var(--color-text);
+        }
+        .blog-content-container h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        .blog-content-container h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        /* Blockquote styling */
+        .blog-content-container blockquote {
+            border-left: 4px solid var(--color-accent);
+            margin: 1.5em 0;
+            padding: 0.5em 1em;
+            color: var(--color-accent);
+            background: rgba(74, 85, 104, 0.05);
+            font-style: italic;
+        }
+        /* Dark mode blockquote adjustment */
+        html.theme-dark .blog-content-container blockquote {
+            background: rgba(160, 174, 192, 0.1);
+        }
+        /* Image styling */
+        .blog-content-container figure,
+        .blog-content-container .image {
+            margin: 2em 0;
+            text-align: center;
+        }
+        .blog-content-container figure img,
+        .blog-content-container .image img,
+        .blog-content-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        /* Link styling */
+        .blog-content-container a {
+            color: var(--color-accent);
+            text-decoration: underline;
+        }
+        .blog-content-container a:hover {
+            text-decoration: none;
+        }
+        /* Code styling */
+        .blog-content-container code {
+            background: rgba(74, 85, 104, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        html.theme-dark .blog-content-container code {
+            background: rgba(160, 174, 192, 0.2);
+        }
+        .blog-content-container pre {
+            background: rgba(74, 85, 104, 0.05);
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+        html.theme-dark .blog-content-container pre {
+            background: rgba(160, 174, 192, 0.1);
+        }
+        .blog-content-container pre code {
+            background: none;
+            padding: 0;
+        }
+        @media (max-width: 900px) {
+            .homepage-container, .nav-header, .nav-wrapper, .blog-content-container {
+                max-width: 100%;
+                padding: 0 12px 48px 12px;
+            }
+        }
+    </style>
+    <script>
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
+        }
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTheme(getPreferredTheme());
+            const themeToggle = document.querySelector('.js-theme');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+                    setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
+                });
+            }
+        });
+    </script>
+
+        <style>
+        .blog-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .blog-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e0e0e0;
+            color: #333;
+        }
+        
+        .blog-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        
+        .blog-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .blog-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-table {
+                font-size: 12px;
+            }
+            
+            .blog-table th,
+            .blog-table td {
+                padding: 8px 12px;
+            }
+        }
+        </style>
+        </head>
+<body>
+    <div class="nav-header">
+        <nav class="nav-wrapper" aria-label="Main">
+            <ul>
+                <li class="nav-home"><a href="/">Home</a></li>
+                <li class="nav-blogs active"><a href="/blogs/">Blogs</a></li>
+                <li class="nav-projects"><a href="/projects/">Projects</a></li>
+            </ul>
+            <a class="nav-search" title="Search" aria-label="Search" data-ghost-search><i class="icon icon-search" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.2148 18.3361C14.7436 19.3838 12.9437 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 12.9437 19.3838 14.7436 18.3361 16.2148L23.1213 21L21 23.1213L16.2148 18.3361ZM11 17.25C14.4518 17.25 17.25 14.4518 17.25 11C17.25 7.54822 14.4518 4.75 11 4.75C7.54822 4.75 4.75 7.54822 4.75 11C4.75 14.4518 7.54822 17.25 11 17.25Z" fill="currentColor"/></svg></i></a>
+        </nav>
+        <div class="nav-wrapper-control">
+            <div class="inner">
+                <a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 19H22.5V17H1.5V19ZM1.5 13H22.5V11H1.5V13ZM1.5 5V7H22.5V5H1.5Z" fill="currentColor"/></svg></i> Menu</a>
+                <a class="nav-search" title="Search" aria-label="Search" role="button" data-ghost-search><i class="icon icon-search" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.2148 18.3361C14.7436 19.3838 12.9437 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11C20 12.9437 19.3838 14.7436 18.3361 16.2148L23.1213 21L21 23.1213L16.2148 18.3361ZM11 17.25C14.4518 17.25 17.25 14.4518 17.25 11C17.25 7.54822 14.4518 4.75 11 4.75C7.54822 4.75 4.75 7.54822 4.75 11C4.75 14.4518 7.54822 17.25 11 17.25Z" fill="currentColor"/></svg></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="homepage-container">
+        <div class="blog-content-container">
+            <a href="/blogs/" class="back-button">← Back to Blogs</a>
+            <h1 class="blog-title-main">No brownie points</h1>
+            <span class="blog-date-main">November 28, 2025</span>
+            <article class="page sans" id="29001a3a-1382-80b9-9d11-e9d7a857d902"><header><h1 class="page-title">No brownie points</h1><table class="b l o g - t a b l e"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><figure class_="image"><img alt="Blog image" src="https://www.notion.so/icons/list_gray.svg"/></figure></span>Tag</th><td><span class="selected-value select-value-color-red">Personal</span></td></tr></tbody></table></header><div class="page-body"><p id="29001a3a-1382-8026-8fe6-d0b8139b57a6">This blog is an extension of an early (private) piece of writing of mine called The Deeksha Paradox - maybe I will make this public one day, but until then the below context should suffice: </p><blockquote id="29001a3a-1382-80fc-8ec6-d499ec18bfc4">Step 1: Eat shit, and I mean really get skull-fucked, for a short period of time to improve the odds of observing disproportionate long-term gains. <br/>Step 2: Forget you ate shit, enabling you to repeat the cycle multiple times.</blockquote><p id="29001a3a-1382-8060-a160-f67ffa1d4bb9">This is not an original thought. It has probably been written about, quoted, tweeted (X’ed?) a lot. But I wish to talk about this today as I have been through a decent amount of shit off-late, and last night’s <em>episode</em> introduced clarity. </p><p id="29001a3a-1382-80fe-86cb-e010fca08c02">Premise: Nobody gives a fuck what you’ve done in life, how far you’ve come, how you got here. Nothing. Nobody.</p><p id="29001a3a-1382-80d8-865a-cabd3017d603">Consequent 1: This is a feature of life. Embrace it before it kills you.</p><p id="29001a3a-1382-80b0-b08e-fa05b7d64b36">Consequent 2: Short-term past + long-term future = scale. </p><figure class="image" id="29001a3a-1382-807f-a11e-d409ca70e5d8"><a href="No%20brownie%20points/image.png"><figure class_="image"><img alt="Blog image" src="/assets/img/No%20brownie%20points/image.png"/></figure></a></figure><p id="29001a3a-1382-809d-8e2e-df711e8fbef3">Substantiating the premise.</p><p id="29001a3a-1382-80f1-9125-e2b8d957b349">Humans, for all their intelligence, are point-in-time creatures. History and memory have a tendency to blur our the details (specifically, the input params) and retain a select set of outcomes. Examples (Note: these have a negative bent of mind, because that’s how I feel at the moment)</p><ul class="bulleted-list" id="29001a3a-1382-80f4-b787-e47028d55819"><li style="list-style-type:disc">Work: Your manager doesn’t remember the 100s of startups you met, multiple deals done, but for the 1 you missed; your boss doesn’t care when you went home last night</li></ul><ul class="bulleted-list" id="29001a3a-1382-807f-b17d-fca053dae033"><li style="list-style-type:disc">Personal life: Your girlfriend probably doesn’t remember the multiple dates and impromptu plans you made over the last 3 months, just that you didn’t spend enough time last week. Your friends don’t remember the years spent together, they remember the call you missed</li></ul><p id="29001a3a-1382-80ed-a8d9-e1de9719cae1">In short, humans operate on short-term memory with a hazy long-term memory states formed sub-consciously as an average of spikey moments. Long-term states are hard to game, really solve for short-term memory for the people you care the most about. You do not accumulate brownie points for the small wins.</p><p id="29001a3a-1382-80c1-9b4d-c5edd91cbbc5">Consequent 1: This is a feature of life. Embrace it before it kills you.</p><p id="29001a3a-1382-80b2-9620-cfdb884a958c">This aspect of human life forces you to trim the fat of social circles and focus only on the people that matter the most (this might be the introvert in me speaking). It teaches you, over time, to graduate from sporadically caring a little bit about everyone to consistently caring about a select set of individuals you wish to lead the rest of your life with. It is mentally taxing and physically impossible to mean materially to multiple people and this is a feature, not a flaw.</p><p id="2a101a3a-1382-80f5-a849-c70029554aa4">The quicker you get comfortable with trimming the fat, the stronger your strongest links grow and quality of life improves. Trim the fat, and focus. Initiatives taken in the past with your strongest links should remain in the past, every hand is played anew, every day is an opportunity to strengthen your bond. Embrace the short-termness of life, before it kills you.</p><p id="2a101a3a-1382-80e9-9ae9-f6e1c17627c6">Consequent 2: Short-term past + long-term future = scale. </p><p id="29001a3a-1382-80d5-9973-dcde78ace544">When looking into the future and planning ahead, operate like the world is your oyster. I have been the victim of limiting my field of view for reasons such as accessibility, ease, lack of research, etc. Avoid short-term outlook like a disease. Take the entire super-set of the wildest opportunities you can think of and see which excites you the most, plan for a decade out. This is much much harder to implement than one would assume. A decade out is even more blurry than a decade in, which makes the short-term bias stronger when looking ahead. Do not fall for the pit-falls of local minima and follow your gut. But remember, cut the fat to gain long-term clarity. I will supplement this with a follow on framework on how to achieve this when I am wiser than I am today. Until then, see this.</p><p id="2a701a3a-1382-8081-9cf2-c0063af7e3a4">This applies to people and dreams.</p><figure class="image" id="2a701a3a-1382-80d7-89af-c7364202511c"><a href="No%20brownie%20points/image%201.png"><figure class_="image"><img alt="Blog image" src="/assets/img/No%20brownie%20points/image%201.png"/></figure></a></figure><p id="29001a3a-1382-809d-9592-e22ac4775b8f">There are no brownie points in life to accumulate, be intentional about the people and dreams that matter the most to you and things may turn out okay.</p></div></article>
+        </div>
+    </div>
+    <nav class="nav-wrapper" aria-label="Footer" style="justify-content: center;">
+        <div style="display: flex; gap: 32px; justify-content: center; align-items: center; padding: 32px 0;">
+            <a href="https://github.com/nayankote" target="_blank" rel="noopener" aria-label="GitHub" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.987 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.593 1.028 2.686 0 3.847-2.337 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg></a>
+            <a href="https://www.linkedin.com/in/nayankote/" target="_blank" rel="noopener" aria-label="LinkedIn" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.601v5.595z"/></svg></a>
+            <a href="https://twitter.com/nayankote" target="_blank" rel="noopener" aria-label="Twitter" style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 0 0-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.058 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636A10.012 10.012 0 0 0 24 4.557z"/></svg></a>
+        </div>
+    </nav>
+</body>
+</html>

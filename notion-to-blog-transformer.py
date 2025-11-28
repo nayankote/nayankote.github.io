@@ -35,10 +35,36 @@ class NotionBlogTransformer:
     def extract_notion_content(self, notion_html_path):
         """Extract content from Notion HTML export with improved parsing"""
         try:
-            with open(notion_html_path, 'r', encoding='utf-8') as f:
-                html_content = f.read()
-                self.debug_print(f"HTML file size: {len(html_content)} characters")
-                soup = BeautifulSoup(html_content, 'html.parser')
+            with open(notion_html_path, 'rb') as f:
+                raw_data = f.read()
+
+            # Handle zipped Notion exports (some downloads are zipped even with .html extension)
+            if raw_data.startswith(b'PK\x03\x04'):
+                from zipfile import ZipFile
+                from io import BytesIO
+
+                self.debug_print("Detected ZIP-compressed Notion export, extracting HTML.")
+                with ZipFile(BytesIO(raw_data)) as zf:
+                    html_candidates = [name for name in zf.namelist() if name.lower().endswith('.html')]
+                    if not html_candidates:
+                        raise ValueError("ZIP archive does not contain an HTML file.")
+                    # Prefer index-like filenames to match Notion exports
+                    html_candidates.sort(key=lambda n: (0 if 'index' in n.lower() else 1, len(n)))
+                    selected_html = html_candidates[0]
+                    self.debug_print(f"Using HTML file from archive: {selected_html}")
+                    raw_data = zf.read(selected_html)
+
+            try:
+                html_content = raw_data.decode('utf-8')
+            except UnicodeDecodeError as decode_error:
+                self.debug_print(f"UTF-8 decode error ({decode_error}); falling back with replacement characters.")
+                html_content = raw_data.decode('utf-8', errors='replace')
+
+            if '�' in html_content:
+                self.debug_print("Warning: some characters could not be decoded and were replaced with �.")
+
+            self.debug_print(f"HTML file size: {len(html_content)} characters")
+            soup = BeautifulSoup(html_content, 'html.parser')
             
             # Debug: Print structure
             if self.debug:

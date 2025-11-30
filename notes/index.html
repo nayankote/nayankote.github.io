@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Notes - Interactive Graph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        :root {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #181818;
+                --color-text: #fff;
+                --color-accent: #a0aec0;
+                --color-nav-bg: #181818;
+                --color-nav-text: #fff;
+            }
+        }
+
+        html.theme-dark {
+            --color-bg: #181818;
+            --color-text: #fff;
+            --color-accent: #a0aec0;
+            --color-nav-bg: #181818;
+            --color-nav-text: #fff;
+        }
+
+        html.theme-light {
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
+        }
+
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-size: 1.2em;
+            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .nav-header {
+            background: var(--color-nav-bg);
+            color: var(--color-nav-text);
+            padding: 16px 32px;
+            box-sizing: border-box;
+        }
+
+        .nav-wrapper ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 16px;
+        }
+
+        .nav-wrapper ul li {
+            list-style: none;
+        }
+
+        .nav-wrapper ul li a {
+            color: var(--color-nav-text);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95em;
+            padding: 8px 16px;
+            border: 2px solid var(--color-accent);
+            border-radius: 6px;
+            display: inline-block;
+            transition: all 0.2s ease;
+            background: transparent;
+        }
+
+        .nav-wrapper ul li a:hover {
+            background: var(--color-accent);
+            color: var(--color-bg);
+        }
+
+        .nav-wrapper ul li.active a {
+            background: var(--color-accent);
+            color: var(--color-bg);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        #graph-container {
+            width: 100vw;
+            height: calc(100vh - 80px);
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .node:hover {
+            filter: brightness(1.2);
+        }
+
+        .node circle {
+            stroke: var(--color-bg);
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 11px;
+            font-weight: 600;
+            fill: var(--color-text);
+            pointer-events: none;
+            text-anchor: middle;
+        }
+
+        .link {
+            stroke: var(--color-accent);
+            stroke-opacity: 0.3;
+            stroke-width: 1.5px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--color-bg);
+            margin: 10% auto;
+            padding: 32px;
+            border: 1px solid var(--color-accent);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        .modal-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--color-bg);
+        }
+
+        .modal-date {
+            font-size: 0.9em;
+            color: var(--color-accent);
+            margin-bottom: 16px;
+        }
+
+        .modal-text {
+            line-height: 1.6;
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        .close {
+            color: var(--color-accent);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: var(--color-text);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
+        }
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            setTheme(getPreferredTheme());
+        });
+    </script>
+</head>
+
+<body>
+    <div class="nav-header">
+        <nav class="nav-wrapper" aria-label="Main">
+            <ul>
+                <li class="nav-home"><a href="/">Home</a></li>
+                <li class="nav-blogs"><a href="/blogs/">Blogs</a></li>
+                <li class="nav-notes active"><a href="/notes/">Notes</a></li>
+                <li class="nav-projects"><a href="/projects/">Projects</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="graph-container">
+        <div class="controls">
+            <button class="control-btn" onclick="resetZoom()">Reset View</button>
+        </div>
+        <svg id="graph"></svg>
+    </div>
+
+    <!-- Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle"></div>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-tags" id="modalTags"></div>
+            <div class="modal-date" id="modalDate"></div>
+            <div class="modal-text" id="modalText"></div>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Sample notes data
+        const notes = [
+            { id: 1, title: "Morning Reflection", tags: ["personal"], date: "2025-11-28", text: "Started the day with meditation. Feeling grateful for the small moments of peace in a busy world. Need to remember to slow down more often." },
+            { id: 2, title: "Product Idea", tags: ["work", "ideas"], date: "2025-11-27", text: "What if we built a tool that helps people visualize their thoughts? Like a mind map but more interactive and beautiful. Could use D3.js for the visualization." },
+            { id: 3, title: "5K Run", tags: ["fitness"], date: "2025-11-26", text: "Completed my first 5K in under 30 minutes! Legs are sore but feeling accomplished. Consistency is key." },
+            { id: 4, title: "Team Meeting Insights", tags: ["work"], date: "2025-11-25", text: "Great discussion about user feedback today. We need to focus more on the core experience rather than adding features. Less is more." },
+            { id: 5, title: "Why I Love Coding", tags: ["work", "motivation"], date: "2025-11-24", text: "There's something magical about turning ideas into reality through code. Every bug fixed is a small victory. Every feature shipped is a step forward." },
+            { id: 6, title: "Friendship Thoughts", tags: ["personal"], date: "2025-11-23", text: "Called an old friend today. Realized how important it is to maintain connections even when life gets busy. Quality over quantity in relationships." },
+            { id: 7, title: "TIL: CSS Grid", tags: ["TIL", "work"], date: "2025-11-22", text: "Finally understood CSS Grid properly. It's so much more powerful than flexbox for complex layouts. Wish I'd learned this earlier." },
+            { id: 8, title: "Workout Motivation", tags: ["fitness", "motivation"], date: "2025-11-21", text: "Didn't feel like working out today but did it anyway. The hardest part is always starting. Once you begin, momentum takes over." },
+            { id: 9, title: "Reading Notes", tags: ["personal", "ideas"], date: "2025-11-20", text: "Finished 'Atomic Habits' - key takeaway: focus on systems, not goals. Small improvements compound over time." },
+            { id: 10, title: "API Design Thoughts", tags: ["work", "ideas"], date: "2025-11-19", text: "Good API design is like good writing - clear, concise, and predictable. Consistency matters more than cleverness." },
+            { id: 11, title: "Gratitude Practice", tags: ["personal", "motivation"], date: "2025-11-18", text: "Three things I'm grateful for today: health, meaningful work, and supportive friends. Perspective is everything." },
+            { id: 12, title: "Strength Training", tags: ["fitness"], date: "2025-11-17", text: "Progressive overload is working! Increased weights on all major lifts this week. Slow and steady progress." },
+            { id: 13, title: "TIL: D3.js Forces", tags: ["TIL", "work"], date: "2025-11-16", text: "Force-directed graphs use physics simulation to position nodes. Repulsion keeps them apart, attraction pulls connected nodes together. Beautiful!" },
+            { id: 14, title: "Weekend Plans", tags: ["personal"], date: "2025-11-15", text: "Planning to disconnect from work this weekend. Need to recharge. Maybe a hike or just reading a good book." },
+            { id: 15, title: "User Research Findings", tags: ["work"], date: "2025-11-14", text: "Users don't read instructions. They just click around until something works. Design needs to be intuitive, not just functional." },
+            { id: 16, title: "Morning Routine", tags: ["personal", "fitness"], date: "2025-11-13", text: "Established a solid morning routine: wake at 6am, exercise, cold shower, coffee, deep work. Game changer for productivity." },
+            { id: 17, title: "Innovation Thought", tags: ["ideas", "motivation"], date: "2025-11-12", text: "Innovation isn't about having big ideas. It's about executing small ideas really well. Focus on craft." },
+            { id: 18, title: "TIL: Async/Await", tags: ["TIL"], date: "2025-11-11", text: "Finally clicked how async/await makes asynchronous code readable. It's just syntactic sugar over promises but what a difference!" },
+            { id: 19, title: "Yoga Session", tags: ["fitness", "personal"], date: "2025-11-10", text: "First yoga class in months. Flexibility has decreased but mental clarity improved. Balance in all things." },
+            { id: 20, title: "Career Reflection", tags: ["work", "motivation", "personal"], date: "2025-11-09", text: "Five years into my career. Learned more from failures than successes. Grateful for every challenge that pushed me to grow." }
+        ];
+
+        // Create links between related notes (same tags)
+        const links = [];
+        for (let i = 0; i < notes.length; i++) {
+            for (let j = i + 1; j < notes.length; j++) {
+                const commonTags = notes[i].tags.filter(tag => notes[j].tags.includes(tag));
+                if (commonTags.length > 0) {
+                    links.push({
+                        source: notes[i].id,
+                        target: notes[j].id,
+                        strength: commonTags.length
+                    });
+                }
+            }
+        }
+
+        // Tag colors
+        const tagColors = {
+            "personal": "#FF6B6B",
+            "work": "#4ECDC4",
+            "fitness": "#95E1D3",
+            "motivation": "#FFD93D",
+            "ideas": "#A8E6CF",
+            "TIL": "#C7CEEA"
+        };
+
+        // Get node color based on primary tag
+        function getNodeColor(tags) {
+            return tagColors[tags[0]] || "#999";
+        }
+
+        // Setup SVG
+        const container = document.getElementById('graph-container');
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        const svg = d3.select("#graph")
+            .attr("viewBox", [0, 0, width, height]);
+
+        const g = svg.append("g");
+
+        // Add zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+
+        svg.call(zoom);
+
+        // Create force simulation
+        const simulation = d3.forceSimulation(notes)
+            .force("link", d3.forceLink(links).id(d => d.id).distance(100).strength(d => d.strength * 0.3))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(40));
+
+        // Create links
+        const link = g.append("g")
+            .selectAll("line")
+            .data(links)
+            .join("line")
+            .attr("class", "link")
+            .attr("stroke-width", d => d.strength);
+
+        // Create nodes
+        const node = g.append("g")
+            .selectAll("g")
+            .data(notes)
+            .join("g")
+            .attr("class", "node")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .on("click", (event, d) => openModal(d));
+
+        node.append("circle")
+            .attr("r", 20)
+            .attr("fill", d => getNodeColor(d.tags));
+
+        node.append("text")
+            .attr("dy", 35)
+            .text(d => d.tags[0]);
+
+        // Update positions on tick
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // Modal functions
+        function openModal(note) {
+            document.getElementById('modalTitle').textContent = note.title;
+            document.getElementById('modalDate').textContent = note.date;
+            document.getElementById('modalText').textContent = note.text;
+
+            const tagsContainer = document.getElementById('modalTags');
+            tagsContainer.innerHTML = '';
+            note.tags.forEach(tag => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'tag';
+                tagEl.textContent = tag;
+                tagEl.style.backgroundColor = tagColors[tag] || '#999';
+                tagsContainer.appendChild(tagEl);
+            });
+
+            document.getElementById('noteModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('noteModal').style.display = 'none';
+        }
+
+        function resetZoom() {
+            svg.transition().duration(750).call(
+                zoom.transform,
+                d3.zoomIdentity
+            );
+        }
+
+        // Close modal on outside click
+        window.onclick = function (event) {
+            const modal = document.getElementById('noteModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+
+</html>

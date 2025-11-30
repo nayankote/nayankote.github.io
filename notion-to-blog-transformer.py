@@ -645,15 +645,16 @@ class NotionBlogTransformer:
         """Add CSS styling for tables if not already present"""
         table_css = """
         <style>
+        /* Improved table styling */
         .blog-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
+            margin: 1.5em 0;
+            font-size: 0.9em;
+            font-family: 'Fira Sans', sans-serif;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .blog-table th {

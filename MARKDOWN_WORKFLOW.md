@@ -64,15 +64,15 @@ Open your terminal (in VS Code) and run:
 # Make sure your virtual environment is active
 source .venv/bin/activate
 
-# Run the transformer
-python markdown_transformer.py
+# Run the transformer (Input -> Output)
+python markdown_transformer.py drafts/my-new-post.md blogs/my-new-post.html
 ```
 
 This script will:
-1.  Read every `.md` file in `drafts/`.
+1.  Read the specific input file.
 2.  Convert it to HTML.
 3.  Inject it into `blogs/blog-post-template.html`.
-4.  Save the result to `blogs/`.
+4.  Save the result to the output path you specified.
 
 ## 4. Publishing
 

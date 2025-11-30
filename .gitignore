@@ -26,3 +26,6 @@ ENV/
 *.swp
 *.swo
 *~
+
+# Blog drafts (keep private)
+drafts/

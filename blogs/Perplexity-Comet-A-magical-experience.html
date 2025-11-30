@@ -98,9 +98,25 @@
         }
 
         .blog-content-container {
-            max-width: 900px;
+            max-width: 650px;
             margin: 0 auto;
             padding: 0 32px 48px 32px;
+            border: 1px solid rgba(74, 85, 104, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px rgba(74, 85, 104, 0.1),
+                0 4px 16px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(to bottom,
+                    rgba(74, 85, 104, 0.02) 0%,
+                    transparent 100%);
+        }
+
+        html.theme-dark .blog-content-container {
+            border: 1px solid rgba(160, 174, 192, 0.2);
+            box-shadow: 0 0 0 1px rgba(160, 174, 192, 0.1),
+                0 4px 16px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to bottom,
+                    rgba(160, 174, 192, 0.03) 0%,
+                    transparent 100%);
         }
 
         .blog-title-main {

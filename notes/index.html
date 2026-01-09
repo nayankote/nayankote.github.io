@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <style>
-        /* ============================================
-           EXACT HOMEPAGE COLORS
-           ============================================ */
+        /* EXACT HOMEPAGE COLORS */
         :root {
             --color-bg: #fff;
             --color-text: #181818;
@@ -44,9 +42,6 @@
             --color-nav-text: #181818;
         }
 
-        /* ============================================
-           BASE - EXACT MATCH TO HOMEPAGE
-           ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -58,19 +53,14 @@
             color: var(--color-text);
             font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
             font-size: 1.2em;
-            line-height: 1.6;
             margin: 0;
             overflow: hidden;
         }
 
-        /* ============================================
-           NAVIGATION - EXACT HOMEPAGE MATCH
-           ============================================ */
+        /* EXACT HOMEPAGE NAVIGATION */
         .nav-header {
             background: var(--color-nav-bg);
-            color: var(--color-nav-text);
             padding: 16px 32px;
-            box-sizing: border-box;
         }
 
         .nav-wrapper {
@@ -113,79 +103,36 @@
             color: var(--color-bg);
         }
 
-        /* Controls on right side */
-        .nav-controls {
-            display: flex;
-            gap: 8px;
+        /* Theme toggle - EXACT HOMEPAGE MATCH */
+        #theme-toggle {
+            margin-left: auto;
+            display: inline-flex;
             align-items: center;
-        }
-
-        .control-btn {
-            background: transparent;
-            border: 2px solid var(--color-accent);
+            gap: 8px;
+            padding: 6px 12px;
+            border: 1px solid var(--color-accent);
+            border-radius: 20px;
             color: var(--color-nav-text);
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            font-weight: 600;
-            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9em;
             transition: all 0.2s ease;
-            font-family: 'Fira Sans', sans-serif;
-        }
-
-        .control-btn:hover {
-            background: var(--color-accent);
-            color: var(--color-bg);
-        }
-
-        /* ============================================
-           FILTER PANEL
-           ============================================ */
-        #filter-panel {
-            background: var(--color-bg);
-            border-bottom: 1px solid #e5e5e5;
-            padding: 12px 0;
-        }
-
-        .filter-wrapper {
-            max-width: 650px;
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .filter-tag {
-            background: transparent;
-            border: 2px solid var(--color-accent);
-            color: var(--color-text);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.15s ease;
-            text-transform: lowercase;
-            font-family: 'Fira Sans', sans-serif;
         }
 
-        .filter-tag:hover {
+        #theme-toggle:hover {
             background: var(--color-accent);
             color: var(--color-bg);
         }
 
-        .filter-tag.active {
-            background: var(--color-accent);
-            color: var(--color-bg);
+        #theme-toggle svg {
+            transition: transform 0.3s ease;
         }
 
-        /* ============================================
-           GRAPH CONTAINER
-           ============================================ */
+        #theme-toggle:hover svg {
+            transform: rotate(20deg);
+        }
+
+        /* Graph container */
         #graph-container {
             width: 100vw;
             height: calc(100vh - 57px);
@@ -198,22 +145,14 @@
             height: 100%;
         }
 
-        /* ============================================
-           NODES & LINKS
-           ============================================ */
+        /* Nodes */
         .node {
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .node:hover circle {
-            stroke-width: 3px;
         }
 
         .node circle {
             stroke: var(--color-bg);
             stroke-width: 2px;
-            transition: all 0.2s ease;
         }
 
         .node text {
@@ -225,6 +164,7 @@
             font-family: 'Fira Sans', sans-serif;
         }
 
+        /* Links */
         .link {
             stroke: var(--color-accent);
             stroke-opacity: 0.2;
@@ -242,9 +182,7 @@
             stroke-width: 2px;
         }
 
-        /* ============================================
-           MODAL
-           ============================================ */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -254,23 +192,6 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { 
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .modal-content {
@@ -283,14 +204,11 @@
             max-width: 650px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.3s ease;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 16px;
         }
 
@@ -298,7 +216,6 @@
             font-size: 1.5em;
             font-weight: 700;
             color: var(--color-text);
-            font-family: 'Fira Sans', sans-serif;
         }
 
         .close {
@@ -306,31 +223,23 @@
             font-size: 28px;
             font-weight: 300;
             cursor: pointer;
-            line-height: 1;
-        }
-
-        .close:hover {
-            color: var(--color-text);
         }
 
         .modal-metadata {
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
         .modal-date {
             font-size: 0.9em;
             color: var(--color-accent);
             font-weight: 600;
-            font-family: 'Fira Sans', sans-serif;
         }
 
         .modal-tags {
             display: flex;
             gap: 6px;
-            flex-wrap: wrap;
         }
 
         .tag {
@@ -339,20 +248,16 @@
             font-size: 0.75em;
             font-weight: 600;
             color: white;
-            font-family: 'Fira Sans', sans-serif;
         }
 
         .modal-text {
             line-height: 1.7;
             color: var(--color-text);
             font-size: 0.95em;
-            font-family: 'Fira Sans', sans-serif;
         }
 
-        /* ============================================
-           ERROR/LOADING MESSAGES
-           ============================================ */
-        .message-container {
+        /* Messages */
+        .message {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -362,45 +267,43 @@
             padding: 40px;
         }
 
-        .message-container h3 {
+        .message h3 {
             font-size: 1.3em;
-            color: var(--color-text);
             margin-bottom: 20px;
-            font-family: 'Fira Sans', sans-serif;
         }
 
-        .message-container p {
-            color: var(--color-text);
-            line-height: 1.6;
+        .message p {
             margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Controls overlay */
+        .controls-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            background: var(--color-bg);
+            border: 2px solid var(--color-accent);
+            color: var(--color-text);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
             font-family: 'Fira Sans', sans-serif;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .message-container code {
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 0.9em;
-        }
-
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-        @media (max-width: 768px) {
-            body {
-                font-size: 1em;
-            }
-
-            .nav-wrapper {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .nav-controls {
-                width: 100%;
-                justify-content: center;
-            }
+        .control-btn:hover {
+            background: var(--color-accent);
+            color: var(--color-bg);
         }
     </style>
 
@@ -413,8 +316,9 @@
 
         function getPreferredTheme() {
             const stored = localStorage.getItem('attila_theme');
-            if (stored) return stored;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+            if (stored === 'dark' || stored === 'theme-dark') return 'theme-dark';
+            if (stored === 'light' || stored === 'theme-light') return 'theme-light';
+            return 'theme-light';
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -428,33 +332,38 @@
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/blogs/">Blogs</a></li>
-                <li class="active"><a href="/notes/">Notes</a></li>
-                <li><a href="/projects/">Projects</a></li>
+                <li class="nav-home"><a href="/"><span>Home</span></a></li>
+                <li class="nav-blogs"><a href="/blogs/"><span>Blogs</span></a></li>
+                <li class="nav-notes active"><a href="/notes/"><span>Notes</span></a></li>
+                <li class="nav-projects"><a href="/projects/"><span>Projects</span></a></li>
             </ul>
-            <div class="nav-controls">
-                <button class="control-btn" onclick="resetZoom()">Reset View</button>
-                <button class="control-btn" onclick="toggleFilters()">Filter</button>
-            </div>
+            <a id="theme-toggle" href="#" aria-label="Toggle theme" onclick="event.preventDefault(); const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light'; setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </a>
         </nav>
     </div>
 
-    <!-- Filter Panel -->
-    <div id="filter-panel" style="display: none;">
-        <div class="filter-wrapper">
-            <div class="filter-group" id="filterTags"></div>
-        </div>
-    </div>
-
-    <!-- Graph -->
+    <!-- Graph with floating controls -->
     <div id="graph-container">
-        <div id="messageContainer"></div>
+        <div class="controls-overlay">
+            <button class="control-btn" onclick="resetZoom()">Reset View</button>
+        </div>
+        <div id="message"></div>
         <svg id="graph"></svg>
     </div>
 
     <!-- Modal -->
-    <div id="noteModal" class="modal">
+    <div id="noteModal" class="modal" onclick="if(event.target===this) closeModal()">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title" id="modalTitle"></div>
@@ -470,99 +379,55 @@
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
-        // Tag colors
         const tagColors = {
-            "personal": "#ef4444",
-            "work": "#3b82f6",
-            "fitness": "#10b981",
-            "ironman": "#f59e0b",
-            "thinking": "#8b5cf6",
-            "til": "#06b6d4",
-            "startups": "#ec4899",
-            "ideas": "#14b8a6",
-            "mental-health": "#a855f7",
-            "career": "#6366f1",
-            "motivation": "#f97316"
+            "personal": "#ef4444", "work": "#3b82f6", "fitness": "#10b981",
+            "ironman": "#f59e0b", "thinking": "#8b5cf6", "til": "#06b6d4",
+            "startups": "#ec4899", "ideas": "#14b8a6", "mental-health": "#a855f7",
+            "career": "#6366f1", "motivation": "#f97316"
         };
 
         const MIN_CONNECTION_STRENGTH = 1;
         const MAX_CONNECTIONS_PER_NODE = 4;
 
-        let notes = [];
-        let links = [];
-        let simulation = null;
+        let notes = [], links = [], simulation = null;
 
-        function showMessage(type, html) {
-            const container = document.getElementById('messageContainer');
-            container.innerHTML = `<div class="message-container">${html}</div>`;
+        function showMessage(html) {
+            document.getElementById('message').innerHTML = `<div class="message">${html}</div>`;
         }
 
         async function loadNotes() {
-            showMessage('loading', '<h3>Loading notes...</h3>');
+            showMessage('<h3>Loading notes...</h3>');
             
-            // Try multiple paths
-            const paths = [
-                'notes.json',           // Same directory
-                '/notes/notes.json',    // Absolute path
-                './notes.json'          // Explicit relative
-            ];
-
-            for (const path of paths) {
-                try {
-                    console.log('Trying to load:', path);
-                    const response = await fetch(path);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        notes = data.notes || [];
-                        
-                        if (notes.length === 0) {
-                            showMessage('error', `
-                                <h3>⚠️ No notes found</h3>
-                                <p>The notes.json file is empty or has no notes.</p>
-                                <p><strong>To add notes:</strong></p>
-                                <p>1. Create a text file: <code>notes/inbox/test.txt</code></p>
-                                <p>2. Run: <code>cd notes && python notes_parser.py inbox/ -o notes.json</code></p>
-                                <p>3. Refresh this page</p>
-                            `);
-                            return;
-                        }
-                        
-                        console.log('Loaded', notes.length, 'notes from', path);
-                        links = createSmartLinks(notes);
-                        document.getElementById('messageContainer').innerHTML = '';
-                        initializeGraph();
-                        return;
-                    }
-                } catch (error) {
-                    console.log('Failed to load from', path, ':', error.message);
+            try {
+                const response = await fetch('notes.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
                 }
+                
+                const data = await response.json();
+                notes = data.notes || [];
+                
+                if (notes.length === 0) {
+                    showMessage(`
+                        <h3>⚠️ No notes found</h3>
+                        <p>Add notes to get started!</p>
+                    `);
+                    return;
+                }
+                
+                links = createSmartLinks(notes);
+                document.getElementById('message').innerHTML = '';
+                initializeGraph();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage(`
+                    <h3>⚠️ Could not load notes.json</h3>
+                    <p>Error: ${error.message}</p>
+                    <p>Check browser console (F12) for details</p>
+                `);
             }
-            
-            // If all paths failed
-            showMessage('error', `
-                <h3>⚠️ Could not find notes.json</h3>
-                <p><strong>Current page location:</strong> ${window.location.href}</p>
-                <p><strong>Looking for file at:</strong></p>
-                <p>• ${window.location.origin}/notes/notes.json</p>
-                <p style="margin-top: 20px;"><strong>To fix this:</strong></p>
-                <p>1. Make sure <code>notes.json</code> exists in your <code>notes/</code> folder</p>
-                <p>2. Check the file path is correct</p>
-                <p>3. If you just created notes, run:</p>
-                <p><code>cd notes && python notes_parser.py inbox/ -o notes.json</code></p>
-                <p style="margin-top: 20px;"><strong>For testing, create:</strong></p>
-                <p><code>notes/notes.json</code> with:</p>
-                <pre style="text-align: left; background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 0.8em;">
-{
-  "notes": [{
-    "id": 1,
-    "title": "Test",
-    "tags": ["personal"],
-    "date": "2025-01-09",
-    "text": "Test note"
-  }]
-}</pre>
-            `);
         }
 
         function createSmartLinks(notes) {
@@ -643,21 +508,11 @@
                 .join("g")
                 .attr("class", "node")
                 .call(d3.drag()
-                    .on("start", (e, d) => {
-                        if (!e.active) simulation.alphaTarget(0.3).restart();
-                        d.fx = d.x; d.fy = d.y;
-                    })
+                    .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
                     .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
-                    .on("end", (e, d) => {
-                        if (!e.active) simulation.alphaTarget(0);
-                        d.fx = null; d.fy = null;
-                    }))
+                    .on("end", (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }))
                 .on("click", (e, d) => openModal(d))
-                .on("mouseenter", (e, d) => {
-                    link.classed("highlighted", l => 
-                        l.source.id === d.id || l.target.id === d.id
-                    );
-                })
+                .on("mouseenter", (e, d) => link.classed("highlighted", l => l.source.id === d.id || l.target.id === d.id))
                 .on("mouseleave", () => link.classed("highlighted", false));
 
             node.append("circle")
@@ -669,11 +524,8 @@
                 .text(d => d.tags[0]);
 
             simulation.on("tick", () => {
-                link
-                    .attr("x1", d => d.source.x)
-                    .attr("y1", d => d.source.y)
-                    .attr("x2", d => d.target.x)
-                    .attr("y2", d => d.target.y);
+                link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
                 node.attr("transform", d => `translate(${d.x},${d.y})`);
             });
 
@@ -708,60 +560,6 @@
                 window.svg.transition().duration(750).call(window.zoom.transform, d3.zoomIdentity);
             }
         }
-
-        let activeFilters = new Set();
-
-        function toggleFilters() {
-            const panel = document.getElementById('filter-panel');
-            const isHidden = panel.style.display === 'none';
-            panel.style.display = isHidden ? 'block' : 'none';
-            
-            const graphContainer = document.getElementById('graph-container');
-            graphContainer.style.height = isHidden ? 'calc(100vh - 115px)' : 'calc(100vh - 57px)';
-            
-            if (isHidden && document.getElementById('filterTags').children.length === 0) {
-                const allTags = new Set();
-                notes.forEach(note => note.tags.forEach(tag => allTags.add(tag)));
-                
-                const filterContainer = document.getElementById('filterTags');
-                allTags.forEach(tag => {
-                    const btn = document.createElement('button');
-                    btn.className = 'filter-tag';
-                    btn.textContent = tag;
-                    btn.onclick = () => {
-                        if (activeFilters.has(tag)) {
-                            activeFilters.delete(tag);
-                            btn.classList.remove('active');
-                        } else {
-                            activeFilters.add(tag);
-                            btn.classList.add('active');
-                        }
-                        
-                        const nodes = d3.selectAll('.node');
-                        const links = d3.selectAll('.link');
-                        
-                        if (activeFilters.size === 0) {
-                            nodes.style("opacity", 1);
-                            links.style("opacity", 0.2);
-                        } else {
-                            nodes.style("opacity", d => 
-                                d.tags.some(t => activeFilters.has(t)) ? 1 : 0.1
-                            );
-                            links.style("opacity", d => {
-                                const sourceMatch = d.source.tags.some(t => activeFilters.has(t));
-                                const targetMatch = d.target.tags.some(t => activeFilters.has(t));
-                                return (sourceMatch && targetMatch) ? 0.2 : 0.02;
-                            });
-                        }
-                    };
-                    filterContainer.appendChild(btn);
-                });
-            }
-        }
-
-        window.onclick = (e) => {
-            if (e.target.id === 'noteModal') closeModal();
-        };
 
         loadNotes();
     </script>

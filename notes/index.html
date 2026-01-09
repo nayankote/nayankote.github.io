@@ -8,7 +8,7 @@
     
     <style>
         /* ============================================
-           COLORS - EXACT MATCH TO HOMEPAGE
+           EXACT HOMEPAGE COLORS
            ============================================ */
         :root {
             --color-bg: #fff;
@@ -16,18 +16,6 @@
             --color-accent: #4a5568;
             --color-nav-bg: #fff;
             --color-nav-text: #181818;
-            --node-personal: #ef4444;
-            --node-work: #3b82f6;
-            --node-fitness: #10b981;
-            --node-ironman: #f59e0b;
-            --node-thinking: #8b5cf6;
-            --node-til: #06b6d4;
-            --node-startups: #ec4899;
-            --node-ideas: #14b8a6;
-            --node-mental-health: #a855f7;
-            --node-career: #6366f1;
-            --node-motivation: #f97316;
-            --node-default: #64748b;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -57,7 +45,7 @@
         }
 
         /* ============================================
-           BASE STYLES - EXACT MATCH TO HOMEPAGE
+           BASE - EXACT MATCH TO HOMEPAGE
            ============================================ */
         * {
             margin: 0;
@@ -76,7 +64,7 @@
         }
 
         /* ============================================
-           NAVIGATION - EXACT MATCH TO HOMEPAGE
+           NAVIGATION - EXACT HOMEPAGE MATCH
            ============================================ */
         .nav-header {
             background: var(--color-nav-bg);
@@ -125,10 +113,8 @@
             color: var(--color-bg);
         }
 
-        /* ============================================
-           CONTROLS - MATCH NAV STYLING
-           ============================================ */
-        .controls {
+        /* Controls on right side */
+        .nav-controls {
             display: flex;
             gap: 8px;
             align-items: center;
@@ -138,7 +124,7 @@
             background: transparent;
             border: 2px solid var(--color-accent);
             color: var(--color-nav-text);
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 6px;
             font-size: 0.85em;
             font-weight: 600;
@@ -157,7 +143,7 @@
            ============================================ */
         #filter-panel {
             background: var(--color-bg);
-            border-bottom: 1px solid var(--color-accent);
+            border-bottom: 1px solid #e5e5e5;
             padding: 12px 0;
         }
 
@@ -175,7 +161,7 @@
 
         .filter-tag {
             background: transparent;
-            border: 1px solid var(--color-accent);
+            border: 2px solid var(--color-accent);
             color: var(--color-text);
             padding: 4px 10px;
             border-radius: 4px;
@@ -184,6 +170,7 @@
             cursor: pointer;
             transition: all 0.15s ease;
             text-transform: lowercase;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .filter-tag:hover {
@@ -201,7 +188,7 @@
            ============================================ */
         #graph-container {
             width: 100vw;
-            height: calc(100vh - 53px); /* Subtract nav height */
+            height: calc(100vh - 57px);
             position: relative;
             background: var(--color-bg);
         }
@@ -212,7 +199,7 @@
         }
 
         /* ============================================
-           NODES & LINKS - TIGHTER GRAPH
+           NODES & LINKS
            ============================================ */
         .node {
             cursor: pointer;
@@ -221,7 +208,6 @@
 
         .node:hover circle {
             stroke-width: 3px;
-            filter: brightness(1.1);
         }
 
         .node circle {
@@ -243,22 +229,21 @@
             stroke: var(--color-accent);
             stroke-opacity: 0.2;
             stroke-width: 1px;
-            transition: all 0.2s ease;
         }
 
         .link.strong {
             stroke-width: 2px;
-            stroke-opacity: 0.4;
+            stroke-opacity: 0.3;
         }
 
         .link.highlighted {
             stroke: var(--color-accent);
-            stroke-opacity: 0.6;
+            stroke-opacity: 0.5;
             stroke-width: 2px;
         }
 
         /* ============================================
-           MODAL - MATCH HOMEPAGE STYLE
+           MODAL
            ============================================ */
         .modal {
             display: none;
@@ -295,7 +280,7 @@
             border: 2px solid var(--color-accent);
             border-radius: 6px;
             width: 90%;
-            max-width: 650px; /* Match homepage width */
+            max-width: 650px;
             max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -307,14 +292,13 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 16px;
-            gap: 16px;
         }
 
         .modal-title {
             font-size: 1.5em;
             font-weight: 700;
             color: var(--color-text);
-            line-height: 1.3;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .close {
@@ -322,9 +306,7 @@
             font-size: 28px;
             font-weight: 300;
             cursor: pointer;
-            transition: color 0.2s ease;
             line-height: 1;
-            flex-shrink: 0;
         }
 
         .close:hover {
@@ -333,7 +315,6 @@
 
         .modal-metadata {
             display: flex;
-            align-items: center;
             gap: 12px;
             margin-bottom: 20px;
             flex-wrap: wrap;
@@ -343,6 +324,7 @@
             font-size: 0.9em;
             color: var(--color-accent);
             font-weight: 600;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .modal-tags {
@@ -357,88 +339,71 @@
             font-size: 0.75em;
             font-weight: 600;
             color: white;
-            text-transform: lowercase;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .modal-text {
             line-height: 1.7;
             color: var(--color-text);
             font-size: 0.95em;
-            font-family: 'Fira Sans', serif;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         /* ============================================
-           LOADING STATE
+           ERROR/LOADING MESSAGES
            ============================================ */
-        .loading-message {
+        .message-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .message-container h3 {
+            font-size: 1.3em;
             color: var(--color-text);
-            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-family: 'Fira Sans', sans-serif;
         }
 
-        .error-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: var(--color-accent);
-            max-width: 500px;
-            padding: 20px;
+        .message-container p {
+            color: var(--color-text);
+            line-height: 1.6;
+            margin: 10px 0;
+            font-family: 'Fira Sans', sans-serif;
         }
 
-        /* ============================================
-           SCROLLBAR
-           ============================================ */
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: var(--color-bg);
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--color-accent);
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: var(--color-text);
+        .message-container code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
         }
 
         /* ============================================
            RESPONSIVE
            ============================================ */
         @media (max-width: 768px) {
+            body {
+                font-size: 1em;
+            }
+
             .nav-wrapper {
                 flex-direction: column;
                 gap: 12px;
             }
 
-            .controls {
+            .nav-controls {
                 width: 100%;
                 justify-content: center;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 24px;
-                margin: 4vh auto;
-            }
-
-            body {
-                font-size: 1em;
             }
         }
     </style>
 
-    <!-- Theme toggle script (matches homepage) -->
     <script>
         function setTheme(theme) {
             document.documentElement.classList.remove('theme-dark', 'theme-light');
@@ -449,7 +414,6 @@
         function getPreferredTheme() {
             const stored = localStorage.getItem('attila_theme');
             if (stored) return stored;
-            // Default to light mode (homepage behavior)
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
         }
 
@@ -460,7 +424,7 @@
 </head>
 
 <body>
-    <!-- Navigation (matches homepage exactly) -->
+    <!-- EXACT HOMEPAGE NAVIGATION -->
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
             <ul>
@@ -469,27 +433,27 @@
                 <li class="active"><a href="/notes/">Notes</a></li>
                 <li><a href="/projects/">Projects</a></li>
             </ul>
-            <div class="controls">
+            <div class="nav-controls">
                 <button class="control-btn" onclick="resetZoom()">Reset View</button>
                 <button class="control-btn" onclick="toggleFilters()">Filter</button>
             </div>
         </nav>
     </div>
 
-    <!-- Filter panel (initially hidden) -->
+    <!-- Filter Panel -->
     <div id="filter-panel" style="display: none;">
         <div class="filter-wrapper">
             <div class="filter-group" id="filterTags"></div>
         </div>
     </div>
 
-    <!-- Graph Container -->
+    <!-- Graph -->
     <div id="graph-container">
-        <div class="loading-message" id="loadingMessage">Loading notes...</div>
+        <div id="messageContainer"></div>
         <svg id="graph"></svg>
     </div>
 
-    <!-- Modal for note details -->
+    <!-- Modal -->
     <div id="noteModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -504,14 +468,8 @@
         </div>
     </div>
 
-    <!-- D3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    
     <script>
-        // ============================================
-        // CONFIGURATION
-        // ============================================
-        
         // Tag colors
         const tagColors = {
             "personal": "#ef4444",
@@ -527,87 +485,103 @@
             "motivation": "#f97316"
         };
 
-        // Connection settings (TIGHTER GRAPH)
         const MIN_CONNECTION_STRENGTH = 1;
         const MAX_CONNECTIONS_PER_NODE = 4;
 
-        // ============================================
-        // LOAD NOTES FROM JSON
-        // ============================================
-        
         let notes = [];
         let links = [];
         let simulation = null;
 
+        function showMessage(type, html) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="message-container">${html}</div>`;
+        }
+
         async function loadNotes() {
-            try {
-                const response = await fetch('notes.json');
-                if (!response.ok) {
-                    throw new Error('Could not load notes.json');
+            showMessage('loading', '<h3>Loading notes...</h3>');
+            
+            // Try multiple paths
+            const paths = [
+                'notes.json',           // Same directory
+                '/notes/notes.json',    // Absolute path
+                './notes.json'          // Explicit relative
+            ];
+
+            for (const path of paths) {
+                try {
+                    console.log('Trying to load:', path);
+                    const response = await fetch(path);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        notes = data.notes || [];
+                        
+                        if (notes.length === 0) {
+                            showMessage('error', `
+                                <h3>⚠️ No notes found</h3>
+                                <p>The notes.json file is empty or has no notes.</p>
+                                <p><strong>To add notes:</strong></p>
+                                <p>1. Create a text file: <code>notes/inbox/test.txt</code></p>
+                                <p>2. Run: <code>cd notes && python notes_parser.py inbox/ -o notes.json</code></p>
+                                <p>3. Refresh this page</p>
+                            `);
+                            return;
+                        }
+                        
+                        console.log('Loaded', notes.length, 'notes from', path);
+                        links = createSmartLinks(notes);
+                        document.getElementById('messageContainer').innerHTML = '';
+                        initializeGraph();
+                        return;
+                    }
+                } catch (error) {
+                    console.log('Failed to load from', path, ':', error.message);
                 }
-                const data = await response.json();
-                notes = data.notes || [];
-                
-                if (notes.length === 0) {
-                    showError('No notes found. Add some notes to get started!');
-                    return;
-                }
-                
-                // Create smart links
-                links = createSmartLinks(notes);
-                
-                // Hide loading message
-                document.getElementById('loadingMessage').style.display = 'none';
-                
-                // Initialize graph
-                initializeGraph();
-                
-            } catch (error) {
-                console.error('Error loading notes:', error);
-                showError('Could not load notes. Make sure notes.json exists in the notes/ folder.');
             }
+            
+            // If all paths failed
+            showMessage('error', `
+                <h3>⚠️ Could not find notes.json</h3>
+                <p><strong>Current page location:</strong> ${window.location.href}</p>
+                <p><strong>Looking for file at:</strong></p>
+                <p>• ${window.location.origin}/notes/notes.json</p>
+                <p style="margin-top: 20px;"><strong>To fix this:</strong></p>
+                <p>1. Make sure <code>notes.json</code> exists in your <code>notes/</code> folder</p>
+                <p>2. Check the file path is correct</p>
+                <p>3. If you just created notes, run:</p>
+                <p><code>cd notes && python notes_parser.py inbox/ -o notes.json</code></p>
+                <p style="margin-top: 20px;"><strong>For testing, create:</strong></p>
+                <p><code>notes/notes.json</code> with:</p>
+                <pre style="text-align: left; background: #f5f5f5; padding: 10px; border-radius: 4px; font-size: 0.8em;">
+{
+  "notes": [{
+    "id": 1,
+    "title": "Test",
+    "tags": ["personal"],
+    "date": "2025-01-09",
+    "text": "Test note"
+  }]
+}</pre>
+            `);
         }
 
-        function showError(message) {
-            document.getElementById('loadingMessage').style.display = 'none';
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.innerHTML = `
-                <h3>⚠️ ${message}</h3>
-                <p style="margin-top: 16px; font-size: 0.9em;">
-                    To add notes:<br>
-                    1. Create notes/inbox/test.txt<br>
-                    2. Run: python notes_parser.py inbox/ -o notes.json<br>
-                    3. Refresh this page
-                </p>
-            `;
-            document.getElementById('graph-container').appendChild(errorDiv);
-        }
-
-        // ============================================
-        // SMART CONNECTION LOGIC (TIGHTER)
-        // ============================================
-        
         function createSmartLinks(notes) {
             const potentialLinks = [];
             
             for (let i = 0; i < notes.length; i++) {
                 for (let j = i + 1; j < notes.length; j++) {
                     const commonTags = notes[i].tags.filter(tag => notes[j].tags.includes(tag));
-                    const strength = commonTags.length;
-                    
-                    if (strength >= MIN_CONNECTION_STRENGTH) {
+                    if (commonTags.length >= MIN_CONNECTION_STRENGTH) {
                         potentialLinks.push({
                             source: notes[i].id,
                             target: notes[j].id,
-                            strength: strength
+                            strength: commonTags.length
                         });
                     }
                 }
             }
             
             potentialLinks.sort((a, b) => b.strength - a.strength);
-            
             const connectionsCount = {};
             notes.forEach(note => connectionsCount[note.id] = 0);
             
@@ -624,10 +598,6 @@
             return selectedLinks;
         }
 
-        // ============================================
-        // HELPER FUNCTIONS
-        // ============================================
-        
         function getNodeColor(tags) {
             return tagColors[tags[0]] || "#64748b";
         }
@@ -639,10 +609,6 @@
             return 12 + Math.min(connections * 3, 12);
         }
 
-        // ============================================
-        // GRAPH INITIALIZATION (TIGHTER FORCES)
-        // ============================================
-        
         function initializeGraph() {
             const container = document.getElementById('graph-container');
             const width = container.clientWidth;
@@ -653,42 +619,46 @@
 
             const g = svg.append("g");
 
-            // Zoom behavior
             const zoom = d3.zoom()
                 .scaleExtent([0.1, 4])
-                .on("zoom", (event) => {
-                    g.attr("transform", event.transform);
-                });
+                .on("zoom", (event) => g.attr("transform", event.transform));
 
             svg.call(zoom);
 
-            // TIGHTER force simulation
             simulation = d3.forceSimulation(notes)
                 .force("link", d3.forceLink(links).id(d => d.id).distance(80).strength(0.4))
                 .force("charge", d3.forceManyBody().strength(-200))
                 .force("center", d3.forceCenter(width / 2, height / 2))
                 .force("collision", d3.forceCollide().radius(35));
 
-            // Create links
             const link = g.append("g")
                 .selectAll("line")
                 .data(links)
                 .join("line")
                 .attr("class", d => d.strength > 1 ? "link strong" : "link");
 
-            // Create nodes
             const node = g.append("g")
                 .selectAll("g")
                 .data(notes)
                 .join("g")
                 .attr("class", "node")
                 .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended))
-                .on("click", (event, d) => openModal(d))
-                .on("mouseenter", (event, d) => highlightConnections(d, link))
-                .on("mouseleave", () => unhighlightConnections(link));
+                    .on("start", (e, d) => {
+                        if (!e.active) simulation.alphaTarget(0.3).restart();
+                        d.fx = d.x; d.fy = d.y;
+                    })
+                    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+                    .on("end", (e, d) => {
+                        if (!e.active) simulation.alphaTarget(0);
+                        d.fx = null; d.fy = null;
+                    }))
+                .on("click", (e, d) => openModal(d))
+                .on("mouseenter", (e, d) => {
+                    link.classed("highlighted", l => 
+                        l.source.id === d.id || l.target.id === d.id
+                    );
+                })
+                .on("mouseleave", () => link.classed("highlighted", false));
 
             node.append("circle")
                 .attr("r", d => getNodeSize(d))
@@ -698,58 +668,19 @@
                 .attr("dy", d => getNodeSize(d) + 16)
                 .text(d => d.tags[0]);
 
-            // Update positions on tick
             simulation.on("tick", () => {
                 link
                     .attr("x1", d => d.source.x)
                     .attr("y1", d => d.source.y)
                     .attr("x2", d => d.target.x)
                     .attr("y2", d => d.target.y);
-
                 node.attr("transform", d => `translate(${d.x},${d.y})`);
             });
 
-            // Store references globally
             window.svg = svg;
             window.zoom = zoom;
-            window.link = link;
         }
 
-        // ============================================
-        // INTERACTION FUNCTIONS
-        // ============================================
-        
-        function highlightConnections(note, link) {
-            link.classed("highlighted", d => 
-                d.source.id === note.id || d.target.id === note.id
-            );
-        }
-
-        function unhighlightConnections(link) {
-            link.classed("highlighted", false);
-        }
-
-        function dragstarted(event, d) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
-
-        function dragged(event, d) {
-            d.fx = event.x;
-            d.fy = event.y;
-        }
-
-        function dragended(event, d) {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
-
-        // ============================================
-        // MODAL FUNCTIONS
-        // ============================================
-        
         function openModal(note) {
             document.getElementById('modalTitle').textContent = note.title;
             document.getElementById('modalDate').textContent = note.date;
@@ -774,17 +705,10 @@
 
         function resetZoom() {
             if (window.svg && window.zoom) {
-                window.svg.transition().duration(750).call(
-                    window.zoom.transform,
-                    d3.zoomIdentity
-                );
+                window.svg.transition().duration(750).call(window.zoom.transform, d3.zoomIdentity);
             }
         }
 
-        // ============================================
-        // FILTER FUNCTIONALITY
-        // ============================================
-        
         let activeFilters = new Set();
 
         function toggleFilters() {
@@ -792,78 +716,53 @@
             const isHidden = panel.style.display === 'none';
             panel.style.display = isHidden ? 'block' : 'none';
             
-            // Adjust graph container height
             const graphContainer = document.getElementById('graph-container');
-            if (isHidden) {
-                graphContainer.style.height = 'calc(100vh - 110px)';
-                if (document.getElementById('filterTags').children.length === 0) {
-                    initializeFilters();
-                }
-            } else {
-                graphContainer.style.height = 'calc(100vh - 53px)';
-            }
-        }
-
-        function initializeFilters() {
-            const allTags = new Set();
-            notes.forEach(note => note.tags.forEach(tag => allTags.add(tag)));
+            graphContainer.style.height = isHidden ? 'calc(100vh - 115px)' : 'calc(100vh - 57px)';
             
-            const filterContainer = document.getElementById('filterTags');
-            filterContainer.innerHTML = '';
-            
-            allTags.forEach(tag => {
-                const btn = document.createElement('button');
-                btn.className = 'filter-tag';
-                btn.textContent = tag;
-                btn.onclick = () => toggleFilter(tag, btn);
-                filterContainer.appendChild(btn);
-            });
-        }
-
-        function toggleFilter(tag, btn) {
-            if (activeFilters.has(tag)) {
-                activeFilters.delete(tag);
-                btn.classList.remove('active');
-            } else {
-                activeFilters.add(tag);
-                btn.classList.add('active');
-            }
-            
-            applyFilters();
-        }
-
-        function applyFilters() {
-            const nodes = d3.selectAll('.node');
-            const links = d3.selectAll('.link');
-            
-            if (activeFilters.size === 0) {
-                nodes.style("opacity", 1);
-                links.style("opacity", 0.2);
-            } else {
-                nodes.style("opacity", d => 
-                    d.tags.some(tag => activeFilters.has(tag)) ? 1 : 0.1
-                );
+            if (isHidden && document.getElementById('filterTags').children.length === 0) {
+                const allTags = new Set();
+                notes.forEach(note => note.tags.forEach(tag => allTags.add(tag)));
                 
-                links.style("opacity", d => {
-                    const sourceMatch = d.source.tags.some(tag => activeFilters.has(tag));
-                    const targetMatch = d.target.tags.some(tag => activeFilters.has(tag));
-                    return (sourceMatch && targetMatch) ? 0.2 : 0.02;
+                const filterContainer = document.getElementById('filterTags');
+                allTags.forEach(tag => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-tag';
+                    btn.textContent = tag;
+                    btn.onclick = () => {
+                        if (activeFilters.has(tag)) {
+                            activeFilters.delete(tag);
+                            btn.classList.remove('active');
+                        } else {
+                            activeFilters.add(tag);
+                            btn.classList.add('active');
+                        }
+                        
+                        const nodes = d3.selectAll('.node');
+                        const links = d3.selectAll('.link');
+                        
+                        if (activeFilters.size === 0) {
+                            nodes.style("opacity", 1);
+                            links.style("opacity", 0.2);
+                        } else {
+                            nodes.style("opacity", d => 
+                                d.tags.some(t => activeFilters.has(t)) ? 1 : 0.1
+                            );
+                            links.style("opacity", d => {
+                                const sourceMatch = d.source.tags.some(t => activeFilters.has(t));
+                                const targetMatch = d.target.tags.some(t => activeFilters.has(t));
+                                return (sourceMatch && targetMatch) ? 0.2 : 0.02;
+                            });
+                        }
+                    };
+                    filterContainer.appendChild(btn);
                 });
             }
         }
 
-        // Close modal on outside click
-        window.onclick = function (event) {
-            const modal = document.getElementById('noteModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
+        window.onclick = (e) => {
+            if (e.target.id === 'noteModal') closeModal();
+        };
 
-        // ============================================
-        // INITIALIZE ON PAGE LOAD
-        // ============================================
-        
         loadNotes();
     </script>
 </body>

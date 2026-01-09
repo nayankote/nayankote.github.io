@@ -6,24 +6,16 @@
     <title>Notes - Nayan Kote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Obsidian-inspired minimal fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
     <style>
         /* ============================================
-           COLOR SCHEME - Obsidian-inspired
+           COLORS - EXACT MATCH TO HOMEPAGE
            ============================================ */
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #fafafa;
-            --text-primary: #2e3338;
-            --text-secondary: #6c757d;
-            --text-muted: #9aa0a6;
-            --border: #e5e5e5;
-            --accent: #7c3aed;
-            --accent-hover: #6d28d9;
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
             --node-personal: #ef4444;
             --node-work: #3b82f6;
             --node-fitness: #10b981;
@@ -34,46 +26,38 @@
             --node-ideas: #14b8a6;
             --node-mental-health: #a855f7;
             --node-career: #6366f1;
+            --node-motivation: #f97316;
             --node-default: #64748b;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-primary: #1e1e1e;
-                --bg-secondary: #252525;
-                --text-primary: #dcddde;
-                --text-secondary: #b9bbbe;
-                --text-muted: #72767d;
-                --border: #3a3a3a;
-                --accent: #a78bfa;
-                --accent-hover: #8b5cf6;
+                --color-bg: #181818;
+                --color-text: #fff;
+                --color-accent: #a0aec0;
+                --color-nav-bg: #181818;
+                --color-nav-text: #fff;
             }
         }
 
         html.theme-dark {
-            --bg-primary: #1e1e1e;
-            --bg-secondary: #252525;
-            --text-primary: #dcddde;
-            --text-secondary: #b9bbbe;
-            --text-muted: #72767d;
-            --border: #3a3a3a;
-            --accent: #a78bfa;
-            --accent-hover: #8b5cf6;
+            --color-bg: #181818;
+            --color-text: #fff;
+            --color-accent: #a0aec0;
+            --color-nav-bg: #181818;
+            --color-nav-text: #fff;
         }
 
         html.theme-light {
-            --bg-primary: #ffffff;
-            --bg-secondary: #fafafa;
-            --text-primary: #2e3338;
-            --text-secondary: #6c757d;
-            --text-muted: #9aa0a6;
-            --border: #e5e5e5;
-            --accent: #7c3aed;
-            --accent-hover: #6d28d9;
+            --color-bg: #fff;
+            --color-text: #181818;
+            --color-accent: #4a5568;
+            --color-nav-bg: #fff;
+            --color-nav-text: #181818;
         }
 
         /* ============================================
-           BASE STYLES - Clean & Minimal
+           BASE STYLES - EXACT MATCH TO HOMEPAGE
            ============================================ */
         * {
             margin: 0;
@@ -82,62 +66,68 @@
         }
 
         body {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 15px;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+            font-size: 1.2em;
             line-height: 1.6;
+            margin: 0;
             overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         /* ============================================
-           NAVIGATION - Obsidian style
+           NAVIGATION - EXACT MATCH TO HOMEPAGE
            ============================================ */
         .nav-header {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 24px;
-            position: relative;
-            z-index: 100;
+            background: var(--color-nav-bg);
+            color: var(--color-nav-text);
+            padding: 16px 32px;
+            box-sizing: border-box;
         }
 
         .nav-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0;
         }
 
         .nav-wrapper ul {
+            margin: 0;
+            padding: 0;
             display: flex;
-            gap: 8px;
+            gap: 16px;
             list-style: none;
         }
 
         .nav-wrapper ul li a {
-            color: var(--text-secondary);
+            color: var(--color-nav-text);
+            font-weight: 600;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 6px 12px;
+            font-size: 0.95em;
+            padding: 8px 16px;
+            border: 2px solid var(--color-accent);
             border-radius: 6px;
+            display: inline-block;
             transition: all 0.2s ease;
-            letter-spacing: -0.01em;
+            background: transparent;
         }
 
         .nav-wrapper ul li a:hover {
-            color: var(--text-primary);
-            background: var(--bg-secondary);
+            background: var(--color-accent);
+            color: var(--color-bg);
         }
 
         .nav-wrapper ul li.active a {
-            color: var(--accent);
-            background: var(--bg-secondary);
+            background: var(--color-accent);
+            color: var(--color-bg);
         }
 
+        /* ============================================
+           CONTROLS - MATCH NAV STYLING
+           ============================================ */
         .controls {
             display: flex;
             gap: 8px;
@@ -146,61 +136,74 @@
 
         .control-btn {
             background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
+            border: 2px solid var(--color-accent);
+            color: var(--color-nav-text);
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 0.85em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .control-btn:hover {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-color: var(--accent);
+            background: var(--color-accent);
+            color: var(--color-bg);
+        }
+
+        /* ============================================
+           FILTER PANEL
+           ============================================ */
+        #filter-panel {
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-accent);
+            padding: 12px 0;
+        }
+
+        .filter-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0 32px;
         }
 
         .filter-group {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .filter-tag {
             background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
+            border: 1px solid var(--color-accent);
+            color: var(--color-text);
             padding: 4px 10px;
             border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 0.75em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
             text-transform: lowercase;
         }
 
         .filter-tag:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+            background: var(--color-accent);
+            color: var(--color-bg);
         }
 
         .filter-tag.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
+            background: var(--color-accent);
+            color: var(--color-bg);
         }
 
         /* ============================================
-           GRAPH CONTAINER - Full viewport
+           GRAPH CONTAINER
            ============================================ */
         #graph-container {
             width: 100vw;
-            height: calc(100vh - 50px);
+            height: calc(100vh - 53px); /* Subtract nav height */
             position: relative;
-            background: var(--bg-primary);
+            background: var(--color-bg);
         }
 
         svg {
@@ -209,7 +212,7 @@
         }
 
         /* ============================================
-           NODES & LINKS - Obsidian-inspired
+           NODES & LINKS - TIGHTER GRAPH
            ============================================ */
         .node {
             cursor: pointer;
@@ -222,41 +225,40 @@
         }
 
         .node circle {
-            stroke: var(--bg-primary);
+            stroke: var(--color-bg);
             stroke-width: 2px;
             transition: all 0.2s ease;
         }
 
         .node text {
-            font-size: 10px;
-            font-weight: 500;
-            fill: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            fill: var(--color-text);
             pointer-events: none;
             text-anchor: middle;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.01em;
+            font-family: 'Fira Sans', sans-serif;
         }
 
         .link {
-            stroke: var(--border);
-            stroke-opacity: 0.4;
+            stroke: var(--color-accent);
+            stroke-opacity: 0.2;
             stroke-width: 1px;
             transition: all 0.2s ease;
         }
 
         .link.strong {
             stroke-width: 2px;
-            stroke-opacity: 0.6;
+            stroke-opacity: 0.4;
         }
 
         .link.highlighted {
-            stroke: var(--accent);
-            stroke-opacity: 0.8;
+            stroke: var(--color-accent);
+            stroke-opacity: 0.6;
             stroke-width: 2px;
         }
 
         /* ============================================
-           MODAL - Clean & Readable
+           MODAL - MATCH HOMEPAGE STYLE
            ============================================ */
         .modal {
             display: none;
@@ -266,8 +268,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
+            background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.2s ease;
         }
 
@@ -288,16 +289,16 @@
         }
 
         .modal-content {
-            background: var(--bg-primary);
+            background: var(--color-bg);
             margin: 8vh auto;
-            padding: 24px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            padding: 32px;
+            border: 2px solid var(--color-accent);
+            border-radius: 6px;
             width: 90%;
-            max-width: 600px;
+            max-width: 650px; /* Match homepage width */
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             animation: slideIn 0.3s ease;
         }
 
@@ -310,16 +311,15 @@
         }
 
         .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.4;
-            letter-spacing: -0.02em;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--color-text);
+            line-height: 1.3;
         }
 
         .close {
-            color: var(--text-muted);
-            font-size: 24px;
+            color: var(--color-accent);
+            font-size: 28px;
             font-weight: 300;
             cursor: pointer;
             transition: color 0.2s ease;
@@ -328,21 +328,21 @@
         }
 
         .close:hover {
-            color: var(--text-primary);
+            color: var(--color-text);
         }
 
         .modal-metadata {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .modal-date {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
+            font-size: 0.9em;
+            color: var(--color-accent);
+            font-weight: 600;
         }
 
         .modal-tags {
@@ -352,39 +352,64 @@
         }
 
         .tag {
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 0.75em;
+            font-weight: 600;
             color: white;
             text-transform: lowercase;
         }
 
         .modal-text {
             line-height: 1.7;
-            color: var(--text-secondary);
-            font-size: 14px;
+            color: var(--color-text);
+            font-size: 0.95em;
+            font-family: 'Fira Sans', serif;
         }
 
         /* ============================================
-           SCROLLBAR - Custom styling
+           LOADING STATE
+           ============================================ */
+        .loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-text);
+            font-size: 1.2em;
+        }
+
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-accent);
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        /* ============================================
+           SCROLLBAR
            ============================================ */
         .modal-content::-webkit-scrollbar {
             width: 8px;
         }
 
         .modal-content::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
+            background: var(--color-bg);
             border-radius: 4px;
         }
 
         .modal-content::-webkit-scrollbar-thumb {
-            background: var(--border);
+            background: var(--color-accent);
             border-radius: 4px;
         }
 
         .modal-content::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
+            background: var(--color-text);
         }
 
         /* ============================================
@@ -398,27 +423,34 @@
 
             .controls {
                 width: 100%;
-                justify-content: space-between;
+                justify-content: center;
             }
 
             .modal-content {
                 width: 95%;
-                padding: 20px;
+                padding: 24px;
                 margin: 4vh auto;
+            }
+
+            body {
+                font-size: 1em;
             }
         }
     </style>
 
-    <!-- Theme toggle script (matching your site) -->
+    <!-- Theme toggle script (matches homepage) -->
     <script>
-        function getPreferredTheme() {
-            const stored = localStorage.getItem('theme');
-            return stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
         }
 
-        function setTheme(theme) {
-            document.documentElement.className = theme === 'dark' ? 'theme-dark' : 'theme-light';
-            localStorage.setItem('theme', theme);
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            // Default to light mode (homepage behavior)
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -428,7 +460,7 @@
 </head>
 
 <body>
-    <!-- Navigation -->
+    <!-- Navigation (matches homepage exactly) -->
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
             <ul>
@@ -439,18 +471,21 @@
             </ul>
             <div class="controls">
                 <button class="control-btn" onclick="resetZoom()">Reset View</button>
-                <button class="control-btn" onclick="toggleFilters()">Filter Tags</button>
+                <button class="control-btn" onclick="toggleFilters()">Filter</button>
             </div>
         </nav>
     </div>
 
     <!-- Filter panel (initially hidden) -->
-    <div id="filter-panel" style="display: none; padding: 12px 24px; border-bottom: 1px solid var(--border); background: var(--bg-secondary);">
-        <div class="filter-group" id="filterTags"></div>
+    <div id="filter-panel" style="display: none;">
+        <div class="filter-wrapper">
+            <div class="filter-group" id="filterTags"></div>
+        </div>
     </div>
 
     <!-- Graph Container -->
     <div id="graph-container">
+        <div class="loading-message" id="loadingMessage">Loading notes...</div>
         <svg id="graph"></svg>
     </div>
 
@@ -477,7 +512,7 @@
         // CONFIGURATION
         // ============================================
         
-        // Tag colors matching CSS variables
+        // Tag colors
         const tagColors = {
             "personal": "#ef4444",
             "work": "#3b82f6",
@@ -488,39 +523,74 @@
             "startups": "#ec4899",
             "ideas": "#14b8a6",
             "mental-health": "#a855f7",
-            "career": "#6366f1"
+            "career": "#6366f1",
+            "motivation": "#f97316"
         };
 
-        // Minimum shared tags for connection (reduces line clutter)
-        const MIN_CONNECTION_STRENGTH = 1; // Only show connections with 1+ shared tags
-        const MAX_CONNECTIONS_PER_NODE = 5; // Maximum connections per node
+        // Connection settings (TIGHTER GRAPH)
+        const MIN_CONNECTION_STRENGTH = 1;
+        const MAX_CONNECTIONS_PER_NODE = 4;
 
         // ============================================
-        // DATA - Will be loaded from notes.json
+        // LOAD NOTES FROM JSON
         // ============================================
         
-        // Sample data (replace with fetch from notes.json)
-        const notes = [
-            { id: 1, title: "Morning Reflection", tags: ["personal"], date: "2025-11-28", text: "Started the day with meditation. Feeling grateful for the small moments of peace in a busy world." },
-            { id: 2, title: "Product Idea", tags: ["work", "ideas", "startups"], date: "2025-11-27", text: "What if we built a tool that helps people visualize their thoughts? Like a mind map but more interactive." },
-            { id: 3, title: "5K Run", tags: ["fitness"], date: "2025-11-26", text: "Completed my first 5K in under 30 minutes! Legs are sore but feeling accomplished." },
-            { id: 4, title: "Career Growth", tags: ["career", "work"], date: "2025-11-25", text: "Reflecting on my career trajectory. It's not just about climbing the ladder, it's about building skills." },
-            { id: 5, title: "Mental Health Check", tags: ["mental-health", "personal"], date: "2025-11-24", text: "Taking time to check in with myself. Therapy has been incredibly valuable." },
-            { id: 6, title: "Ironman Training", tags: ["fitness", "ironman"], date: "2025-11-23", text: "Week 3 of Ironman training. The volume is intense but I'm adapting." },
-            { id: 7, title: "Startup Pivot", tags: ["startups", "work", "ideas"], date: "2025-11-22", text: "Sometimes the best ideas come from listening to what customers actually need, not what we think they need." },
-            { id: 8, title: "Deep Work", tags: ["thinking", "work"], date: "2025-11-21", text: "Read Cal Newport's Deep Work. Changed how I think about focus and productivity." },
-            { id: 9, title: "TIL: React Hooks", tags: ["til", "work"], date: "2025-11-20", text: "Finally understood useEffect dependencies. It's about synchronization, not lifecycle." },
-            { id: 10, title: "Gratitude", tags: ["personal", "mental-health"], date: "2025-11-19", text: "Three things I'm grateful for: health, meaningful work, and supportive friends." }
-        ];
+        let notes = [];
+        let links = [];
+        let simulation = null;
+
+        async function loadNotes() {
+            try {
+                const response = await fetch('notes.json');
+                if (!response.ok) {
+                    throw new Error('Could not load notes.json');
+                }
+                const data = await response.json();
+                notes = data.notes || [];
+                
+                if (notes.length === 0) {
+                    showError('No notes found. Add some notes to get started!');
+                    return;
+                }
+                
+                // Create smart links
+                links = createSmartLinks(notes);
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+                // Initialize graph
+                initializeGraph();
+                
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                showError('Could not load notes. Make sure notes.json exists in the notes/ folder.');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingMessage').style.display = 'none';
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.innerHTML = `
+                <h3>⚠️ ${message}</h3>
+                <p style="margin-top: 16px; font-size: 0.9em;">
+                    To add notes:<br>
+                    1. Create notes/inbox/test.txt<br>
+                    2. Run: python notes_parser.py inbox/ -o notes.json<br>
+                    3. Refresh this page
+                </p>
+            `;
+            document.getElementById('graph-container').appendChild(errorDiv);
+        }
 
         // ============================================
-        // SMART CONNECTION LOGIC
+        // SMART CONNECTION LOGIC (TIGHTER)
         // ============================================
         
         function createSmartLinks(notes) {
             const potentialLinks = [];
             
-            // Calculate all potential connections with strength
             for (let i = 0; i < notes.length; i++) {
                 for (let j = i + 1; j < notes.length; j++) {
                     const commonTags = notes[i].tags.filter(tag => notes[j].tags.includes(tag));
@@ -530,22 +600,17 @@
                         potentialLinks.push({
                             source: notes[i].id,
                             target: notes[j].id,
-                            strength: strength,
-                            i: i,
-                            j: j
+                            strength: strength
                         });
                     }
                 }
             }
             
-            // Sort by strength (strongest connections first)
             potentialLinks.sort((a, b) => b.strength - a.strength);
             
-            // Keep track of connections per node
             const connectionsCount = {};
             notes.forEach(note => connectionsCount[note.id] = 0);
             
-            // Select best connections (avoid overcrowding)
             const selectedLinks = [];
             for (const link of potentialLinks) {
                 if (connectionsCount[link.source] < MAX_CONNECTIONS_PER_NODE &&
@@ -559,8 +624,6 @@
             return selectedLinks;
         }
 
-        const links = createSmartLinks(notes);
-
         // ============================================
         // HELPER FUNCTIONS
         // ============================================
@@ -570,93 +633,99 @@
         }
 
         function getNodeSize(note) {
-            // Larger nodes for notes with more connections
             const connections = links.filter(l => 
                 l.source.id === note.id || l.target.id === note.id
             ).length;
-            return 15 + Math.min(connections * 2, 15);
+            return 12 + Math.min(connections * 3, 12);
         }
 
         // ============================================
-        // GRAPH SETUP
+        // GRAPH INITIALIZATION (TIGHTER FORCES)
         // ============================================
         
-        const container = document.getElementById('graph-container');
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        function initializeGraph() {
+            const container = document.getElementById('graph-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
 
-        const svg = d3.select("#graph")
-            .attr("viewBox", [0, 0, width, height]);
+            const svg = d3.select("#graph")
+                .attr("viewBox", [0, 0, width, height]);
 
-        const g = svg.append("g");
+            const g = svg.append("g");
 
-        // Zoom behavior
-        const zoom = d3.zoom()
-            .scaleExtent([0.1, 4])
-            .on("zoom", (event) => {
-                g.attr("transform", event.transform);
+            // Zoom behavior
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 4])
+                .on("zoom", (event) => {
+                    g.attr("transform", event.transform);
+                });
+
+            svg.call(zoom);
+
+            // TIGHTER force simulation
+            simulation = d3.forceSimulation(notes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(80).strength(0.4))
+                .force("charge", d3.forceManyBody().strength(-200))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide().radius(35));
+
+            // Create links
+            const link = g.append("g")
+                .selectAll("line")
+                .data(links)
+                .join("line")
+                .attr("class", d => d.strength > 1 ? "link strong" : "link");
+
+            // Create nodes
+            const node = g.append("g")
+                .selectAll("g")
+                .data(notes)
+                .join("g")
+                .attr("class", "node")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended))
+                .on("click", (event, d) => openModal(d))
+                .on("mouseenter", (event, d) => highlightConnections(d, link))
+                .on("mouseleave", () => unhighlightConnections(link));
+
+            node.append("circle")
+                .attr("r", d => getNodeSize(d))
+                .attr("fill", d => getNodeColor(d.tags));
+
+            node.append("text")
+                .attr("dy", d => getNodeSize(d) + 16)
+                .text(d => d.tags[0]);
+
+            // Update positions on tick
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node.attr("transform", d => `translate(${d.x},${d.y})`);
             });
 
-        svg.call(zoom);
-
-        // Force simulation with adjusted parameters for cleaner layout
-        const simulation = d3.forceSimulation(notes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(120).strength(d => d.strength * 0.2))
-            .force("charge", d3.forceManyBody().strength(-400))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collision", d3.forceCollide().radius(50));
-
-        // Create links
-        const link = g.append("g")
-            .selectAll("line")
-            .data(links)
-            .join("line")
-            .attr("class", d => d.strength > 1 ? "link strong" : "link");
-
-        // Create nodes
-        const node = g.append("g")
-            .selectAll("g")
-            .data(notes)
-            .join("g")
-            .attr("class", "node")
-            .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended))
-            .on("click", (event, d) => openModal(d))
-            .on("mouseenter", (event, d) => highlightConnections(d))
-            .on("mouseleave", () => unhighlightConnections());
-
-        node.append("circle")
-            .attr("r", d => getNodeSize(d))
-            .attr("fill", d => getNodeColor(d.tags));
-
-        node.append("text")
-            .attr("dy", d => getNodeSize(d) + 14)
-            .text(d => d.tags[0]);
-
-        // Update positions on tick
-        simulation.on("tick", () => {
-            link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            node.attr("transform", d => `translate(${d.x},${d.y})`);
-        });
+            // Store references globally
+            window.svg = svg;
+            window.zoom = zoom;
+            window.link = link;
+        }
 
         // ============================================
         // INTERACTION FUNCTIONS
         // ============================================
         
-        function highlightConnections(note) {
+        function highlightConnections(note, link) {
             link.classed("highlighted", d => 
                 d.source.id === note.id || d.target.id === note.id
             );
         }
 
-        function unhighlightConnections() {
+        function unhighlightConnections(link) {
             link.classed("highlighted", false);
         }
 
@@ -704,10 +773,12 @@
         }
 
         function resetZoom() {
-            svg.transition().duration(750).call(
-                zoom.transform,
-                d3.zoomIdentity
-            );
+            if (window.svg && window.zoom) {
+                window.svg.transition().duration(750).call(
+                    window.zoom.transform,
+                    d3.zoomIdentity
+                );
+            }
         }
 
         // ============================================
@@ -718,10 +789,18 @@
 
         function toggleFilters() {
             const panel = document.getElementById('filter-panel');
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            const isHidden = panel.style.display === 'none';
+            panel.style.display = isHidden ? 'block' : 'none';
             
-            if (panel.style.display === 'block' && document.getElementById('filterTags').children.length === 0) {
-                initializeFilters();
+            // Adjust graph container height
+            const graphContainer = document.getElementById('graph-container');
+            if (isHidden) {
+                graphContainer.style.height = 'calc(100vh - 110px)';
+                if (document.getElementById('filterTags').children.length === 0) {
+                    initializeFilters();
+                }
+            } else {
+                graphContainer.style.height = 'calc(100vh - 53px)';
             }
         }
 
@@ -730,6 +809,8 @@
             notes.forEach(note => note.tags.forEach(tag => allTags.add(tag)));
             
             const filterContainer = document.getElementById('filterTags');
+            filterContainer.innerHTML = '';
+            
             allTags.forEach(tag => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-tag';
@@ -752,21 +833,21 @@
         }
 
         function applyFilters() {
+            const nodes = d3.selectAll('.node');
+            const links = d3.selectAll('.link');
+            
             if (activeFilters.size === 0) {
-                // Show all nodes
-                node.style("opacity", 1);
-                link.style("opacity", 0.4);
+                nodes.style("opacity", 1);
+                links.style("opacity", 0.2);
             } else {
-                // Filter nodes
-                node.style("opacity", d => 
+                nodes.style("opacity", d => 
                     d.tags.some(tag => activeFilters.has(tag)) ? 1 : 0.1
                 );
                 
-                // Filter links
-                link.style("opacity", d => {
+                links.style("opacity", d => {
                     const sourceMatch = d.source.tags.some(tag => activeFilters.has(tag));
                     const targetMatch = d.target.tags.some(tag => activeFilters.has(tag));
-                    return (sourceMatch && targetMatch) ? 0.4 : 0.05;
+                    return (sourceMatch && targetMatch) ? 0.2 : 0.02;
                 });
             }
         }
@@ -780,22 +861,10 @@
         }
 
         // ============================================
-        // LOAD FROM JSON (uncomment when ready)
+        // INITIALIZE ON PAGE LOAD
         // ============================================
-        /*
-        async function loadNotes() {
-            try {
-                const response = await fetch('/notes/notes.json');
-                const data = await response.json();
-                // Reinitialize graph with new data
-                initializeGraph(data.notes);
-            } catch (error) {
-                console.error('Error loading notes:', error);
-            }
-        }
         
         loadNotes();
-        */
     </script>
 </body>
 </html>

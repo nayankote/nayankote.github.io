@@ -1,6 +1,16 @@
 {
   "notes": [
     {
+      "id": 2413196394,
+      "title": "Mic check mic check",
+      "tags": [
+        "uncategorized"
+      ],
+      "date": "2026-01-09",
+      "text": "Mic check mic check",
+      "source": "note1.txt"
+    },
+    {
       "id": 351210989,
       "title": "Test note",
       "tags": [
@@ -11,6 +21,6 @@
       "source": "test.txt"
     }
   ],
-  "generated_at": "2026-01-09T17:16:34.856340",
-  "total_notes": 1
+  "generated_at": "2026-01-09T17:26:53.947174",
+  "total_notes": 2
 }

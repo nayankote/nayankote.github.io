@@ -399,31 +399,8 @@
                 <!-- Blogs Section -->
                 <div class="blogs-section">
                     <h2>Blogs</h2>
-                    <ul class="blog-list">
-                        <li class="blog-item">
-                            <a href="/blogs/Ironman-Oman-Checkin1.html" class="blog-title">Ironman 70.3 Oman Checkin
-                                1</a>
-                            <span class="blog-date">Nov 2025</span>
-                        </li>
-                        <li class="blog-item">
-                            <a href="/blogs/No-Brownie-Points.html" class="blog-title">No Brownie Points</a>
-                            <span class="blog-date">Nov 2025</span>
-                        </li>
-                        <li class="blog-item">
-                            <a href="/blogs/The-fictitious-world-of-TAM-SAM-SOM.html" class="blog-title">The Fictitious
-                                World of TAM, SAM, SOM</a>
-                            <span class="blog-date">Aug 2025</span>
-                        </li>
-                        <li class="blog-item">
-                            <a href="/blogs/Perplexity-Comet-A-magical-experience.html" class="blog-title">Perplexity
-                                Comet: A magical experience</a>
-                            <span class="blog-date">Aug 2025</span>
-                        </li>
-                        <li class="blog-item">
-                            <a href="/blogs/why-am-i-starting-a-blog.html" class="blog-title">Why am I starting a
-                                blog?</a>
-                            <span class="blog-date">Jul 2025</span>
-                        </li>
+                    <ul class="blog-list" id="latest-blogs-list">
+                        <!-- Latest 5 blogs will be loaded here automatically -->
                     </ul>
                 </div>
                 <!-- Internet people I Admire Section -->
@@ -482,6 +459,32 @@
 
     </div>
 
+    <script>
+        // Auto-load latest 5 blogs from blogs/index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/blogs/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const blogItems = doc.querySelectorAll('.blog-item');
+                    const latestBlogsList = document.getElementById('latest-blogs-list');
+
+                    // Take the first 5 blog items
+                    const blogsToShow = Array.from(blogItems).slice(0, 5);
+
+                    blogsToShow.forEach(item => {
+                        latestBlogsList.appendChild(item.cloneNode(true));
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading blogs:', error);
+                    // Fallback: show error message or leave empty
+                    document.getElementById('latest-blogs-list').innerHTML =
+                        '<li style="color: var(--color-accent);">Unable to load latest blogs. Please visit the <a href="/blogs/">Blogs page</a>.</li>';
+                });
+        });
+    </script>
 
 </body>
 

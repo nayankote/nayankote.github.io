@@ -511,16 +511,31 @@ html.theme-dark .blog-content-container pre {
 /* Footer social links - centered across all pages */
 .nav-footer {
     text-align: center !important;
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
 }
 
 .nav-footer .nav-wrapper {
     justify-content: center !important;
     margin: 0 auto !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    padding: 0 !important;
+}
+
+.nav-footer .nav-wrapper > div {
+    justify-content: center !important;
 }
 
 /* Projects page - fix font size to match other pages */
 .page-template.page-projects .post-title {
     font-size: 4em !important;
+    line-height: 1.25em !important;
+}
+
+.post-header .post-title {
+    font-size: 4em !important;
+    line-height: 1.25em !important;
 }
 
 /* Responsive adjustments */

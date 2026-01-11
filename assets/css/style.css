@@ -62,7 +62,7 @@ body {
 .nav-header {
     background: var(--color-nav-bg) !important;
     color: var(--color-nav-text) !important;
-    padding: 16px 32px !important;
+    padding: 48px 32px 16px 32px !important;
     box-sizing: border-box !important;
     position: static !important;
     transform: none !important;

@@ -176,117 +176,9 @@
             --ghost-accent-color: #FF1A75;
         }
     </style>
-    <!-- Modern, unified styles and theme logic from homepage -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>nayankote.com</title>
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=2aae365934" />
+
+    <!-- Blogs-specific styles only - base styles in centralized CSS -->
     <style>
-        :root {
-            --color-bg: #fff;
-            --color-text: #181818;
-            --color-accent: #4a5568;
-            --color-nav-bg: #fff;
-            --color-nav-text: #181818;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --color-bg: #181818;
-                --color-text: #fff;
-                --color-accent: #a0aec0;
-                --color-nav-bg: #181818;
-                --color-nav-text: #fff;
-            }
-        }
-
-        html.theme-dark {
-            --color-bg: #181818;
-            --color-text: #fff;
-            --color-accent: #a0aec0;
-            --color-nav-bg: #181818;
-            --color-nav-text: #fff;
-        }
-
-        html.theme-light {
-            --color-bg: #fff;
-            --color-text: #181818;
-            --color-accent: #4a5568;
-            --color-nav-bg: #fff;
-            --color-nav-text: #181818;
-        }
-
-        body {
-            background: var(--color-bg);
-            color: var(--color-text);
-            font-size: 1.2em;
-            /* Reduced from 1.35em */
-            font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-        }
-
-        .homepage-container {
-            max-width: 650px;
-            margin: 0 auto;
-            padding: 80px 32px 0 32px;
-        }
-
-        .nav-header {
-            background: var(--color-nav-bg);
-            color: var(--color-nav-text);
-            padding: 16px 32px;
-            box-sizing: border-box;
-        }
-
-        .nav-wrapper ul {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 16px;
-        }
-
-        .nav-wrapper ul li {
-            list-style: none;
-        }
-
-        .nav-wrapper ul li a {
-            color: var(--color-nav-text);
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.95em;
-            padding: 8px 16px;
-            border: 2px solid var(--color-accent);
-            border-radius: 6px;
-            display: inline-block;
-            transition: all 0.2s ease;
-            background: transparent;
-        }
-
-        .nav-wrapper ul li a:hover {
-            background: var(--color-accent);
-            color: var(--color-bg);
-        }
-
-        .nav-wrapper ul li.active a {
-            background: var(--color-accent);
-            color: var(--color-bg);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 650px;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        .nav-search {
-            color: var(--color-nav-text);
-        }
-
         .content-section {
             max-width: 650px;
             margin: 0 auto;
@@ -343,16 +235,13 @@
         }
 
         @media (max-width: 900px) {
-
-            .homepage-container,
-            .nav-header,
-            .nav-wrapper,
             .content-section {
                 max-width: 100%;
                 padding: 0 12px;
             }
         }
     </style>
+
     <script>
         function setTheme(theme) {
             document.documentElement.classList.remove('theme-dark', 'theme-light');
@@ -383,13 +272,12 @@
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
             <ul>
-                <li class="nav-home"><a href="/">Home</a></li>
-                <li class="nav-blogs active"><a href="/blogs/">Blogs</a></li>
-                <li class="nav-notes"><a href="/notes/">Notes</a></li>
-                <li class="nav-projects"><a href="/projects/">Projects</a></li>
+                <li class="nav-home"><a href="/"><span>Home</span></a></li>
+                <li class="nav-blogs active"><a href="/blogs/"><span>Blogs</span></a></li>
+                <li class="nav-notes"><a href="/notes/"><span>Notes</span></a></li>
+                <li class="nav-projects"><a href="/projects/"><span>Projects</span></a></li>
             </ul>
-            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme"
-                style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--color-accent);border-radius:20px;color:var(--color-nav-text);text-decoration:none;font-size:0.9em;transition:all 0.2s ease">
+            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="5"></circle>

@@ -538,6 +538,59 @@ html.theme-dark .blog-content-container pre {
     line-height: 1.25em !important;
 }
 
+/* Mobile navigation - override button styling for mobile menu */
+@media (max-width: 640px) {
+    .nav-wrapper ul li a {
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 0 0 0 4rem !important;
+        font-size: 2em !important;
+        display: block !important;
+        background: transparent !important;
+        color: white !important;
+        position: relative;
+    }
+
+    .nav-wrapper ul li a::before {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 50%;
+        width: 1.5rem;
+        height: 2px;
+        margin-top: -1px;
+        border-radius: 2px;
+        background: #3B3D40;
+    }
+
+    .nav-wrapper ul li a:hover {
+        background: transparent !important;
+        color: #C4C7CC !important;
+    }
+
+    .nav-wrapper ul li.active a {
+        background: transparent !important;
+        color: white !important;
+    }
+
+    .nav-wrapper ul li.active a::before {
+        background: var(--ghost-accent-color);
+    }
+
+    /* Hide theme toggle text on mobile, show only icon */
+    #theme-toggle {
+        padding: 8px !important;
+        border-radius: 50% !important;
+        width: 48px;
+        height: 48px;
+        justify-content: center;
+    }
+
+    #theme-toggle svg {
+        margin: 0 !important;
+    }
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
     .homepage-container,

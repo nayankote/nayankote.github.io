@@ -561,10 +561,33 @@ html.theme-dark .blog-content-container pre {
         right: 0 !important;
         left: auto !important;
         width: auto !important;
-        background: var(--color-nav-bg) !important;
-        padding: 16px 32px !important;
+        background: transparent !important;
+        padding: 16px 20px !important;
         border: none !important;
         z-index: 500 !important;
+    }
+
+    .nav-wrapper-control .inner {
+        display: flex !important;
+        gap: 12px !important;
+    }
+
+    .nav-wrapper-control a {
+        color: var(--color-text) !important;
+        font-size: 1.8em !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5em !important;
+        padding: 8px !important;
+    }
+
+    .nav-wrapper-control a svg {
+        fill: var(--color-text) !important;
+        stroke: var(--color-text) !important;
+    }
+
+    .nav-wrapper-control a path {
+        fill: var(--color-text) !important;
     }
 
     /* When menu is active, show navigation */

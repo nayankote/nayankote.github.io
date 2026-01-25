@@ -1,29 +1,5 @@
 {
-  "notes": [
-    {
-      "id": "63879f5c-3f7d-4aab-8fed-5625844b2810",
-      "text": "Testing a final run of this",
-      "timestamp": "2026-01-25T20:06:14.000Z",
-      "source": "email",
-      "cluster_id": 0,
-      "connections": []
-    },
-    {
-      "id": "64a3868a-0f39-45c6-8f39-c8ca280e5c08",
-      "text": "Mic check mic check",
-      "timestamp": "2026-01-25T20:19:00.000Z",
-      "source": "email",
-      "cluster_id": 0,
-      "connections": []
-    }
-  ],
-  "clusters": [
-    {
-      "id": 0,
-      "auto_label": "mic check testing",
-      "custom_label": null,
-      "note_count": 2
-    }
-  ],
-  "last_processed": "2026-01-25T20:21:41.251669Z"
+  "notes": [],
+  "clusters": [],
+  "last_processed": "2026-01-25T20:32:51.164344Z"
 }

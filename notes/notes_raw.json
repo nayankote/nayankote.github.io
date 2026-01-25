@@ -6,6 +6,13 @@
       "subject": "test email 5, syoooo",
       "timestamp": "2026-01-25T20:37:38.000Z",
       "source": "email"
+    },
+    {
+      "id": "f1d8cecd-ce5b-4171-8442-afd1f4f48b31",
+      "text": "Does this work?\r\nLadies and gentlemen, introducing, DR DREEE",
+      "subject": "test email 5, syoooo",
+      "timestamp": "2026-01-25T20:37:42.000Z",
+      "source": "email"
     }
   ]
 }

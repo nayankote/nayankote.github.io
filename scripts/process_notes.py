@@ -163,6 +163,7 @@ def main():
         processed_notes.append({
             "id": note["id"],
             "text": note["text"],
+            "subject": note.get("subject"),
             "timestamp": note["timestamp"],
             "source": note.get("source", "unknown"),
             "cluster_id": int(cluster_labels[i]),

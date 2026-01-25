@@ -147,6 +147,13 @@
             border-radius: 4px;
         }
 
+        .modal-subject {
+            font-size: 0.85em;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
         .empty-state {
             position: absolute;
             top: 50%;
@@ -266,6 +273,7 @@
                 <div class="modal-date" id="modalDate"></div>
                 <div class="modal-cluster" id="modalCluster"></div>
             </div>
+            <div class="modal-subject" id="modalSubject"></div>
         </div>
     </div>
 
@@ -446,6 +454,15 @@
             document.getElementById('modalTitle').textContent = note.text;
             document.getElementById('modalDate').textContent = formatDate(note.timestamp);
             document.getElementById('modalCluster').textContent = getClusterLabel(note.cluster_id);
+
+            const subjectEl = document.getElementById('modalSubject');
+            if (note.subject) {
+                subjectEl.textContent = `subject: "${note.subject}"`;
+                subjectEl.style.display = 'block';
+            } else {
+                subjectEl.style.display = 'none';
+            }
+
             document.getElementById('noteModal').style.display = 'block';
         }
 

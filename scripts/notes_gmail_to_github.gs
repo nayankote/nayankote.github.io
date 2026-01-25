@@ -82,47 +82,38 @@ function processNewEmails() {
   const newNotes = [];
 
   for (const thread of threads) {
-    const messages = thread.getMessages();
+    // Only process the first message in each thread (avoid duplicates from replies)
+    const message = thread.getMessages()[0];
+    let subject = message.getSubject();
 
-    for (const message of messages) {
-      let subject = message.getSubject();
+    // Skip if subject doesn't match our pattern (safety check)
+    if (!/^(note:|n:)/i.test(subject)) {
+      thread.addLabel(processedLabel);
+      thread.markRead();
+      continue;
+    }
 
-      // Skip if subject doesn't match our pattern (safety check)
-      if (!/^(note:|n:)/i.test(subject)) {
-        continue;
-      }
+    const body = message.getPlainBody().trim();
 
-      const body = message.getPlainBody().trim();
+    // Strip the note:/n: prefix from subject to get optional title
+    const title = subject.replace(/^(note:|n:)\s*/i, '').trim();
 
-      // Strip the note:/n: prefix from subject to get optional title
-      const title = subject.replace(/^(note:|n:)\s*/i, '').trim();
+    // Note text is the body; if no body, use the title
+    let noteText = body || title;
 
-      // Note text is the body; title from subject is optional context
-      let noteText = body;
+    // Truncate to 200 chars as per spec
+    if (noteText && noteText.length > 200) {
+      noteText = noteText.substring(0, 197) + '...';
+    }
 
-      // If no body, use the title from subject
-      if (!noteText && title) {
-        noteText = title;
-      }
-
-      // If body exists and title exists, combine them
-      if (body && title) {
-        noteText = body;  // Just use body, title is metadata
-      }
-
-      // Truncate to 200 chars as per spec
-      if (noteText && noteText.length > 200) {
-        noteText = noteText.substring(0, 197) + '...';
-      }
-
-      if (noteText) {
-        newNotes.push({
-          id: Utilities.getUuid(),
-          text: noteText,
-          timestamp: message.getDate().toISOString(),
-          source: 'email'
-        });
-      }
+    if (noteText) {
+      newNotes.push({
+        id: Utilities.getUuid(),
+        text: noteText,
+        subject: title || null,  // Store subject separately
+        timestamp: message.getDate().toISOString(),
+        source: 'email'
+      });
     }
 
     // Mark thread as processed: add label and mark read

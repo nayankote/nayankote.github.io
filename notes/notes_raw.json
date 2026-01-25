@@ -185,6 +185,12 @@
       "text": "Testing processing segment of notes, hope to pick up only 1 test email this\r\ntime (vs 10 last time)",
       "timestamp": "2026-01-25T19:58:11.000Z",
       "source": "email"
+    },
+    {
+      "id": "43355415-e7c1-4821-9457-e9cf74f3c977",
+      "text": "Seems like I had a bunch of garbage in my email earlier, trying another \r\ntest email",
+      "timestamp": "2026-01-25T20:01:38.000Z",
+      "source": "email"
     }
   ]
 }

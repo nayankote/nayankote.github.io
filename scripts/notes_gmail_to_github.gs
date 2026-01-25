@@ -13,12 +13,19 @@
  * 6. Run the setup() function once (Run > Run function > setup)
  * 7. Grant permissions when prompted
  *
- * The script will then run every 5 minutes automatically.
+ * HOW TO CAPTURE NOTES:
+ * - Send email to nayankotenl@gmail.com
+ * - Subject: "n: optional title" or "note: optional title"
+ * - Body: your actual note content
+ * - Processed notes are moved to "Processed" label and marked read
+ *
+ * The script runs every 5 minutes automatically.
  */
 
 const CONFIG = {
   FILE_PATH: 'notes/notes_raw.json',
-  BRANCH: 'main'
+  BRANCH: 'main',
+  PROCESSED_LABEL: 'Processed'
 };
 
 function setup() {
@@ -28,14 +35,27 @@ function setup() {
     ScriptApp.deleteTrigger(trigger);
   }
 
+  // Create the "Processed" label if it doesn't exist
+  getOrCreateLabel(CONFIG.PROCESSED_LABEL);
+
   // Create time-based trigger to run every 5 minutes
   ScriptApp.newTrigger('processNewEmails')
     .timeBased()
     .everyMinutes(5)
     .create();
 
-  Logger.log('Trigger created! Script will run every 5 minutes.');
-  Logger.log('You can close this tab now.');
+  Logger.log('Setup complete!');
+  Logger.log('- Trigger created (runs every 5 minutes)');
+  Logger.log('- "Processed" label created');
+}
+
+function getOrCreateLabel(labelName) {
+  let label = GmailApp.getUserLabelByName(labelName);
+  if (!label) {
+    label = GmailApp.createLabel(labelName);
+    Logger.log(`Created label: ${labelName}`);
+  }
+  return label;
 }
 
 function processNewEmails() {
@@ -49,51 +69,69 @@ function processNewEmails() {
     return;
   }
 
-  // Only process emails with subject starting with "note:" or "n:"
-  const threads = GmailApp.search('subject:(note: OR n:)', 0, 10);
+  // Search for emails with subject starting with "note:" or "n:"
+  // Exclude already processed emails (those with the Processed label)
+  const threads = GmailApp.search(`subject:(note: OR n:) -label:${CONFIG.PROCESSED_LABEL}`, 0, 20);
 
   if (threads.length === 0) {
-    Logger.log('No new emails.');
+    Logger.log('No new notes to process.');
     return;
   }
 
+  const processedLabel = getOrCreateLabel(CONFIG.PROCESSED_LABEL);
   const newNotes = [];
 
   for (const thread of threads) {
     const messages = thread.getMessages();
 
     for (const message of messages) {
-      if (!message.isStarred()) {  // Use star to mark as processed
-        let subject = message.getSubject();
-        const body = message.getPlainBody().trim();
+      let subject = message.getSubject();
 
-        // Strip the note:/n: prefix from subject
-        subject = subject.replace(/^(note:|n:)\s*/i, '').trim();
+      // Skip if subject doesn't match our pattern (safety check)
+      if (!/^(note:|n:)/i.test(subject)) {
+        continue;
+      }
 
-        // Prefer body, fall back to subject (without prefix)
-        let noteText = body || subject;
+      const body = message.getPlainBody().trim();
 
-        // Truncate to 200 chars as per spec
-        if (noteText.length > 200) {
-          noteText = noteText.substring(0, 197) + '...';
-        }
+      // Strip the note:/n: prefix from subject to get optional title
+      const title = subject.replace(/^(note:|n:)\s*/i, '').trim();
 
-        if (noteText) {
-          newNotes.push({
-            id: Utilities.getUuid(),
-            text: noteText,
-            timestamp: message.getDate().toISOString(),
-            source: 'email'
-          });
-        }
+      // Note text is the body; title from subject is optional context
+      let noteText = body;
 
-        message.star();  // Mark as processed
+      // If no body, use the title from subject
+      if (!noteText && title) {
+        noteText = title;
+      }
+
+      // If body exists and title exists, combine them
+      if (body && title) {
+        noteText = body;  // Just use body, title is metadata
+      }
+
+      // Truncate to 200 chars as per spec
+      if (noteText && noteText.length > 200) {
+        noteText = noteText.substring(0, 197) + '...';
+      }
+
+      if (noteText) {
+        newNotes.push({
+          id: Utilities.getUuid(),
+          text: noteText,
+          timestamp: message.getDate().toISOString(),
+          source: 'email'
+        });
       }
     }
+
+    // Mark thread as processed: add label and mark read
+    thread.addLabel(processedLabel);
+    thread.markRead();
   }
 
   if (newNotes.length === 0) {
-    Logger.log('No new notes found.');
+    Logger.log('No valid notes found in matched emails.');
     return;
   }
 

@@ -49,9 +49,8 @@ function processNewEmails() {
     return;
   }
 
-  // Search for unread emails in Primary inbox only (excludes promotions, spam, etc.)
-  // Only process emails TO this address (not CC/BCC)
-  const threads = GmailApp.search('is:unread in:inbox category:primary', 0, 10);
+  // Only process emails with subject starting with "note:" or "n:"
+  const threads = GmailApp.search('subject:(note: OR n:)', 0, 10);
 
   if (threads.length === 0) {
     Logger.log('No new emails.');
@@ -64,11 +63,14 @@ function processNewEmails() {
     const messages = thread.getMessages();
 
     for (const message of messages) {
-      if (message.isUnread()) {
-        const subject = message.getSubject();
+      if (!message.isStarred()) {  // Use star to mark as processed
+        let subject = message.getSubject();
         const body = message.getPlainBody().trim();
 
-        // Combine subject and body, prefer body if both exist
+        // Strip the note:/n: prefix from subject
+        subject = subject.replace(/^(note:|n:)\s*/i, '').trim();
+
+        // Prefer body, fall back to subject (without prefix)
         let noteText = body || subject;
 
         // Truncate to 200 chars as per spec
@@ -85,13 +87,13 @@ function processNewEmails() {
           });
         }
 
-        message.markRead();
+        message.star();  // Mark as processed
       }
     }
   }
 
   if (newNotes.length === 0) {
-    Logger.log('No valid notes in emails.');
+    Logger.log('No new notes found.');
     return;
   }
 

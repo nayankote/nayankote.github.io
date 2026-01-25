@@ -1,3 +1,11 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "id": "5a7c0fd4-7750-4f2f-9c3f-fb472b4a0ec7",
+      "text": "test email 5, syoooo",
+      "subject": "test email 5, syoooo",
+      "timestamp": "2026-01-25T20:37:38.000Z",
+      "source": "email"
+    }
+  ]
 }

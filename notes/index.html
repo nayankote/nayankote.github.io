@@ -6,11 +6,9 @@
     <title>Notes - Nayan Kote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Centralized CSS - Ground truth for all pages -->
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
 
     <style>
-        /* Notes-specific overrides only */
         * {
             margin: 0;
             padding: 0;
@@ -18,12 +16,185 @@
         }
 
         body {
-            overflow: hidden; /* Notes page needs this for the graph */
+            overflow: hidden;
+        }
+
+        #graph-container {
+            width: 100%;
+            height: calc(100vh - 60px);
+            position: relative;
         }
 
         svg {
             width: 100%;
             height: 100%;
+        }
+
+        .node circle {
+            fill: #64748b;
+            cursor: pointer;
+            transition: fill 0.2s ease;
+        }
+
+        .node:hover circle {
+            fill: var(--color-accent, #FF1A75);
+        }
+
+        .node text {
+            font-size: 10px;
+            fill: var(--color-text, #333);
+            text-anchor: middle;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .node:hover text {
+            opacity: 1;
+        }
+
+        .link {
+            stroke: #e2e8f0;
+            stroke-width: 1;
+            transition: stroke 0.2s ease, stroke-width 0.2s ease;
+        }
+
+        .link.highlighted {
+            stroke: var(--color-accent, #FF1A75);
+            stroke-width: 2;
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-text, #333);
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        .message h3 {
+            margin-bottom: 12px;
+            color: var(--color-accent, #FF1A75);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--color-bg, #fff);
+            margin: 10% auto;
+            padding: 24px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--color-text, #333);
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.4;
+            flex: 1;
+            padding-right: 16px;
+        }
+
+        .close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--color-accent, #FF1A75);
+        }
+
+        .modal-metadata {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .modal-date {
+            font-size: 0.85em;
+            color: #64748b;
+        }
+
+        .modal-cluster {
+            font-size: 0.85em;
+            color: var(--color-accent, #FF1A75);
+            background: rgba(255, 26, 117, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .empty-state {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-text, #333);
+            font-family: 'Libre Baskerville', serif;
+            max-width: 400px;
+            padding: 24px;
+        }
+
+        .empty-state h3 {
+            color: var(--color-accent, #FF1A75);
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            line-height: 1.6;
+            color: #64748b;
+        }
+
+        #reset-view-btn {
+            background: none;
+            border: 1px solid var(--color-accent, #FF1A75);
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+            color: var(--color-accent, #FF1A75);
+            margin-right: 12px;
+        }
+
+        #reset-view-btn:hover {
+            background: var(--color-accent, #FF1A75);
+            color: white;
+        }
+
+        /* Dark mode adjustments */
+        .theme-dark .node circle {
+            fill: #94a3b8;
+        }
+
+        .theme-dark .link {
+            stroke: #334155;
+        }
+
+        .theme-dark .modal-content {
+            background-color: #1e293b;
         }
     </style>
 
@@ -48,7 +219,6 @@
 </head>
 
 <body>
-    <!-- EXACT HOMEPAGE NAVIGATION -->
     <div class="nav-header">
         <nav class="nav-wrapper" aria-label="Main">
             <ul>
@@ -81,13 +251,11 @@
         </nav>
     </div>
 
-    <!-- Graph container -->
     <div id="graph-container">
         <div id="message"></div>
         <svg id="graph"></svg>
     </div>
 
-    <!-- Modal -->
     <div id="noteModal" class="modal" onclick="if(event.target===this) closeModal()">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,107 +264,98 @@
             </div>
             <div class="modal-metadata">
                 <div class="modal-date" id="modalDate"></div>
-                <div class="modal-tags" id="modalTags"></div>
+                <div class="modal-cluster" id="modalCluster"></div>
             </div>
-            <div class="modal-text" id="modalText"></div>
         </div>
     </div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
-        const tagColors = {
-            "personal": "#ef4444", "work": "#3b82f6", "fitness": "#10b981",
-            "ironman": "#f59e0b", "thinking": "#8b5cf6", "til": "#06b6d4",
-            "startups": "#ec4899", "ideas": "#14b8a6", "mental-health": "#a855f7",
-            "career": "#6366f1", "motivation": "#f97316"
-        };
-
-        const MIN_CONNECTION_STRENGTH = 1;
-        const MAX_CONNECTIONS_PER_NODE = 4;
-
-        let notes = [], links = [], simulation = null;
+        const NODE_RADIUS = 12;
+        let notes = [], links = [], clusters = [], simulation = null;
 
         function showMessage(html) {
             document.getElementById('message').innerHTML = `<div class="message">${html}</div>`;
         }
 
+        function showEmptyState() {
+            document.getElementById('message').innerHTML = `
+                <div class="empty-state">
+                    <h3>No notes yet</h3>
+                    <p>Start capturing your thoughts by emailing them to your notes inbox. They'll appear here as an interconnected web of ideas.</p>
+                </div>
+            `;
+        }
+
         async function loadNotes() {
             showMessage('<h3>Loading notes...</h3>');
-            
+
             try {
-                const response = await fetch('notes.json');
-                
+                const response = await fetch('notes_processed.json');
+
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
-                
+
                 const data = await response.json();
                 notes = data.notes || [];
-                
+                clusters = data.clusters || [];
+
                 if (notes.length === 0) {
-                    showMessage(`
-                        <h3>⚠️ No notes found</h3>
-                        <p>Add notes to get started!</p>
-                    `);
+                    showEmptyState();
                     return;
                 }
-                
-                links = createSmartLinks(notes);
+
+                // Build links from connections
+                links = buildLinks(notes);
                 document.getElementById('message').innerHTML = '';
                 initializeGraph();
-                
+
             } catch (error) {
                 console.error('Error:', error);
                 showMessage(`
-                    <h3>⚠️ Could not load notes.json</h3>
+                    <h3>Could not load notes</h3>
                     <p>Error: ${error.message}</p>
-                    <p>Check browser console (F12) for details</p>
                 `);
             }
         }
 
-        function createSmartLinks(notes) {
-            const potentialLinks = [];
-            
-            for (let i = 0; i < notes.length; i++) {
-                for (let j = i + 1; j < notes.length; j++) {
-                    const commonTags = notes[i].tags.filter(tag => notes[j].tags.includes(tag));
-                    if (commonTags.length >= MIN_CONNECTION_STRENGTH) {
-                        potentialLinks.push({
-                            source: notes[i].id,
-                            target: notes[j].id,
-                            strength: commonTags.length
+        function buildLinks(notes) {
+            const linkSet = new Set();
+            const links = [];
+
+            for (const note of notes) {
+                for (const conn of note.connections || []) {
+                    // Create a unique key for this pair (order-independent)
+                    const key = [note.id, conn.target_id].sort().join('-');
+
+                    if (!linkSet.has(key)) {
+                        linkSet.add(key);
+                        links.push({
+                            source: note.id,
+                            target: conn.target_id,
+                            similarity: conn.similarity
                         });
                     }
                 }
             }
-            
-            potentialLinks.sort((a, b) => b.strength - a.strength);
-            const connectionsCount = {};
-            notes.forEach(note => connectionsCount[note.id] = 0);
-            
-            const selectedLinks = [];
-            for (const link of potentialLinks) {
-                if (connectionsCount[link.source] < MAX_CONNECTIONS_PER_NODE &&
-                    connectionsCount[link.target] < MAX_CONNECTIONS_PER_NODE) {
-                    selectedLinks.push(link);
-                    connectionsCount[link.source]++;
-                    connectionsCount[link.target]++;
-                }
-            }
-            
-            return selectedLinks;
+
+            return links;
         }
 
-        function getNodeColor(tags) {
-            return tagColors[tags[0]] || "#64748b";
+        function getClusterLabel(clusterId) {
+            const cluster = clusters.find(c => c.id === clusterId);
+            if (!cluster) return 'uncategorized';
+            return cluster.custom_label || cluster.auto_label || 'uncategorized';
         }
 
-        function getNodeSize(note) {
-            const connections = links.filter(l => 
-                l.source.id === note.id || l.target.id === note.id
-            ).length;
-            return 12 + Math.min(connections * 3, 12);
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
         }
 
         function initializeGraph() {
@@ -207,6 +366,8 @@
             const svg = d3.select("#graph")
                 .attr("viewBox", [0, 0, width, height]);
 
+            svg.selectAll("*").remove();
+
             const g = svg.append("g");
 
             const zoom = d3.zoom()
@@ -216,16 +377,20 @@
             svg.call(zoom);
 
             simulation = d3.forceSimulation(notes)
-                .force("link", d3.forceLink(links).id(d => d.id).distance(80).strength(0.4))
+                .force("link", d3.forceLink(links)
+                    .id(d => d.id)
+                    .distance(80)
+                    .strength(d => d.similarity * 0.5))
                 .force("charge", d3.forceManyBody().strength(-200))
                 .force("center", d3.forceCenter(width / 2, height / 2))
-                .force("collision", d3.forceCollide().radius(35));
+                .force("collision", d3.forceCollide().radius(NODE_RADIUS + 10));
 
             const link = g.append("g")
                 .selectAll("line")
                 .data(links)
                 .join("line")
-                .attr("class", d => d.strength > 1 ? "link strong" : "link");
+                .attr("class", "link")
+                .style("opacity", d => 0.3 + d.similarity * 0.5);
 
             const node = g.append("g")
                 .selectAll("g")
@@ -233,24 +398,43 @@
                 .join("g")
                 .attr("class", "node")
                 .call(d3.drag()
-                    .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-                    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
-                    .on("end", (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }))
+                    .on("start", (e, d) => {
+                        if (!e.active) simulation.alphaTarget(0.3).restart();
+                        d.fx = d.x;
+                        d.fy = d.y;
+                    })
+                    .on("drag", (e, d) => {
+                        d.fx = e.x;
+                        d.fy = e.y;
+                    })
+                    .on("end", (e, d) => {
+                        if (!e.active) simulation.alphaTarget(0);
+                        d.fx = null;
+                        d.fy = null;
+                    }))
                 .on("click", (e, d) => openModal(d))
-                .on("mouseenter", (e, d) => link.classed("highlighted", l => l.source.id === d.id || l.target.id === d.id))
+                .on("mouseenter", (e, d) => {
+                    link.classed("highlighted", l =>
+                        l.source.id === d.id || l.target.id === d.id
+                    );
+                })
                 .on("mouseleave", () => link.classed("highlighted", false));
 
             node.append("circle")
-                .attr("r", d => getNodeSize(d))
-                .attr("fill", d => getNodeColor(d.tags));
+                .attr("r", NODE_RADIUS);
 
+            // Show truncated text on hover
             node.append("text")
-                .attr("dy", d => getNodeSize(d) + 16)
-                .text(d => d.tags[0]);
+                .attr("dy", NODE_RADIUS + 14)
+                .text(d => d.text.length > 30 ? d.text.substring(0, 30) + '...' : d.text);
 
             simulation.on("tick", () => {
-                link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-                    .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
                 node.attr("transform", d => `translate(${d.x},${d.y})`);
             });
 
@@ -259,20 +443,9 @@
         }
 
         function openModal(note) {
-            document.getElementById('modalTitle').textContent = note.title;
-            document.getElementById('modalDate').textContent = note.date;
-            document.getElementById('modalText').textContent = note.text;
-
-            const tagsContainer = document.getElementById('modalTags');
-            tagsContainer.innerHTML = '';
-            note.tags.forEach(tag => {
-                const tagEl = document.createElement('span');
-                tagEl.className = 'tag';
-                tagEl.textContent = tag;
-                tagEl.style.backgroundColor = tagColors[tag] || '#64748b';
-                tagsContainer.appendChild(tagEl);
-            });
-
+            document.getElementById('modalTitle').textContent = note.text;
+            document.getElementById('modalDate').textContent = formatDate(note.timestamp);
+            document.getElementById('modalCluster').textContent = getClusterLabel(note.cluster_id);
             document.getElementById('noteModal').style.display = 'block';
         }
 
@@ -285,6 +458,11 @@
                 window.svg.transition().duration(750).call(window.zoom.transform, d3.zoomIdentity);
             }
         }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         loadNotes();
     </script>

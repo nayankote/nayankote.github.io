@@ -82,8 +82,9 @@ function processNewEmails() {
   const newNotes = [];
 
   for (const thread of threads) {
-    // Only process the first message in each thread (avoid duplicates from replies)
-    const message = thread.getMessages()[0];
+    // Get the last (most recent) message in the thread
+    const messages = thread.getMessages();
+    const message = messages[messages.length - 1];
     let subject = message.getSubject();
 
     // Skip if subject doesn't match our pattern (safety check)
@@ -141,8 +142,21 @@ function processNewEmails() {
     }
   }
 
-  // Append new notes
-  currentData.notes = currentData.notes.concat(newNotes);
+  // Get existing note texts to prevent duplicates
+  const existingTexts = new Set(currentData.notes.map(n => n.text));
+
+  // Filter out any notes that already exist (by text content)
+  const uniqueNewNotes = newNotes.filter(n => !existingTexts.has(n.text));
+
+  if (uniqueNewNotes.length === 0) {
+    Logger.log('All notes already exist, skipping.');
+    return;
+  }
+
+  // Append only unique new notes
+  currentData.notes = currentData.notes.concat(uniqueNewNotes);
+
+  Logger.log(`Adding ${uniqueNewNotes.length} unique notes (filtered ${newNotes.length - uniqueNewNotes.length} duplicates).`);
 
   // Commit to GitHub
   const success = updateGitHubFile(

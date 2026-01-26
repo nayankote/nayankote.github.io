@@ -2,9 +2,11 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch, except notes_raw.json
   push:
     branches: ["main"]
+    paths-ignore:
+      - 'notes/notes_raw.json'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

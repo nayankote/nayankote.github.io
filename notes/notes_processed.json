@@ -17,15 +17,24 @@
       "source": "email",
       "cluster_id": 0,
       "connections": []
+    },
+    {
+      "id": "101a4f59-fce8-4e50-b637-a524db8624fd",
+      "text": "Quite often I see people quoting labor shortages or limited access to\r\nqualified people as a tailwind or a 'why now' driver for certain markets.\r\nIn my opinion, it is almost certainly never the cas...",
+      "subject": "Market tailwinds",
+      "timestamp": "2026-01-26T11:11:59.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
     }
   ],
   "clusters": [
     {
       "id": 0,
-      "auto_label": "fleventy fleven",
+      "auto_label": "people fleventy fleven",
       "custom_label": null,
-      "note_count": 2
+      "note_count": 3
     }
   ],
-  "last_processed": "2026-01-26T07:37:30.680004Z"
+  "last_processed": "2026-01-26T11:32:50.720479Z"
 }

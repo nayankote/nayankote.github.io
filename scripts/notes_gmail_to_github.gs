@@ -82,12 +82,10 @@ function processNewEmails() {
   const newNotes = [];
 
   for (const thread of threads) {
-    // Get the last (most recent) message in the thread
-    const messages = thread.getMessages();
-    const message = messages[messages.length - 1];
+    const message = thread.getMessages()[0];
     let subject = message.getSubject();
 
-    // Skip if subject doesn't match our pattern (safety check)
+    // Skip if subject doesn't match our pattern
     if (!/^(note:|n:)/i.test(subject)) {
       thread.addLabel(processedLabel);
       thread.markRead();
@@ -95,14 +93,12 @@ function processNewEmails() {
     }
 
     const body = message.getPlainBody().trim();
-
-    // Strip the note:/n: prefix from subject to get optional title
     const title = subject.replace(/^(note:|n:)\s*/i, '').trim();
 
     // Note text is the body; if no body, use the title
     let noteText = body || title;
 
-    // Truncate to 200 chars as per spec
+    // Truncate to 200 chars
     if (noteText && noteText.length > 200) {
       noteText = noteText.substring(0, 197) + '...';
     }
@@ -111,13 +107,12 @@ function processNewEmails() {
       newNotes.push({
         id: Utilities.getUuid(),
         text: noteText,
-        subject: title || null,  // Store subject separately
+        subject: title || null,
         timestamp: message.getDate().toISOString(),
         source: 'email'
       });
     }
 
-    // Mark thread as processed: add label and mark read
     thread.addLabel(processedLabel);
     thread.markRead();
   }

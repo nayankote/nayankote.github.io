@@ -176,6 +176,34 @@
             color: #64748b;
         }
 
+        .notes-intro {
+            position: absolute;
+            top: 20px;
+            left: 24px;
+            max-width: 320px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.9em;
+            color: #64748b;
+            line-height: 1.5;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .notes-intro strong {
+            color: var(--color-text, #333);
+        }
+
+        @media (max-width: 600px) {
+            .notes-intro {
+                position: relative;
+                top: auto;
+                left: auto;
+                max-width: 100%;
+                padding: 16px 20px;
+                text-align: center;
+            }
+        }
+
         #reset-view-btn {
             background: none;
             border: 1px solid var(--color-accent, #FF1A75);
@@ -259,6 +287,10 @@
     </div>
 
     <div id="graph-container">
+        <p class="notes-intro">
+            <strong>Fleeting thoughts</strong> captured throughout my day.
+            Click any node to read. Connected nodes share similar ideas.
+        </p>
         <div id="message"></div>
         <svg id="graph"></svg>
     </div>

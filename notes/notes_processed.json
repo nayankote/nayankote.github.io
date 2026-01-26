@@ -1,5 +1,22 @@
 {
-  "notes": [],
-  "clusters": [],
-  "last_processed": "2026-01-26T07:25:17.634099Z"
+  "notes": [
+    {
+      "id": "e8ac8131-a9a6-41fe-8cc5-c7cd3d68d71b",
+      "text": "6y",
+      "subject": "test 6",
+      "timestamp": "2026-01-26T07:28:23.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
+    }
+  ],
+  "clusters": [
+    {
+      "id": 0,
+      "auto_label": "miscellaneous",
+      "custom_label": null,
+      "note_count": 1
+    }
+  ],
+  "last_processed": "2026-01-26T07:30:45.199675Z"
 }

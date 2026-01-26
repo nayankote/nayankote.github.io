@@ -1,31 +1,5 @@
 {
-  "notes": [
-    {
-      "id": "5a7c0fd4-7750-4f2f-9c3f-fb472b4a0ec7",
-      "text": "test email 5, syoooo",
-      "subject": "test email 5, syoooo",
-      "timestamp": "2026-01-25T20:37:38.000Z",
-      "source": "email",
-      "cluster_id": 0,
-      "connections": []
-    },
-    {
-      "id": "f1d8cecd-ce5b-4171-8442-afd1f4f48b31",
-      "text": "Does this work?\r\nLadies and gentlemen, introducing, DR DREEE",
-      "subject": "test email 5, syoooo",
-      "timestamp": "2026-01-25T20:37:42.000Z",
-      "source": "email",
-      "cluster_id": 0,
-      "connections": []
-    }
-  ],
-  "clusters": [
-    {
-      "id": 0,
-      "auto_label": "test email syoooo",
-      "custom_label": null,
-      "note_count": 2
-    }
-  ],
-  "last_processed": "2026-01-25T20:45:08.916314Z"
+  "notes": [],
+  "clusters": [],
+  "last_processed": "2026-01-26T07:25:17.634099Z"
 }

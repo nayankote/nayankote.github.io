@@ -80,15 +80,17 @@ function processNewEmails() {
 
   const processedLabel = getOrCreateLabel(CONFIG.PROCESSED_LABEL);
   const newNotes = [];
+  const threadsToLabel = [];  // Store threads to label only after successful commit
+  const threadsToSkip = [];   // Threads that don't match pattern (label immediately)
 
+  // Phase 1: Collect notes without labeling
   for (const thread of threads) {
     const message = thread.getMessages()[0];
     let subject = message.getSubject();
 
-    // Skip if subject doesn't match our pattern
+    // Skip if subject doesn't match our pattern - these can be labeled immediately
     if (!/^(note:|n:)/i.test(subject)) {
-      thread.addLabel(processedLabel);
-      thread.markRead();
+      threadsToSkip.push(thread);
       continue;
     }
 
@@ -111,8 +113,12 @@ function processNewEmails() {
         timestamp: message.getDate().toISOString(),
         source: 'email'
       });
+      threadsToLabel.push(thread);
     }
+  }
 
+  // Label skipped threads immediately (non-matching subjects)
+  for (const thread of threadsToSkip) {
     thread.addLabel(processedLabel);
     thread.markRead();
   }
@@ -124,7 +130,7 @@ function processNewEmails() {
 
   Logger.log(`Found ${newNotes.length} new notes.`);
 
-  // Get current file from GitHub
+  // Phase 2: Get current file from GitHub
   const currentFile = getGitHubFile(token, owner, repo, CONFIG.FILE_PATH);
   let currentData = { notes: [] };
 
@@ -145,6 +151,11 @@ function processNewEmails() {
 
   if (uniqueNewNotes.length === 0) {
     Logger.log('All notes already exist, skipping.');
+    // Label these threads since notes already exist in GitHub
+    for (const thread of threadsToLabel) {
+      thread.addLabel(processedLabel);
+      thread.markRead();
+    }
     return;
   }
 
@@ -153,18 +164,24 @@ function processNewEmails() {
 
   Logger.log(`Adding ${uniqueNewNotes.length} unique notes (filtered ${newNotes.length - uniqueNewNotes.length} duplicates).`);
 
-  // Commit to GitHub
+  // Phase 3: Commit to GitHub
   const success = updateGitHubFile(
     token, owner, repo, CONFIG.FILE_PATH,
     JSON.stringify(currentData, null, 2),
-    `Add ${newNotes.length} note(s) from email`,
+    `Add ${uniqueNewNotes.length} note(s) from email`,
     currentFile ? currentFile.sha : null
   );
 
+  // Phase 4: Only label threads after successful commit
   if (success) {
-    Logger.log(`Successfully added ${newNotes.length} notes to GitHub.`);
+    Logger.log(`Successfully added ${uniqueNewNotes.length} notes to GitHub.`);
+    for (const thread of threadsToLabel) {
+      thread.addLabel(processedLabel);
+      thread.markRead();
+    }
+    Logger.log(`Labeled ${threadsToLabel.length} threads as processed.`);
   } else {
-    Logger.log('Failed to update GitHub file.');
+    Logger.log('Failed to update GitHub file. Emails left unlabeled for retry.');
   }
 }
 

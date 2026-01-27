@@ -141,12 +141,15 @@ def main():
 
     custom_labels = load_json(CLUSTER_LABELS)
 
+    # Don't generate auto-labels if we don't have enough notes for meaningful clustering
+    skip_auto_labels = len(notes) < MIN_NOTES_FOR_CLUSTERING
+
     unique_clusters = set(cluster_labels)
     clusters = []
     for cluster_id in unique_clusters:
         cluster_id = int(cluster_id)
         cluster_texts = [texts[i] for i, c in enumerate(cluster_labels) if c == cluster_id]
-        auto_label = generate_cluster_label(cluster_texts)
+        auto_label = "uncategorized" if skip_auto_labels else generate_cluster_label(cluster_texts)
         clusters.append({
             "id": cluster_id,
             "auto_label": auto_label,

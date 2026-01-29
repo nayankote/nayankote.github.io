@@ -20,7 +20,7 @@
     },
     {
       "id": "101a4f59-fce8-4e50-b637-a524db8624fd",
-      "text": "Quite often I see people quoting labor shortages or limited access to\r\nqualified people as a tailwind or a 'why now' driver for certain markets.\r\nIn my opinion, it is almost certainly never the cas...",
+      "text": "Quite often I see people quoting labor shortages or limited access to qualified people as a tailwind or a 'why now' driver for certain markets. In my opinion, it is almost certainly never the cas...",
       "subject": "Market tailwinds",
       "timestamp": "2026-01-26T11:11:59.000Z",
       "source": "email",
@@ -31,10 +31,10 @@
   "clusters": [
     {
       "id": 0,
-      "auto_label": "people fleventy fleven",
+      "auto_label": "uncategorized",
       "custom_label": null,
       "note_count": 3
     }
   ],
-  "last_processed": "2026-01-26T11:32:50.720479Z"
+  "last_processed": "2026-01-29T03:05:29.802561Z"
 }

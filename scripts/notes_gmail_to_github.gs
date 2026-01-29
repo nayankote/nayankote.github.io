@@ -100,6 +100,11 @@ function processNewEmails() {
     // Note text is the body; if no body, use the title
     let noteText = body || title;
 
+    // Normalize line breaks: replace \r\n and \r with single space, collapse multiple spaces
+    if (noteText) {
+      noteText = noteText.replace(/\r\n/g, ' ').replace(/\r/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
     // Truncate to 200 chars
     if (noteText && noteText.length > 200) {
       noteText = noteText.substring(0, 197) + '...';

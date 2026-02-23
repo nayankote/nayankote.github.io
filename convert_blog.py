@@ -37,7 +37,7 @@ def parse_metadata(content):
     return title, date, tag
 
 
-def markdown_to_html(content):
+def markdown_to_html(content, img_folder=None):
     """Convert markdown content to HTML."""
     # Remove metadata lines
     lines = content.strip().split('\n')
@@ -57,6 +57,23 @@ def markdown_to_html(content):
             filtered_lines.append(line)
 
     content = '\n'.join(filtered_lines)
+
+    # Convert images ![alt](path) to <img> tags
+    def replace_image(match):
+        alt = match.group(1)
+        path = match.group(2)
+        # Decode URL-encoded paths and use the img_folder path
+        from urllib.parse import unquote
+        decoded_path = unquote(path)
+        # Extract just the filename
+        filename = decoded_path.split('/')[-1]
+        if img_folder:
+            img_path = f"/assets/img/{img_folder}/{filename}"
+        else:
+            img_path = f"/assets/img/{filename}"
+        return f'<img src="{img_path}" alt="{alt}" class="blog-image">'
+
+    content = re.sub(r'!\[(.*?)\]\((.*?)\)', replace_image, content)
 
     # Convert headers (h2, h3, etc.)
     content = re.sub(r'^### (.*?)$', r'<h3>\1</h3>', content, flags=re.MULTILINE)
@@ -118,8 +135,12 @@ def create_blog_post(md_file, output_file=None):
         print("Error: Could not extract title or date from markdown")
         return
 
+    # Generate img folder name from title
+    img_folder = title.replace(' ', '-').replace(':', '-').replace('.', '')
+    img_folder = re.sub(r'-+', '-', img_folder)
+
     # Convert markdown to HTML
-    html_content = markdown_to_html(md_content)
+    html_content = markdown_to_html(md_content, img_folder)
 
     # Read template
     template_path = Path(md_path.parent) / 'blog-post-template.html'

@@ -300,31 +300,8 @@ html.theme-dark .blog-content-container blockquote {
     margin: 1.5em auto;
 }
 
-/* Image grid for side-by-side images */
-.blog-content-container .image-grid {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 1.5em 0;
-}
-
-.blog-content-container .image-grid img {
-    max-width: calc(50% - 6px);
-    margin: 0;
-    flex: 1 1 auto;
-}
-
-.blog-content-container .image-grid.three-up img {
-    max-width: calc(33.33% - 8px);
-}
-
 @media (max-width: 600px) {
     .blog-content-container img {
-        max-width: 100%;
-    }
-    .blog-content-container .image-grid img,
-    .blog-content-container .image-grid.three-up img {
         max-width: 100%;
     }
 }

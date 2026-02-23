@@ -88,57 +88,17 @@ def markdown_to_html(content, img_folder=None):
     # Convert inline code `text`
     content = re.sub(r'`(.*?)`', r'<code>\1</code>', content)
 
-    # Convert lists and group consecutive images
+    # Convert lists
     html_lines = []
     in_list = False
-    image_buffer = []
 
-    def flush_images():
-        """Output buffered images, grouping consecutive ones."""
-        nonlocal image_buffer
-        if not image_buffer:
-            return
-        if len(image_buffer) == 1:
-            html_lines.append(image_buffer[0])
-        elif len(image_buffer) == 2:
-            html_lines.append('<div class="image-grid">')
-            html_lines.extend(image_buffer)
-            html_lines.append('</div>')
-        else:  # 3 or more
-            html_lines.append('<div class="image-grid three-up">')
-            html_lines.extend(image_buffer)
-            html_lines.append('</div>')
-        image_buffer = []
-
-    lines = content.split('\n')
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        is_image = line.strip().startswith('<img ')
-
+    for line in content.split('\n'):
         if line.strip().startswith('- '):
-            flush_images()
             if not in_list:
                 html_lines.append('<ul>')
                 in_list = True
             html_lines.append(f'<li>{line.strip()[2:]}</li>')
-        elif is_image:
-            if in_list:
-                html_lines.append('</ul>')
-                in_list = False
-            image_buffer.append(line.strip())
-        elif line.strip() == '' and image_buffer:
-            # Check if next non-empty line is also an image
-            j = i + 1
-            while j < len(lines) and lines[j].strip() == '':
-                j += 1
-            if j < len(lines) and lines[j].strip().startswith('<img '):
-                # Skip blank line, next image will be added to buffer
-                pass
-            else:
-                flush_images()
         else:
-            flush_images()
             if in_list:
                 html_lines.append('</ul>')
                 in_list = False
@@ -150,9 +110,7 @@ def markdown_to_html(content, img_folder=None):
                 html_lines.append(line)
             else:
                 html_lines.append('')
-        i += 1
 
-    flush_images()
     if in_list:
         html_lines.append('</ul>')
 

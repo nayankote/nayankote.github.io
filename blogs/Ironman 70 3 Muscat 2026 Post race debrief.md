@@ -75,13 +75,9 @@ The last 2Kms were something else. Six months of single-minded work had come dow
 
 ![Run_IM703Oman_1.jpg](Ironman%2070%203%20Muscat%202026%20Post%20race%20debrief/Run_IM703Oman_1.jpg)
 
-![Run_IM703Oman_2.jpg](Ironman%2070%203%20Muscat%202026%20Post%20race%20debrief/Run_IM703Oman_2.jpg)
-
 **Finish line and learnings (Official time: 06:50:59)**
 
 ![Finish_IM703Oman_1.jpg](Ironman%2070%203%20Muscat%202026%20Post%20race%20debrief/Finish_IM703Oman_1.jpg)
-
-![Finish_IM703Oman_2.jpg](Ironman%2070%203%20Muscat%202026%20Post%20race%20debrief/Finish_IM703Oman_2.jpg)
 
 Sitting in finish-line tent, calling my parents, brother and girlfriend, I could hear how proud they were of me, and that made it all worth it. The six-month journey which started in June/ July 2025 was over, but I was just getting started. Some thoughts from the finish line:
 

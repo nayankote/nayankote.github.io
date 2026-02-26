@@ -34,6 +34,13 @@
       "subject": "Why do we need menus?",
       "timestamp": "2026-02-03T16:40:10.000Z",
       "source": "email"
+    },
+    {
+      "id": "c7bbc8cb-b633-4dde-82c8-967ea2c1b057",
+      "text": "Spending some time understanding context graphs. I don't believe I fully understand if they are a weird esoteric concept or if they have a role to play in real enterprises. The premise is simple - ...",
+      "subject": "Is code the context?",
+      "timestamp": "2026-02-26T13:02:57.000Z",
+      "source": "email"
     }
   ]
 }

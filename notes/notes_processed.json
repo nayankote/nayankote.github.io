@@ -44,6 +44,15 @@
       "source": "email",
       "cluster_id": 0,
       "connections": []
+    },
+    {
+      "id": "c7bbc8cb-b633-4dde-82c8-967ea2c1b057",
+      "text": "Spending some time understanding context graphs. I don't believe I fully understand if they are a weird esoteric concept or if they have a role to play in real enterprises. The premise is simple - ...",
+      "subject": "Is code the context?",
+      "timestamp": "2026-02-26T13:02:57.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
     }
   ],
   "clusters": [
@@ -51,8 +60,8 @@
       "id": 0,
       "auto_label": "uncategorized",
       "custom_label": null,
-      "note_count": 5
+      "note_count": 6
     }
   ],
-  "last_processed": "2026-02-03T16:55:14.636280Z"
+  "last_processed": "2026-02-26T13:10:49.346508Z"
 }

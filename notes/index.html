@@ -109,7 +109,7 @@
         }
 
         .modal-title {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 600;
             color: var(--color-text, #333);
             font-family: 'Libre Baskerville', serif;
@@ -149,6 +149,16 @@
             background: rgba(255, 26, 117, 0.1);
             padding: 2px 8px;
             border-radius: 4px;
+        }
+
+        .modal-body {
+            font-size: 1em;
+            color: var(--color-text, #333);
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.7;
+            margin-top: 16px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .modal-subject {
@@ -302,6 +312,7 @@
                 <div class="modal-date" id="modalDate"></div>
                 <div class="modal-cluster" id="modalCluster"></div>
             </div>
+            <div class="modal-body" id="modalBody"></div>
             <div class="modal-subject" id="modalSubject"></div>
         </div>
     </div>
@@ -480,17 +491,23 @@
         }
 
         function openModal(note) {
-            document.getElementById('modalTitle').textContent = note.text;
+            // Header: subject (bold, body font size)
+            const titleEl = document.getElementById('modalTitle');
+            if (note.subject) {
+                titleEl.textContent = note.subject;
+                titleEl.style.display = 'block';
+            } else {
+                titleEl.style.display = 'none';
+            }
+
             document.getElementById('modalDate').textContent = formatDate(note.timestamp);
             document.getElementById('modalCluster').textContent = getClusterLabel(note.cluster_id);
 
-            const subjectEl = document.getElementById('modalSubject');
-            if (note.subject) {
-                subjectEl.textContent = `subject: "${note.subject}"`;
-                subjectEl.style.display = 'block';
-            } else {
-                subjectEl.style.display = 'none';
-            }
+            // Body: full note text
+            document.getElementById('modalBody').textContent = note.text;
+
+            // Category: small italic (cluster label already shown above, hide old subject field)
+            document.getElementById('modalSubject').style.display = 'none';
 
             document.getElementById('noteModal').style.display = 'block';
         }

@@ -29,3 +29,6 @@ ENV/
 
 # Blog drafts (keep private)
 drafts/
+
+# Git worktrees
+.worktrees/

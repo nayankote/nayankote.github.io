@@ -247,3 +247,81 @@ function updateGitHubFile(token, owner, repo, path, content, message, sha) {
 function testProcessEmails() {
   processNewEmails();
 }
+
+/**
+ * Full resync: re-reads ALL note emails (including already-processed ones)
+ * and rebuilds notes_raw.json from scratch with full text.
+ * Run once manually from script.google.com after removing the truncation limit.
+ */
+function reprocessAllEmails() {
+  const props = PropertiesService.getScriptProperties();
+  const token = props.getProperty('GITHUB_TOKEN');
+  const owner = props.getProperty('GITHUB_OWNER');
+  const repo = props.getProperty('GITHUB_REPO');
+
+  if (!token || !owner || !repo) {
+    Logger.log('Missing configuration. Set GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO in script properties.');
+    return;
+  }
+
+  // Search ALL note emails, including already-processed ones (no -label filter)
+  const threads = GmailApp.search('subject:(note: OR n:)', 0, 500);
+
+  if (threads.length === 0) {
+    Logger.log('No note emails found.');
+    return;
+  }
+
+  Logger.log(`Found ${threads.length} note email threads. Rebuilding from scratch...`);
+
+  const allNotes = [];
+
+  for (const thread of threads) {
+    const message = thread.getMessages()[0];
+    let subject = message.getSubject();
+
+    if (!/^(note:|n:)/i.test(subject)) {
+      continue;
+    }
+
+    const body = message.getPlainBody().trim();
+    const title = subject.replace(/^(note:|n:)\s*/i, '').trim();
+
+    let noteText = body || title;
+
+    // Normalize line breaks (same as processNewEmails, but NO truncation)
+    if (noteText) {
+      noteText = noteText.replace(/\r\n/g, ' ').replace(/\r/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    if (noteText) {
+      allNotes.push({
+        id: Utilities.getUuid(),
+        text: noteText,
+        subject: title || null,
+        timestamp: message.getDate().toISOString(),
+        source: 'email'
+      });
+    }
+  }
+
+  Logger.log(`Collected ${allNotes.length} notes. Committing to GitHub...`);
+
+  // Get current file SHA (needed for update, even though we're overwriting content)
+  const currentFile = getGitHubFile(token, owner, repo, CONFIG.FILE_PATH);
+  const newData = { notes: allNotes };
+
+  const success = updateGitHubFile(
+    token, owner, repo, CONFIG.FILE_PATH,
+    JSON.stringify(newData, null, 2),
+    `Resync: rebuild ${allNotes.length} notes from Gmail with full text`,
+    currentFile ? currentFile.sha : null
+  );
+
+  if (success) {
+    Logger.log(`Done! Rebuilt notes_raw.json with ${allNotes.length} notes (full text, no truncation).`);
+    Logger.log('GitHub Actions will now re-run process_notes.py to regenerate notes_processed.json.');
+  } else {
+    Logger.log('Failed to update GitHub file.');
+  }
+}

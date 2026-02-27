@@ -1,52 +1,45 @@
 {
   "notes": [
     {
-      "id": "e8ac8131-a9a6-41fe-8cc5-c7cd3d68d71b",
-      "text": "6y",
-      "subject": "test 6",
-      "timestamp": "2026-01-26T07:28:23.000Z",
+      "id": "945a37bc-732d-4f04-af6a-240622e98ef3",
+      "text": "I came across Bill Gurley's blog post on how to evaluate marketplaces. They've funded some of the world's largest, such as, Uber, Yelp, Zillow, etc. Reading through Benchmark's 10 commandments of evaluating a marketplace, they generally hold true for most businesses. Is every business a marketplace? Read more here: https://abovethecrowd.com/2012/11/13/all-markets-are-not-created-equal-10-factors-to-consider-when-evaluating-digital-marketplaces/ Nayan Nandan | Analyst | Accel +91 98459 22156 | @Accel_India",
+      "subject": "Is every business a marketplace?",
+      "timestamp": "2026-02-27T11:23:18.000Z",
       "source": "email"
     },
     {
-      "id": "36706fff-0328-4c02-89c8-3349404a759f",
-      "text": "fleventy fleven",
-      "subject": "test 7",
-      "timestamp": "2026-01-26T07:35:14.000Z",
+      "id": "7cca7b61-c9a9-4be4-9cbc-9d00b33fcf18",
+      "text": "Spending some time understanding context graphs. I don't believe I fully understand if they are a weird esoteric concept or if they have a role to play in real enterprises. The premise is simple - systems of record store the state/ end result/ artifact/ the 'what'. Humans were used in abundance to decode the 'why' that went behind the 'what', and the communication channels for the 'why' have been fragmented, i.e., email, slack, whatsapp, policy docs, etc. If agents do economically useful tasks, such as coding, is it not important for them to get access to the why, and eventually start writing their own whys? Running some experiments this week.",
+      "subject": "Is code the context?",
+      "timestamp": "2026-02-26T13:02:57.000Z",
       "source": "email"
     },
     {
-      "id": "101a4f59-fce8-4e50-b637-a524db8624fd",
-      "text": "Quite often I see people quoting labor shortages or limited access to qualified people as a tailwind or a 'why now' driver for certain markets. In my opinion, it is almost certainly never the cas...",
-      "subject": "Market tailwinds",
-      "timestamp": "2026-01-26T11:11:59.000Z",
+      "id": "977a7f57-69c0-4f4a-8aca-10dbce12d421",
+      "text": "In a world of lossless translation from intent to actions, do we still need menus (e.g, settings, toggles, lists, etc.)? There are multiple lists that people would rather not browse, why do they still exist? Does my washing machine still need 20 buttons? Would people pay extra for intelligence to abstract menus in the physical world?",
+      "subject": "Why do we need menus?",
+      "timestamp": "2026-02-03T16:40:10.000Z",
       "source": "email"
     },
     {
-      "id": "caba8982-6aca-47ef-bb48-7c70db563b04",
+      "id": "ec30b76b-6fb2-433e-ab80-62381352c0af",
       "text": "Man I took a fat fucking L in today?s swim endurance session. I let the 1.9K distance and waves and crowded waters get into my head. Felt weak and bailed halfway, gotta build some mental discipline.",
       "subject": "Training Ls",
       "timestamp": "2026-01-29T13:54:19.000Z",
       "source": "email"
     },
     {
-      "id": "2e599428-94c1-47ab-aceb-ff9ee8c37717",
-      "text": "In a world of lossless translation from intent to actions, do we still need menus (e.g, settings, toggles, lists, etc.)? There are multiple lists that people would rather not browse, why do they st...",
-      "subject": "Why do we need menus?",
-      "timestamp": "2026-02-03T16:40:10.000Z",
+      "id": "05c56adb-7d09-4763-9ef4-a91d2505ff3f",
+      "text": "Quite often I see people quoting labor shortages or limited access to qualified people as a tailwind or a 'why now' driver for certain markets. In my opinion, it is almost certainly never the case that markets get created due to shortages of labor (unless there has been recent event of mass destruction of a particular labor force segment due to war/ disease). Labor shortage is a secular, long-ranging trend, not a sudden shift in market dynamics. Labor shortages motivate companies to adopt new tech and/ or explore new geographies but seldom are the key driver behind these moves. Note to self: If you have not found a tailwind outside of labor shortage, keep looking.",
+      "subject": "Market tailwinds",
+      "timestamp": "2026-01-26T11:11:59.000Z",
       "source": "email"
     },
     {
-      "id": "c7bbc8cb-b633-4dde-82c8-967ea2c1b057",
-      "text": "Spending some time understanding context graphs. I don't believe I fully understand if they are a weird esoteric concept or if they have a role to play in real enterprises. The premise is simple - ...",
-      "subject": "Is code the context?",
-      "timestamp": "2026-02-26T13:02:57.000Z",
-      "source": "email"
-    },
-    {
-      "id": "cdeb365f-1359-4e70-9e64-79792619275e",
-      "text": "I came across Bill Gurley's blog post on how to evaluate marketplaces. They've funded some of the world's largest, such as, Uber, Yelp, Zillow, etc. Reading through Benchmark's 10 commandments of e...",
-      "subject": "Is every business a marketplace?",
-      "timestamp": "2026-02-27T11:23:18.000Z",
+      "id": "ce3505a2-3db4-4d78-a631-b47028dcb0bf",
+      "text": "Does this work? Ladies and gentlemen, introducing, DR DREEE",
+      "subject": "test email 5, syoooo",
+      "timestamp": "2026-01-25T20:37:42.000Z",
       "source": "email"
     }
   ]

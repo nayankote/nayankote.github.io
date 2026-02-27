@@ -105,11 +105,6 @@ function processNewEmails() {
       noteText = noteText.replace(/\r\n/g, ' ').replace(/\r/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
     }
 
-    // Truncate to 200 chars
-    if (noteText && noteText.length > 200) {
-      noteText = noteText.substring(0, 197) + '...';
-    }
-
     if (noteText) {
       newNotes.push({
         id: Utilities.getUuid(),

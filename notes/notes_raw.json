@@ -41,6 +41,13 @@
       "subject": "test email 5, syoooo",
       "timestamp": "2026-01-25T20:37:42.000Z",
       "source": "email"
+    },
+    {
+      "id": "362e5e33-f42b-40c1-9840-c2f645757a38",
+      "text": "Reading The Emperors of Chocolate by Joel Glenn Brenner after the mention on the Mars episode at Acquired. It's amazing, almost as good as Charlie and the Chocolate Factory, except that it's a real story. Tempted to drop everything and pick up chocolate manufacturing",
+      "subject": "Emperors of chocolate is great",
+      "timestamp": "2026-02-27T19:06:20.000Z",
+      "source": "email"
     }
   ]
 }

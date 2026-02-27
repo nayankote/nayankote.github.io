@@ -53,6 +53,15 @@
       "source": "email",
       "cluster_id": 0,
       "connections": []
+    },
+    {
+      "id": "cdeb365f-1359-4e70-9e64-79792619275e",
+      "text": "I came across Bill Gurley's blog post on how to evaluate marketplaces. They've funded some of the world's largest, such as, Uber, Yelp, Zillow, etc. Reading through Benchmark's 10 commandments of e...",
+      "subject": "Is every business a marketplace?",
+      "timestamp": "2026-02-27T11:23:18.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
     }
   ],
   "clusters": [
@@ -60,8 +69,8 @@
       "id": 0,
       "auto_label": "uncategorized",
       "custom_label": null,
-      "note_count": 6
+      "note_count": 7
     }
   ],
-  "last_processed": "2026-02-26T13:10:49.346508Z"
+  "last_processed": "2026-02-27T11:30:00.679506Z"
 }

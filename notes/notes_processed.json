@@ -62,6 +62,15 @@
       "source": "email",
       "cluster_id": 0,
       "connections": []
+    },
+    {
+      "id": "fe4c6bcd-bee5-47fd-860d-419ec0e8e5ec",
+      "text": "I wonder if there can be a 3G capital for India? Specially focused on the QSR growth story. We are overloaded with non-Indian QSRs. Darshinis in Bangalore are probably the QSR heroes of the next 5 decades, in India and globally. I wonder if Taaza Thindi can be 3G'ed. Read: https://colossus.com/article/3g-capital-built-to-own/",
+      "subject": "3G capital for India?",
+      "timestamp": "2026-03-02T16:04:19.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
     }
   ],
   "clusters": [
@@ -69,8 +78,8 @@
       "id": 0,
       "auto_label": "uncategorized",
       "custom_label": null,
-      "note_count": 7
+      "note_count": 8
     }
   ],
-  "last_processed": "2026-02-27T19:09:13.136303Z"
+  "last_processed": "2026-03-02T16:09:03.260828Z"
 }

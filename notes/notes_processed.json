@@ -71,6 +71,15 @@
       "source": "email",
       "cluster_id": 0,
       "connections": []
+    },
+    {
+      "id": "8600bbd1-044e-45fc-b80a-d41f3cf0528b",
+      "text": "How are prediction markets different from synthetic CDOs? I don't know much about either, so I'm probably way off, but how can the price movements of an underlying 'asset' be worth (sometimes) more than even the asset? Breaks my brain.",
+      "subject": "Prediction markets?",
+      "timestamp": "2026-03-04T05:53:48.000Z",
+      "source": "email",
+      "cluster_id": 0,
+      "connections": []
     }
   ],
   "clusters": [
@@ -78,8 +87,8 @@
       "id": 0,
       "auto_label": "uncategorized",
       "custom_label": null,
-      "note_count": 8
+      "note_count": 9
     }
   ],
-  "last_processed": "2026-03-02T16:09:03.260828Z"
+  "last_processed": "2026-03-04T05:58:50.562971Z"
 }

@@ -6,7 +6,7 @@
       "subject": "Is every business a marketplace?",
       "timestamp": "2026-02-27T11:23:18.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -15,7 +15,7 @@
       "subject": "Is code the context?",
       "timestamp": "2026-02-26T13:02:57.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -24,7 +24,7 @@
       "subject": "Why do we need menus?",
       "timestamp": "2026-02-03T16:40:10.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -33,7 +33,7 @@
       "subject": "Training Ls",
       "timestamp": "2026-01-29T13:54:19.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -42,7 +42,7 @@
       "subject": "Market tailwinds",
       "timestamp": "2026-01-26T11:11:59.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -51,7 +51,7 @@
       "subject": "test email 5, syoooo",
       "timestamp": "2026-01-25T20:37:42.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -60,7 +60,7 @@
       "subject": "Emperors of chocolate is great",
       "timestamp": "2026-02-27T19:06:20.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -69,7 +69,7 @@
       "subject": "3G capital for India?",
       "timestamp": "2026-03-02T16:04:19.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
       "connections": []
     },
     {
@@ -78,17 +78,26 @@
       "subject": "Prediction markets?",
       "timestamp": "2026-03-04T05:53:48.000Z",
       "source": "email",
-      "cluster_id": 0,
+      "cluster_id": -1,
+      "connections": []
+    },
+    {
+      "id": "ff4fcdda-48df-4a25-a335-4782acfb6ce7",
+      "text": "Depressing moment today when I went to the 2nd degree connections at Serval AI, just to find that 7/10 2nd degree connections were investors, not actually employees at Serval. Needs to improve. Nayan Nandan | Analyst | Accel +91 98459 22156 | @Accel_India",
+      "subject": "Improving my network",
+      "timestamp": "2026-03-20T12:11:12.000Z",
+      "source": "email",
+      "cluster_id": -1,
       "connections": []
     }
   ],
   "clusters": [
     {
-      "id": 0,
-      "auto_label": "uncategorized",
+      "id": -1,
+      "auto_label": "labor people etc",
       "custom_label": null,
-      "note_count": 9
+      "note_count": 10
     }
   ],
-  "last_processed": "2026-03-04T05:58:50.562971Z"
+  "last_processed": "2026-03-20T12:14:36.967584Z"
 }

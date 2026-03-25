@@ -472,10 +472,13 @@
             node.append("circle")
                 .attr("r", NODE_RADIUS);
 
-            // Show truncated text on hover
+            // Show note title on hover
             node.append("text")
                 .attr("dy", NODE_RADIUS + 14)
-                .text(d => d.text.length > 30 ? d.text.substring(0, 30) + '...' : d.text);
+                .text(d => {
+                    const title = d.subject || d.text;
+                    return title.length > 30 ? title.substring(0, 30) + '...' : title;
+                });
 
             simulation.on("tick", () => {
                 link

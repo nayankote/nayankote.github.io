@@ -76,6 +76,13 @@
       "subject": "Lasting legacy",
       "timestamp": "2026-03-25T17:38:34.000Z",
       "source": "email"
+    },
+    {
+      "id": "62667c82-7895-4aec-9edd-1b68aca2ac80",
+      "text": "I'm learning a lot from first principles of how to ingest and store data, how to design DBs and probably not bloat storage. It's mostly guesswork, claude does a poor job with recommendations and only comes up with valid reccos once I probe based on first principles. I don't know how I feel about this",
+      "subject": "Moving data",
+      "timestamp": "2026-03-30T14:16:14.000Z",
+      "source": "email"
     }
   ]
 }

@@ -88,20 +88,38 @@ def markdown_to_html(content, img_folder=None):
     # Convert inline code `text`
     content = re.sub(r'`(.*?)`', r'<code>\1</code>', content)
 
-    # Convert lists
+    # Convert lists (supports nested bullets via leading-whitespace indentation)
     html_lines = []
-    in_list = False
+    list_indents = []  # stack of indent widths, one open <li> per level
+
+    def close_lists_deeper_than(indent):
+        while list_indents and list_indents[-1] > indent:
+            html_lines.append('</li>')
+            html_lines.append('</ul>')
+            list_indents.pop()
+
+    def close_all_lists():
+        while list_indents:
+            html_lines.append('</li>')
+            html_lines.append('</ul>')
+            list_indents.pop()
 
     for line in content.split('\n'):
-        if line.strip().startswith('- '):
-            if not in_list:
+        stripped = line.lstrip(' \t')
+        if stripped.startswith('- '):
+            indent = len(line) - len(stripped)
+            text = stripped[2:].strip()
+            if not list_indents or indent > list_indents[-1]:
+                # Start a new (possibly nested) list; leaves the parent <li> open
                 html_lines.append('<ul>')
-                in_list = True
-            html_lines.append(f'<li>{line.strip()[2:]}</li>')
+                list_indents.append(indent)
+            else:
+                # Sibling at this level (or shallower): close deeper lists, then the open <li>
+                close_lists_deeper_than(indent)
+                html_lines.append('</li>')
+            html_lines.append(f'<li>{text}')
         else:
-            if in_list:
-                html_lines.append('</ul>')
-                in_list = False
+            close_all_lists()
 
             # Convert paragraphs
             if line.strip() and not line.strip().startswith('<'):
@@ -111,8 +129,7 @@ def markdown_to_html(content, img_folder=None):
             else:
                 html_lines.append('')
 
-    if in_list:
-        html_lines.append('</ul>')
+    close_all_lists()
 
     return '\n'.join(html_lines)
 

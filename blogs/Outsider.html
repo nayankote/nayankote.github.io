@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>nayankote.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Centralized CSS - Ground truth for all pages -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script>
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-dark', 'theme-light');
+            document.documentElement.classList.add(theme);
+            localStorage.setItem('attila_theme', theme);
+        }
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('attila_theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light';
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            setTheme(getPreferredTheme());
+            const themeToggle = document.querySelector('.js-theme');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const current = document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light';
+                    setTheme(current === 'theme-dark' ? 'theme-light' : 'theme-dark');
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="nav-header">
+        <nav class="nav-wrapper" aria-label="Main">
+            <ul>
+                <li class="nav-home"><a href="/"><span>Home</span></a></li>
+                <li class="nav-blogs active"><a href="/blogs/"><span>Blogs</span></a></li>
+                <li class="nav-notes"><a href="/notes/"><span>Notes</span></a></li>
+                    <li class="nav-training"><a href="/training/"><span>Training</span></a></li>
+            </ul>
+            <a id="theme-toggle" class="js-theme" href="#" aria-label="Toggle theme">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </a>
+        </nav>
+    </div>
+    <div class="homepage-container">
+        <div class="blog-content-container">
+            <a href="/blogs/" class="back-button">← Back to Blogs</a>
+            <h1 class="blog-title-main">Outsider</h1>
+            <span class="blog-date-main">June 27, 2026</span>
+            
+<p>Surya and I are in the early days of building Altis, an AI back office for service providers that work with insurance. The reasons we started working on this problem are wide-ranging, but important to know for anyone interested:</p>
+
+<ul>
+<li>We’re both extreme generalists. We have done almost nothing specific in our lives. This could be a function of our ‘short’ careers thus far, but the truth is, we’ve spent 4 years covering a wide base of problems across business and tech, none long enough to become true domain experts.
+</li>
+<li>We looked for a problem that plays to our strength. Read that again.
+<ul>
+<li>We looked - yes, we did a breadth-first search of many problems that we can solve with AI. We leaned towards solving vertical industry problems given the (probably true) belief that we don’t have technical chops to build something horizontal.
+</li>
+<li>A problem - we spent a significant amount of time going deep in each problem we picked. We were our own harshest critics, across our ability to build product for that problem, our ability to sell the product and the market being adoption-willing.
+</li>
+<li>Plays to our strength - for better or for worse, Surya and I were born and raised in India. Most of our childhood was spent being witness to our country moving from not having access to most things the ‘first world’ took for granted and then suddenly having explosive access in its own unique way (think about payments, commerce, electronics). Crucially, early in our careers, we were foot soldiers in the world of Great Indian Services, at Bain and Akamai. This showed us what great services feels like. We looked for problems where we could deliver capability that the world takes for granted to a market that will continue to require humans in the medium term.
+</li>
+</ul>
+</li>
+<li>We selected large markets, but with very specific wedges. This sounds smart, but is a fool’s errand, because every company that sets itself on an ambitious enough path operates in a market that’s too large to ignore. Ambition expands TAM more than selection ever will.
+</li>
+<li>We are excited to build a company that requires a certain leap of faith or seer-seeking of the New World. Conventional VC wisdom would point us in the opposite direction of what we’re building today. Maybe they’re right. But the longer we spend thinking about this problem and building for our customers, the more we believe that this is the future. The future will exist, whether or not we build it, and it requires a little bit of dreaming to get there. We’d rather it be us that builds it.
+</li>
+</ul>
+
+<p>I got back from the US ~3 weeks ago under the impression that we would quickly raise a chunky round of capital from legends across institutional and angel investors. This started to unravel quite quickly. There are two things that happened:</p>
+
+<ul>
+<li>My people at Accel asked questions, not all of which I had answers to. This felt like a personal attack because it felt like they did not have conviction in my ability to find our way in this market and win. Their questions are valid, and must be answered without a doubt. But, the fact that they felt like diligence and not co-building, hurt more than I’d like to admit. I assumed that, because I’d worked for them for 2 years, they’d have enough conviction in my ability to win. It seems like they do not. Not yet, at least.
+</li>
+<li>People in the valley I look up to didn’t respond to us. I’ve reached out to 50 angels in the past 2 weeks and not a single one has gotten back. People I really wanted on our captable. This too hurt more than I’d like to admit, because I thought I had the background to warrant their time. It seems as though I do not.
+</li>
+</ul>
+
+<p>As a result, I am now in a place where I see that I am not ‘hot’ in the valley’s eyes and I have not proved myself enough to people who know me. Oddly, this feels liberating. Sometimes. Our customers do not care where we came from or what we did before in life. They only care if we can make their lives better and that brings about a certain level of clarity that I enjoy.</p>
+
+<p>However, it is also worrisome because the things we are missing out on by not being ‘hot’ in the valley are significant. A company is never built alone. It takes an inordinate amount of goodwill to build something worthwhile, and probably more to build something that’s large. It seems like we are short on goodwill in the early days of Altis, and our only way to accumulate it is by building something our customers want. It seems like we are outsiders to this world, trying to prove ourselves to anyone that gives us even a moment’s notice. It feels like we don’t belong. At least not just yet. It is deeply uncomfortable, and I have no way to say objectively whether we’re on the right path. We are left with no choice but to move forward. What other choice do we have after all?</p>
+        </div>
+    </div>
+    <nav aria-label="Footer" style="width: 100%;">
+        <div style="display: flex; gap: 32px; justify-content: center; align-items: center; padding: 32px 0;">
+            <a href="https://github.com/nayankote" target="_blank" rel="noopener" aria-label="GitHub"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.987 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.593 1.028 2.686 0 3.847-2.337 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
+                </svg></a>
+            <a href="https://www.linkedin.com/in/nayankote/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.601v5.595z" />
+                </svg></a>
+            <a href="https://twitter.com/nayankote" target="_blank" rel="noopener" aria-label="Twitter"
+                style="font-size: 2em; color: var(--color-accent);"><svg width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 0 0-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.058 0 14.009-7.514 14.009-14.009 0-.213-.005-.425-.014-.636A10.012 10.012 0 0 0 24 4.557z" />
+                </svg></a>
+        </div>
+    </nav>
+</body>
+
+</html>
